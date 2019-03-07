@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Migrations;
 using Model;
 
 namespace Data
@@ -15,7 +16,7 @@ namespace Data
         public DatabContext():base("Name=Event")
         {
 
-
+          
         }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Event> Event { get; set; }
@@ -29,3 +30,7 @@ namespace Data
 
     }
 }
+
+
+
+
