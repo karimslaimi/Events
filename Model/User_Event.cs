@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Participate
+    public class User_Event
     {
         [Key]
-        public int idParticipation { get; set; }
+        public int idUser_Event { get; set; }
         public User User;
         public Event Event { get;set; }
+        public bool participate;
+        public string comment;
     }
 }

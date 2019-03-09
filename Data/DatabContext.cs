@@ -25,7 +25,7 @@ namespace Data
         public DbSet<Theme> Theme { get; set; }
         public DbSet<University> University { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Participate> Participate { get; set; }
+        public DbSet<User_Event> Participate { get; set; }
 
 
     }
