@@ -19,7 +19,11 @@ namespace Service
         {
             this.utwk = utwk;
         }
+        protected servicePattern() {
+
+        }
         #endregion Constructor
+
 
 
         public void Dispose()
@@ -28,7 +32,7 @@ namespace Service
         }
         public virtual void Add(TEntity entity)
         {
-            ////_repository.Add(entity);
+            //_repository.Add(entity);
             utwk.getRepository<TEntity>().Add(entity);
         }
 

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Model.Admin>
+
+@{
+    ViewBag.Title = "ListAdmin";
+}
+
+<h2>ListAdmin</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nameAdmin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mailAdmin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passwordAdmin)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nameAdmin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mailAdmin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passwordAdmin)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idAdmin }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idAdmin }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idAdmin })
+        </td>
+    </tr>
+}
+
+</table>

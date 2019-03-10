@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Migrations;
+using Data;
 using Model;
 
 namespace Data
@@ -20,12 +20,13 @@ namespace Data
         }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Event> Event { get; set; }
+        public DbSet<EventPicture> EventPictures { get; set; }
         public DbSet<organization> organization { get; set; }
         public DbSet<Subscribers> Subscribers { get; set; }
         public DbSet<Theme> Theme { get; set; }
         public DbSet<University> University { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<User_Event> Participate { get; set; }
+        public DbSet<UserEvent> UserEvent { get; set; }
 
 
     }

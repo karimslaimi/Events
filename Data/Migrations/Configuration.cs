@@ -34,7 +34,16 @@ namespace Data.Migrations
                 new University{UnivName="Université Virtuelle de Tunis"},
             };
             Universities.ForEach(e => context.University.AddOrUpdate(p => p.UnivName, e));
+            // context.SaveChanges();
+
+            var Admins = new List<Admin>
+            {
+                new Admin{nameAdmin="karim",mailAdmin="admin@admin.com",passwordAdmin="admin",isSuperAdmin=true},
+
+            };
+            Admins.ForEach(e => context.Admin.AddOrUpdate(c => c.mailAdmin, e));
             context.SaveChanges();
         }
     }
 }
+

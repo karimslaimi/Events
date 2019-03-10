@@ -7,8 +7,10 @@ using Model;
 
 namespace Service
 {
-    public interface IserviceAdmin
+    public interface IserviceAdmin:IservicePattern<Admin>
     {
+        
+
         void add_Admin(Admin _admin);
         bool authAdmin(string login, string password);
         void accept_event(Event _event);
@@ -16,6 +18,6 @@ namespace Service
         void delete_admin(Admin _admin);
         void edit_admin_profile(Admin _admin);
         List<Event> Event_log();
-        void delete_comment(User_Event _user_event);
+        void delete_comment(UserEvent _user_event);
     }
 }

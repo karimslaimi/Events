@@ -15,8 +15,8 @@ namespace Service
         void edit_event(Event _event);
         void delete_event(Event _event);
         void create_event(Event _event);
-        void add_comment(User_Event comment);
-        void delete_comment(User_Event comment);
+        void add_comment(UserEvent comment);
+        void delete_comment(UserEvent comment);
 
     }
 }

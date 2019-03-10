@@ -73,7 +73,7 @@
     <Compile Include="Event.cs" />
     <Compile Include="EventPicture.cs" />
     <Compile Include="organization.cs" />
-    <Compile Include="User_Event.cs" />
+    <Compile Include="UserEvent.cs" />
     <Compile Include="Subscribers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Theme.cs" />

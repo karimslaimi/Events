@@ -3,11 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Model;
+using Service;
 
 namespace Event.Controllers
 {
+
+ // esme3 bechway fama 7keya o5ra nikomha te3 login taw nchouf m3aha fama faza hethy 
+
     public class AdminController : Controller
     {
+        IserviceAdmin spa = new serviceAdmin();
+
+
+
+       
+        public ActionResult login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult login(Admin ad)
+        {
+
+            if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))
+            {
+                return RedirectToAction("index");
+            }
+
+
+
+            return View();
+        }
+
+
+        [Authorize]
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult ListAdmin()
+        {
+
+            List<Admin> _admin = new List<Admin>();
+            _admin = spa.GetMany(x => x.isSuperAdmin != true).ToList();
+            ViewData.Model = _admin;
+
+            return View();
+        }
+
         // GET: Admin
         public ActionResult Index()
         {
@@ -21,24 +71,31 @@ namespace Event.Controllers
         }
 
         // GET: Admin/Create
-        public ActionResult Create()
+        public ActionResult RegisterAdmin()
         {
-            return View();
+            return View("register");
         }
 
         // POST: Admin/Create
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult RegisterAdmin(Admin ad,string password)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (spa.Get(x => x.mailAdmin == ad.mailAdmin)!=null)
+                {
+                    ViewBag.DuplicateMessage = "mail already exists";
+                    return View("register");
+                }
+                spa.add_Admin(ad);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("login");
             }
-            catch
+            catch(Exception r)
             {
                 return View();
+                Console.WriteLine(r);
             }
         }
 
