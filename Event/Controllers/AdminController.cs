@@ -73,7 +73,7 @@ namespace Event.Controllers
         // GET: Admin/Create
         public ActionResult RegisterAdmin()
         {
-            return View("register");
+            return View("RegisterAdmin");
         }
 
         // POST: Admin/Create
@@ -86,7 +86,12 @@ namespace Event.Controllers
                 if (spa.Get(x => x.mailAdmin == ad.mailAdmin)!=null)
                 {
                     ViewBag.DuplicateMessage = "mail already exists";
-                    return View("register");
+                    return View("RegisterAdmin");
+                }
+                if (ad.passwordAdmin != password)
+                {
+                    ViewBag.ErrorMessage = "password don't match";
+                    return View("RegisterAdmin");
                 }
                 spa.add_Admin(ad);
 
@@ -95,25 +100,29 @@ namespace Event.Controllers
             catch(Exception r)
             {
                 return View();
-                Console.WriteLine(r);
+               
             }
         }
 
-        // GET: Admin/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
+            Admin ad = new Admin();
+            ad = spa.GetById(id);
+            ViewData.Model = ad;
+
             return View();
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Admin ad)
         {
             try
             {
-                // TODO: Add update logic here
+                spa.edit_admin_profile(ad);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ListAdmin");
             }
             catch
             {
@@ -124,7 +133,11 @@ namespace Event.Controllers
         // GET: Admin/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            Admin ad = new Admin();
+            ad = spa.GetById(id);
+            spa.delete_admin(ad);
+            return RedirectToAction("ListAdmin");
         }
 
         // POST: Admin/Delete/5

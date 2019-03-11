@@ -50,7 +50,8 @@ namespace Service
 
         public void delete_admin(Admin _admin)
         {
-            throw new NotImplementedException();
+            this.Delete(_admin);
+            this.Commit();
         }
 
         public void delete_comment(UserEvent _user_event)
@@ -67,14 +68,20 @@ namespace Service
 
         public void edit_admin_profile(Admin _admin)
         {
-            throw new NotImplementedException();
+
+            Admin ad = this.GetById(_admin.idAdmin);
+            ad.nameAdmin = _admin.nameAdmin;
+            ad.mailAdmin = _admin.mailAdmin;
+            if (_admin.passwordAdmin != null)
+            {
+                ad.passwordAdmin = _admin.passwordAdmin;
+            }
+            this.Update(ad);
+            this.Commit();
+            
         }
 
-        public void edit_profile(User usr)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public List<Event> Event_log()
         {
             throw new NotImplementedException();
