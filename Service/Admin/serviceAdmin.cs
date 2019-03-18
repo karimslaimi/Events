@@ -8,6 +8,7 @@ using Model;
 using Infrastructure;
 using Data.Infrastructure;
 using MyFinance.Data.Infrastructure;
+using System.Web.Security;
 
 namespace Service
 {
@@ -41,6 +42,7 @@ namespace Service
         public bool authAdmin(string login, string password)
         {
             return this.Get(x => x.mailAdmin == login && x.passwordAdmin == password) != null;
+           
         }
 
       

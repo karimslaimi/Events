@@ -4,34 +4,51 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Event.Security;
 using Model;
 using Service;
 
 namespace Event.Controllers
 {
 
- // esme3 bechway fama 7keya o5ra nikomha te3 login taw nchouf m3aha fama faza hethy 
+    
 
     public class AdminController : Controller
     {
         IserviceAdmin spa = new serviceAdmin();
 
+        string ReturnUrl = "index";
 
 
-       
         public ActionResult login()
         {
+            Session["AdminID"] = null;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult login(Admin ad)
+        public ActionResult login(Admin ad,string ReturnUrl)
         {
 
             if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))
             {
-                return RedirectToAction("index");
+                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);
+                Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
+                Session["AdminID"] = _admin.idAdmin;
+                Session["mailAdmin"] = _admin.mailAdmin;
+                if (_admin.isSuperAdmin)
+                {
+                    Session["Role"] = "SuperAdmin";
+                    HttpContext.Session["Role"] = Session["Role"];
+                }
+                else
+                {
+                    Session["Role"] = "Admin";
+                    HttpContext.Session["Role"] = Session["Role"];
+                }
+
+                return RedirectToAction(ReturnUrl,"/");
             }
 
 
@@ -39,15 +56,15 @@ namespace Event.Controllers
             return View();
         }
 
-
         [Authorize]
-        public ActionResult SignOut()
+        public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            Session.Abandon(); // it will clear the session at the end of request
+            return RedirectToAction("index");
         }
 
-
+        [CustomAuthorizeAttribute(Roles="SuperAdmin")]
         public ActionResult ListAdmin()
         {
 
@@ -61,6 +78,7 @@ namespace Event.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+     
             return View();
         }
 

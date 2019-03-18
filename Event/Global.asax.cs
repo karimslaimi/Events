@@ -5,11 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace Event
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+       
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -17,6 +20,19 @@ namespace Event
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
+        }
+        protected void Application_EndRequest()
+        {
+            var context = new HttpContextWrapper(Context);
+            if (context.Response.StatusCode == 401)
+            {
+                context.Response.Redirect("~/Admin/login");
+            }
+        }
+        protected void Session_End(Object sender,EventArgs e)
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
         }
     }
 }
