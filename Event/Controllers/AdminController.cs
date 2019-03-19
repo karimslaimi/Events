@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,7 +18,7 @@ namespace Event.Controllers
     {
         IserviceAdmin spa = new serviceAdmin();
 
-        string ReturnUrl = "index";
+        
 
 
         public ActionResult login()
@@ -34,21 +35,25 @@ namespace Event.Controllers
             if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))
             {
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);
-                Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
-                Session["AdminID"] = _admin.idAdmin;
-                Session["mailAdmin"] = _admin.mailAdmin;
-                if (_admin.isSuperAdmin)
-                {
-                    Session["Role"] = "SuperAdmin";
-                    HttpContext.Session["Role"] = Session["Role"];
-                }
-                else
-                {
-                    Session["Role"] = "Admin";
-                    HttpContext.Session["Role"] = Session["Role"];
-                }
+                
+                //Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
+                //HttpCookie mycookie = new HttpCookie("Role");
+                //Session["AdminID"] = _admin.idAdmin;
+                //Session["mailAdmin"] = _admin.mailAdmin;
+                //if (_admin.isSuperAdmin)
+                //{
+                //    Session["Role"] = "SuperAdmin";
+                //    HttpContext.Session["Role"] = Session["Role"];
+                //    mycookie.Values["Role"] = Session["Role"].ToString();
+                //}
+                //else
+                //{
+                //    Session["Role"] = "Admin";
+                //    HttpContext.Session["Role"] = Session["Role"];
+                //    mycookie.Values["Role"] = Session["Role"].ToString();
+                //}
 
-                return RedirectToAction(ReturnUrl,"/");
+                return RedirectToAction("index");
             }
 
 
@@ -89,14 +94,18 @@ namespace Event.Controllers
         }
 
         // GET: Admin/Create
+        [CustomAuthorizeAttribute(Roles= "SuperAdmin")]
         public ActionResult RegisterAdmin()
         {
             return View("RegisterAdmin");
         }
 
+
+
         // POST: Admin/Create
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult RegisterAdmin(Admin ad,string password)
         {
             try
@@ -122,7 +131,11 @@ namespace Event.Controllers
             }
         }
 
+
+
+
         [HttpGet]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Edit(int id)
         {
             Admin ad = new Admin();
@@ -134,6 +147,7 @@ namespace Event.Controllers
 
         // POST: Admin/Edit/5
         [HttpPost]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Edit(Admin ad)
         {
             try
@@ -149,13 +163,22 @@ namespace Event.Controllers
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             Admin ad = new Admin();
-            ad = spa.GetById(id);
-            spa.delete_admin(ad);
-            return RedirectToAction("ListAdmin");
+            ad = spa.GetById((long)id);
+            if (ad == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View();
         }
 
         // POST: Admin/Delete/5
@@ -165,13 +188,29 @@ namespace Event.Controllers
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                spa.delete_admin(spa.GetById(id));
+                return RedirectToAction("ListADMIN");
             }
             catch
             {
                 return View();
             }
+        }
+
+
+        public void List_annonce()
+        {
+
+        }
+
+
+        public void Accept_annonce()
+        {
+
+        }
+        public void Delete_annonce()
+        {
+
         }
     }
 }

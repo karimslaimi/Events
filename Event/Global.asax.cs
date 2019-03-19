@@ -26,12 +26,13 @@ namespace Event
             var context = new HttpContextWrapper(Context);
             if (context.Response.StatusCode == 401)
             {
-                context.Response.Redirect("~/Admin/login");
+                context.Response.Redirect("unauthorized.cshtml");
             }
+
         }
         protected void Session_End(Object sender,EventArgs e)
         {
-            FormsAuthentication.SignOut();
+           // FormsAuthentication.SignOut();
             Session.Abandon();
         }
     }

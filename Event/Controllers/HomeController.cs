@@ -8,6 +8,11 @@ namespace Event.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Unauthorized()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             return View();
