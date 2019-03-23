@@ -1,13 +1,19 @@
-﻿using System;
+﻿using Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Event.Security;
+using Model;
+using System.Web.Security;
 
 namespace Event.Controllers
 {
     public class UserController : Controller
     {
+
+        IserviceUser spu = new serviceUser();
         // GET: User
         public ActionResult Index()
         {
@@ -21,69 +27,52 @@ namespace Event.Controllers
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public ActionResult login()
         {
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult login(User _user)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            if (ModelState.IsValid && spu.AuthUser(_user.username,_user.password)) {//check if the user model is valid
+                FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
+                Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
 
-                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+                return View("Index");
+            
+        }
+        [Authorize]
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon(); // it will clear the session at the end of request
+            return RedirectToAction("index");
         }
 
-        // GET: User/Edit/5
+
         public ActionResult Edit(int id)
         {
+            User us = new User();
+            us = spu.GetById(id);
+            ViewData.Model = us;//put the mode in the view 
             return View();
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [Authorize]
+        public ActionResult Edit(User _user)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                spu.edit_user_profile(_user);//check serviceUser
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
             return View();
         }
 
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

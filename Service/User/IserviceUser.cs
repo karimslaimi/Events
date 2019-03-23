@@ -7,16 +7,13 @@ using Model;
 
 namespace Service
 {
-    public interface IserviceUser
+    public interface IserviceUser:IservicePattern<User>
     {
         bool AuthUser(string username, string password);
         void register_user(User _user);
         void edit_user_profile(User _user);
-        void edit_event(Event _event);
-        void delete_event(Event _event);
-        void create_event(Event _event);
-        void add_comment(UserEvent comment);
-        void delete_comment(UserEvent comment);
+       
+      
 
     }
 }

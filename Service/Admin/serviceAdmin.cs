@@ -12,7 +12,7 @@ using System.Web.Security;
 
 namespace Service
 {
-    public class serviceAdmin : servicePattern<Admin>,IserviceAdmin
+    public class serviceAdmin : servicePattern<Admin>, IserviceAdmin
 
 
     {
@@ -28,7 +28,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        
+
 
         public void add_Admin(Admin _admin)
         {
@@ -42,13 +42,13 @@ namespace Service
         public bool authAdmin(string login, string password)
         {
             return this.Get(x => x.mailAdmin == login && x.passwordAdmin == password) != null;
-           
+
         }
 
-      
 
 
-        
+
+
 
         public void delete_admin(Admin _admin)
         {
@@ -66,15 +66,23 @@ namespace Service
             throw new NotImplementedException();
         }
 
-       
+
 
         public void edit_admin_profile(Admin _admin)
         {
 
             Admin ad = this.GetById(_admin.idAdmin);
-            ad.nameAdmin = _admin.nameAdmin;
+            if (!string.IsNullOrWhiteSpace(_admin.nameAdmin) && !string.IsNullOrEmpty(_admin.nameAdmin))
+            {
+                ad.nameAdmin = _admin.nameAdmin;
+            }
+            if (!string.IsNullOrWhiteSpace(_admin.mailAdmin) && !string.IsNullOrEmpty(_admin.mailAdmin))
+            { 
+
             ad.mailAdmin = _admin.mailAdmin;
-            if (_admin.passwordAdmin != null)
+
+            } 
+            if (!string.IsNullOrEmpty(_admin.passwordAdmin)&&!string.IsNullOrWhiteSpace(_admin.passwordAdmin))
             {
                 ad.passwordAdmin = _admin.passwordAdmin;
             }

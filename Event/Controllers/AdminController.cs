@@ -17,13 +17,13 @@ namespace Event.Controllers
     public class AdminController : Controller
     {
         IserviceAdmin spa = new serviceAdmin();
-
+        //getting the instance of service that way i can user the service pattern and admin service
         
 
 
         public ActionResult login()
         {
-            Session["AdminID"] = null;
+            Session["AdminID"] = null;//setting the session to be null
             return View();
         }
 
@@ -32,9 +32,9 @@ namespace Event.Controllers
         public ActionResult login(Admin ad,string ReturnUrl)
         {
 
-            if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))
+            if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))//check serviceAdmin
             {
-                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);
+                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
                 
                 //Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
                 //HttpCookie mycookie = new HttpCookie("Role");
@@ -71,10 +71,10 @@ namespace Event.Controllers
 
         [CustomAuthorizeAttribute(Roles="SuperAdmin")]
         public ActionResult ListAdmin()
-        {
+        {//only super admin can view list admins and manage admins(edit,delete)
 
             List<Admin> _admin = new List<Admin>();
-            _admin = spa.GetMany(x => x.isSuperAdmin != true).ToList();
+            _admin = spa.GetMany(x => x.isSuperAdmin != true).ToList();//get you all lines in the table admin without the super admin
             ViewData.Model = _admin;
 
             return View();
@@ -106,17 +106,17 @@ namespace Event.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
-        public ActionResult RegisterAdmin(Admin ad,string password)
+        public ActionResult RegisterAdmin(Admin ad,string password)// string password is only for comfirmation of the typed password
         {
             try
             {
                 if (spa.Get(x => x.mailAdmin == ad.mailAdmin)!=null)
-                {
+                {//if admin already exists 
                     ViewBag.DuplicateMessage = "mail already exists";
                     return View("RegisterAdmin");
                 }
                 if (ad.passwordAdmin != password)
-                {
+                {// if passwords does not match
                     ViewBag.ErrorMessage = "password don't match";
                     return View("RegisterAdmin");
                 }
@@ -138,8 +138,8 @@ namespace Event.Controllers
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Edit(int id)
         {
-            Admin ad = new Admin();
-            ad = spa.GetById(id);
+            Admin ad = new Admin();//empty admin model
+            ad = spa.GetById(id);//get the admin by admin 
             ViewData.Model = ad;
 
             return View();
@@ -188,7 +188,7 @@ namespace Event.Controllers
             try
             {
                 // TODO: Add delete logic here
-                spa.delete_admin(spa.GetById(id));
+                spa.delete_admin(spa.GetById(id));//check serviceAdmin
                 return RedirectToAction("ListADMIN");
             }
             catch
