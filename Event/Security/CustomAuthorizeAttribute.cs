@@ -85,8 +85,16 @@ namespace Event.Security
             //        ViewName = "~/Home/Unauthorized"
             //    };
             //}
-            filterContext.Result = new RedirectToRouteResult(new
-             RouteValueDictionary(new { controller = "Home", action = "Unauthorized" }));
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                 RouteValueDictionary(new { controller = "Home", action = "Unauthorized" }));
+            }
+            else
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                 RouteValueDictionary(new { controller = "Admin", action = "login" }));
+            }
            // filterContext.Result = new HttpUnauthorizedResult();
         }
 

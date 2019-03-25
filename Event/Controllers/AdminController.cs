@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -35,11 +37,15 @@ namespace Event.Controllers
             if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))//check serviceAdmin
             {
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
-                
+                Admin _admin = new Admin();
+                _admin = spa.Get(x => x.mailAdmin == ad.mailAdmin && x.passwordAdmin == ad.passwordAdmin);
+                Session["AdminID"] = _admin.idAdmin;
+                Session["mailAdmin"] = _admin.mailAdmin;
+
+
                 //Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
                 //HttpCookie mycookie = new HttpCookie("Role");
-                //Session["AdminID"] = _admin.idAdmin;
-                //Session["mailAdmin"] = _admin.mailAdmin;
+                //
                 //if (_admin.isSuperAdmin)
                 //{
                 //    Session["Role"] = "SuperAdmin";
@@ -131,9 +137,6 @@ namespace Event.Controllers
             }
         }
 
-
-
-
         [HttpGet]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Edit(int id)
@@ -196,14 +199,10 @@ namespace Event.Controllers
                 return View();
             }
         }
-
-
         public void List_annonce()
         {
 
         }
-
-
         public void Accept_annonce()
         {
 
@@ -212,5 +211,45 @@ namespace Event.Controllers
         {
 
         }
+
+        //GET:Admin/newsletter
+        [Authorize]
+        public ActionResult Newsletter()
+        {
+            MailMessage mailmessage=new MailMessage();
+            return View();
+
+        }
+
+        
+        [Authorize]
+        [HttpPost]
+        public ActionResult Newsletter(string obj,string body)
+        {
+            try
+            {
+                string sendermail = System.Configuration.ConfigurationManager.AppSettings["SenderMail"].ToString();
+                string senderpassword= System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 1000000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                MailMessage mailMessage = new MailMessage(sendermail, "karim-nar@live.fr", obj, body);
+                client.Credentials = new NetworkCredential(sendermail, senderpassword);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+                client.Send(mailMessage);
+
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("index");
+            }
+
+            return RedirectToAction("");
+        }
+
+
     }
 }

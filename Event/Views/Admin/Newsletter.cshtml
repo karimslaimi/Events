@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Newsletter";
+}
+@{
+    Layout = "~/Views/Shared/Adminator.cshtml";
+}
+
+
+<h2>Newsletter</h2>
+<div class="wrapper">
+    @using (Html.BeginForm("Newsletter", "Admin", FormMethod.Post, new { @class = "form-signin" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <h2 class="form-signin-heading">Newsletter informations</h2>
+        <br />
+
+        <input name="obj" type="text" class="form-control" placeholder="object" />
+
+        <br />
+
+
+
+
+
+        
+
+        <textarea  name="body" class="form-control" rows="5" cols="33" placeholder="body"></textarea>
+
+
+
+
+        <br />
+
+
+        <input type="submit" value="send" class="btn btn-lg btn-primary btn-block" />
+
+
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

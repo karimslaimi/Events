@@ -26,6 +26,32 @@ namespace Event.Controllers
             return View();
         }
 
+
+        public ActionResult Signup()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Signup(User _user)
+        {
+
+            if (ModelState.IsValid)
+            {
+                spu.Add(_user);
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return View(_user);
+            }
+
+            
+        }
+
+
+
+
         // GET: User/Create
         public ActionResult login()
         {
