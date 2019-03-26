@@ -7,11 +7,11 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Event.Security;
+using EventWeb.Security;
 using Model;
 using Service;
 
-namespace Event.Controllers
+namespace EventWeb.Controllers
 {
 
     
@@ -19,7 +19,7 @@ namespace Event.Controllers
     public class AdminController : Controller
     {
         IserviceAdmin spa = new serviceAdmin();
-        //getting the instance of service that way i can user the service pattern and admin service
+        //getting the instance of service that way i can use the service pattern and admin service
         
 
 

@@ -9,6 +9,10 @@ namespace Service
 {
     public interface IserviceAdmin:IservicePattern<Admin>
     {
+        //this interface inherit from the service pattern interface with cast of Admin
+        //hence this interface hace the simple crud operations in the entity type Admin
+        //and it defines the interfaces of the other services needed
+
         
 
         void add_Admin(Admin _admin);

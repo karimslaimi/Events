@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,21 @@ namespace Model
     {
         [Key]
         public int id { get; set; }
+        [StringLength(20)]
+        [Index(IsUnique =true)]
         public string username { get; set; }
-        public string firstname { get; set; }//prenom
-        public string lastname { get; set; }//nom
+        [MaxLength(15)]
+        public string firstname { get; set; }
+        [MaxLength(15)]
+        public string lastname { get; set; }
+        [StringLength(20)]
+        [Index(IsUnique = true)]
         public string mail { get; set; }
+        [StringLength(8)]
+        [Index(IsUnique = true)]
         public string phone { get; set; }
+        [Required]
+        [MinLength(8,ErrorMessage ="password must be at least 8 characters"),MaxLength(20,ErrorMessage ="password must be less than 20 charaters")]
         public string password { get; set; }
         public DateTime birthdate { get; set; }
         public ICollection<Event> Event { get; set; }

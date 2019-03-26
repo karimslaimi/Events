@@ -1,16 +1,24 @@
-﻿using System;
+﻿using Service.EventFolder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model;
+using EventWeb.Security;
 
-namespace Event.Controllers
+namespace EventWeb.Controllers
 {
     public class EventController : Controller
     {
+        IserviceEvent spe = new serviceEvent();
         // GET: Event
         public ActionResult Index()
         {
+            //list of events
+            List<Event> _event = new List<Event>();
+
+            _event = spe.GetMany(x=>x.approvedBy!=null).ToList();
             return View();
         }
 
@@ -21,8 +29,10 @@ namespace Event.Controllers
         }
 
         // GET: Event/Create
+        [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
+            
             return View();
         }
 
@@ -32,6 +42,8 @@ namespace Event.Controllers
         {
             try
             {
+                //creation date
+                //
                 // TODO: Add insert logic here
 
                 return RedirectToAction("Index");

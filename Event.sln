@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{A2ABA7DA-E947-4C27-8707-63B385FDEC5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event", "Event\Event.csproj", "{E534320D-0144-4ABB-A896-BFFE21A9CD2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventWeb", "Event\EventWeb.csproj", "{E534320D-0144-4ABB-A896-BFFE21A9CD2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{19A5138F-A86C-44D9-A07F-0CEBD1A38E1D}"
 EndProject

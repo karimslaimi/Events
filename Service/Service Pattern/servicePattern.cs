@@ -25,11 +25,14 @@ namespace Service
         #endregion Constructor
 
 
+        //the implementation of the interface
+
 
         public void Dispose()
         {
             utwk.Dispose();
         }
+
         public virtual void Add(TEntity entity)
         {
             //_repository.Add(entity);

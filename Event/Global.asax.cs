@@ -7,7 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 
-namespace Event
+namespace EventWeb
 {
     public class MvcApplication : System.Web.HttpApplication
     {

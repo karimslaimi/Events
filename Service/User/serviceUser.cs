@@ -33,7 +33,7 @@ namespace Service
         public void edit_user_profile(User _user)
         {
             User us = this.GetById(_user.id);
-            if (!string.IsNullOrEmpty(_user.lastname) && !string.IsNullOrWhiteSpace(_user.lastname))
+            if (!string.IsNullOrEmpty(_user.lastname) && !string.IsNullOrWhiteSpace(_user.lastname) )
             {
                 us.lastname = _user.lastname;
             }
@@ -45,9 +45,13 @@ namespace Service
             {
                 us.mail = _user.mail;
             }
-            if (!string.IsNullOrEmpty(_user.phone) && !string.IsNullOrWhiteSpace(_user.phone))
+            if (!string.IsNullOrEmpty(_user.phone) && !string.IsNullOrWhiteSpace(_user.phone) )
             {
-                us.phone = _user.mail;
+                us.phone = _user.phone;
+            }
+            if(!string.IsNullOrEmpty(_user.password) && !string.IsNullOrWhiteSpace(_user.password))
+            {
+                us.password = _user.password;
             }
             this.Update(us);
             this.Commit();
@@ -55,6 +59,7 @@ namespace Service
 
         public void register_user(User _user)
         {
+
             this.Add(_user);
             this.Commit();
         }

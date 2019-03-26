@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Event.Security;
+using EventWeb.Security;
 using Model;
 using System.Web.Security;
 
-namespace Event.Controllers
+namespace EventWeb.Controllers
 {
     public class UserController : Controller
     {
@@ -20,11 +20,7 @@ namespace Event.Controllers
             return View();
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+      
 
 
         public ActionResult Signup()
@@ -38,7 +34,7 @@ namespace Event.Controllers
 
             if (ModelState.IsValid)
             {
-                spu.Add(_user);
+                spu.register_user(_user);
                 return RedirectToAction("index");
             }
             else
@@ -46,7 +42,7 @@ namespace Event.Controllers
                 return View(_user);
             }
 
-            
+           
         }
 
 
@@ -65,7 +61,7 @@ namespace Event.Controllers
             if (ModelState.IsValid && spu.AuthUser(_user.username,_user.password)) {//check if the user model is valid
                 FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
                 Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
-
+                return RedirectToAction("index");
             }
                 return View("Index");
             
@@ -78,25 +74,27 @@ namespace Event.Controllers
             return RedirectToAction("index");
         }
 
-
+        [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Edit(int id)
         {
             User us = new User();
             us = spu.GetById(id);
+            us.password = "";//make the passsword empty that way the user won't be able to see the password
             ViewData.Model = us;//put the mode in the view 
+            //the user is able only to change his first and last name ,email,phone number and password he can't change his birth of date and username
             return View();
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        [Authorize]
+        [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Edit(User _user)
         {
             if (ModelState.IsValid)
             {
                 spu.edit_user_profile(_user);//check serviceUser
             }
-            return View();
+            return RedirectToAction("index");
         }
 
        

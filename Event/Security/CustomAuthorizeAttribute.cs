@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Event.Security
+namespace EventWeb.Security
 {
     [AttributeUsage(AttributeTargets.Class| AttributeTargets.Method)]
     public class CustomAuthorizeAttribute : AuthorizeAttribute
@@ -32,13 +32,19 @@ namespace Event.Security
             bool isuser = false;
 
             IserviceAdmin spa = new serviceAdmin();
+            IserviceUser spu = new serviceUser();
             IPrincipal user = httpContext.User;
             bool authorize = false;
 
 
             string userid = user.Identity.Name;
             Admin _admin = spa.Get(x=>x.mailAdmin==userid);
+            User _user = new User();
 
+            if (_admin == null)
+            {
+               _user = spu.Get(x => x.username == userid);
+            }
 
 
             if (_admin!=null){
@@ -48,6 +54,10 @@ namespace Event.Security
                 }
                 else { isAdmin = true; }
 
+            }
+            else if(_user!=null)
+            {
+                isuser = true;
             }
 
 
@@ -63,11 +73,11 @@ namespace Event.Security
                 {
                     authorize = true;
                 }
-                if (isAdmin && allowedroles.Contains("Admin"))
+                if (isAdmin && Roles.Contains("Admin"))
                 {
                     authorize = true;
                 }
-                if (isuser && this.allowedroles.Contains("User"))
+                if (isuser && this.Roles.Contains("User"))
                 {
                     authorize = true;
                 }
@@ -90,10 +100,15 @@ namespace Event.Security
                 filterContext.Result = new RedirectToRouteResult(new
                  RouteValueDictionary(new { controller = "Home", action = "Unauthorized" }));
             }
-            else
+            else if(Roles.Contains("SuperAdmin")|| Roles.Contains("Admin"))
             {
                 filterContext.Result = new RedirectToRouteResult(new
                  RouteValueDictionary(new { controller = "Admin", action = "login" }));
+            }
+            else
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                RouteValueDictionary(new { controller = "User", action = "login" }));
             }
            // filterContext.Result = new HttpUnauthorizedResult();
         }

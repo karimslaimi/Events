@@ -14,7 +14,12 @@ namespace Service
 {
     public class serviceAdmin : servicePattern<Admin>, IserviceAdmin
 
-
+        //this implementation implements the interface IserviceAdmin and inherit from the servicePattern implementation with admin cast
+        //with the inheritance of the service Pattern i have already the implementation of the crud operations on the type Admin
+        //and i can now use the crud operations to implement the Admin services
+        //the same principle in the other services 
+        //convention over configuration
+        
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
         static IUnitOfWork uow = new UnitOfWork(dbf);
