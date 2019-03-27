@@ -6,12 +6,18 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
+using Service.Univ;
 
 namespace EventWeb.Controllers
 {
     public class EventController : Controller
     {
         IserviceEvent spe = new serviceEvent();
+        IserviceUniv spun = new serviceUniv();
+
+
+
+
         // GET: Event
         public ActionResult Index()
         {
@@ -32,6 +38,10 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
+            List<University> univlist = new List<University>();
+            univlist = spun.GetMany().ToList();
+            ViewBag.univlist = univlist;
+
             
             return View();
         }
