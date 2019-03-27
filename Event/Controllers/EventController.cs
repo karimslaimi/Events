@@ -6,18 +6,14 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
-using Service.Univ;
 
 namespace EventWeb.Controllers
 {
     public class EventController : Controller
     {
+
+
         IserviceEvent spe = new serviceEvent();
-        IserviceUniv spun = new serviceUniv();
-
-
-
-
         // GET: Event
         public ActionResult Index()
         {
@@ -38,20 +34,31 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
-            List<University> univlist = new List<University>();
-            univlist = spun.GetMany().ToList();
-            ViewBag.univlist = univlist;
-
             
             return View();
         }
 
+        public ActionResult loadorg(int idUniv)
+        {
+            return Json(ctx.organization.Where(x=>x.university.idUniv==idUniv).Select(s => new {
+                Id = s.idorg,
+                Name = s.orgname }).ToList() ,JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Event/Create
+        [CustomAuthorizeAttribute(Roles = "User")]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Event _event)
         {
             try
             {
+                if (ModelState.IsValid){
+                    _event.approvedBy = null;
+                    _event.CreationDate = new DateTime();
+                    _event.creator = spu.Get(x=>x.username==Session["Username"].ToString());
+                   // _event.hostedby
+
+                }
                 //creation date
                 //
                 // TODO: Add insert logic here

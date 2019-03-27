@@ -27,39 +27,24 @@ namespace EventWeb.Security
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            bool superAdmin = false;
+            bool isAdmin =false;
+            bool isuser = false;
 
-
+            IserviceAdmin spa = new serviceAdmin();
+            IserviceUser spu = new serviceUser();
             IPrincipal user = httpContext.User;
             bool authorize = false;
-           
-           
-            
-            
 
 
-           
+            string userid = user.Identity.Name;
+            Admin _admin = spa.Get(x=>x.mailAdmin==userid);
+            User _user = new User();
 
-
-
-
-            if (user.Identity.IsAuthenticated)
+            if (_admin == null)
             {
-                string userid = user.Identity.Name;
-                
-                
-                bool superAdmin = false;
-                bool isAdmin = false;
-                bool isuser = false;
-                
-                IserviceAdmin spa = new serviceAdmin();
-                User _user = new User();
-
-                Admin _admin = spa.Get(x => x.mailAdmin == userid);
-                if (_admin == null)
-                {
-                    IserviceUser spu = new serviceUser();
-                    _user = spu.Get(x => x.username == userid);
-                }
+               _user = spu.Get(x => x.username == userid);
+            }
 
 
                 if (_admin != null)

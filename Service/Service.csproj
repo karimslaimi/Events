@@ -85,12 +85,12 @@
     <Compile Include="Admin\IserviceAdmin.cs" />
     <Compile Include="EventFolder\IserviceEvent.cs" />
     <Compile Include="EventFolder\serviceEvent.cs" />
+    <Compile Include="organization\IserviceOrganization.cs" />
+    <Compile Include="organization\serviceOrganization.cs" />
     <Compile Include="Service Pattern\IservicePattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Admin\serviceAdmin.cs" />
     <Compile Include="Service Pattern\servicePattern.cs" />
-    <Compile Include="Univ\IserviceUniv.cs" />
-    <Compile Include="Univ\serviceUniv.cs" />
     <Compile Include="User\IserviceUser.cs" />
     <Compile Include="User\serviceUser.cs" />
   </ItemGroup>
@@ -108,5 +108,6 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -85,7 +85,6 @@
     <Compile Include="Event.cs" />
     <Compile Include="EventPicture.cs" />
     <Compile Include="organization.cs" />
-    <Compile Include="Security.cs" />
     <Compile Include="UserEvent.cs" />
     <Compile Include="Subscribers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

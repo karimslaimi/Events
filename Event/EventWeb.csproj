@@ -369,6 +369,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{19A5138F-A86C-44D9-A07F-0CEBD1A38E1D}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{a2aba7da-e947-4c27-8707-63b385fdec5e}</Project>
       <Name>Model</Name>
