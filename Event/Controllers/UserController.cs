@@ -60,7 +60,8 @@ namespace EventWeb.Controllers
         {
             if (ModelState.IsValid && spu.AuthUser(_user.username,_user.password)) {//check if the user model is valid
                 FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
-                Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
+                this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
+                this.Session["Username"] = _user.username.ToString();
                 return RedirectToAction("index");
             }
                 return View("Index");

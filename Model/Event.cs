@@ -12,17 +12,18 @@ namespace Model
     {
         [Key]
         public int idEvent{get;set;}
-        public string EventTitle { get; set; }
-        public DateTime CreationDate { get; set; }
-        public DateTime EventDate { get; set; }
-        public string EventLocation { get; set; }
-        public string Description { get; set; }
-        public ICollection<EventPicture> Pics { get; set; }
+        public string EventTitle { get; set; }//titre de l'evenement
+        public DateTime CreationDate { get; set; } //date de creation
+        public DateTime EventDate { get; set; } //date de l'evenement
+        public string EventLocation { get; set; } //lieu de l'evenement
+        public string Description { get; set; } //description de l'evenement
+        public ICollection<EventPicture> Pics { get; set; } //les photos de l'annonce
 
 
-        public organization hostedby { get; set; }
-        public User creator { get; set; }
-        public Theme theme { get; set; }
-        public Admin approvedBy { get; set; }
+        public organization hostedby { get; set; } //l'organisateur de l'evenement
+        public User creator { get; set; } //le createur de l'evenement 
+        public Theme theme { get; set; } //le theme de l'evenement
+        public Admin approvedBy { get; set; } //l'admin qui a approuvé l'annonce de l'evenement tant que ce champ est null 
+                                             //l'evenement n'apparaitra pas sur le site
     }
 }

@@ -6,12 +6,28 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
+using System.Security.Principal;
+using System.Net.Http;
+using Service;
+using Service.Univ;
+using Data;
 
 namespace EventWeb.Controllers
 {
     public class EventController : Controller
     {
+
+
         IserviceEvent spe = new serviceEvent();
+        IserviceUser spu = new serviceUser();
+        IserviceOrganization spo = new serviceOrganization();
+        IserviceUniversity spun = new serviceUniversity();
+        DatabContext ctx = new DatabContext();
+        
+
+
+
+
         // GET: Event
         public ActionResult Index()
         {
@@ -32,16 +48,34 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
+            List<University> univlist = new List<University>();
+            univlist = ctx.University.ToList();//spun service te3ha
+            ViewBag.univlist = univlist;
             
             return View();
         }
 
+        public ActionResult loadorg(int idUniv)
+        {
+            return Json(ctx.organization.Where(x=>x.university.idUniv==idUniv).Select(s => new {
+                Id = s.idorg,
+                Name = s.orgname }).ToList() ,JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Event/Create
+        [CustomAuthorizeAttribute(Roles = "User")]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Event _event)
         {
             try
             {
+                if (ModelState.IsValid){
+                    _event.approvedBy = null;
+                    _event.CreationDate = new DateTime();
+                    _event.creator = spu.Get(x=>x.username==Session["Username"].ToString());
+                   // _event.hostedby
+
+                }
                 //creation date
                 //
                 // TODO: Add insert logic here

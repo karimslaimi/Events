@@ -27,48 +27,51 @@ namespace EventWeb.Security
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            bool superAdmin = false;
-            bool isAdmin =false;
-            bool isuser = false;
 
-            IserviceAdmin spa = new serviceAdmin();
-            IserviceUser spu = new serviceUser();
+
+
+
             IPrincipal user = httpContext.User;
+
             bool authorize = false;
-
-
-            string userid = user.Identity.Name;
-            Admin _admin = spa.Get(x=>x.mailAdmin==userid);
-            User _user = new User();
-
-            if (_admin == null)
-            {
-               _user = spu.Get(x => x.username == userid);
-            }
-
-
-            if (_admin!=null){
-                if (_admin.isSuperAdmin)
-                {
-                    superAdmin = true;
-                }
-                else { isAdmin = true; }
-
-            }
-            else if(_user!=null)
-            {
-                isuser = true;
-            }
-
-
-
 
             if (user.Identity.IsAuthenticated)
             {
+                bool superAdmin = false;
+                bool isAdmin = false;
+                bool isuser = false;
                 
-                    
+
+                IserviceAdmin spa = new serviceAdmin();
+
                 
-               
+                string userid = user.Identity.Name;
+                Admin _admin = spa.Get(x => x.mailAdmin == userid);
+                User _user = new User();
+
+                if (_admin == null)
+                {
+                    IserviceUser spu = new serviceUser();
+                    _user = spu.Get(x => x.username == userid);
+                }
+
+
+                if (_admin != null)
+                {
+                    if (_admin.isSuperAdmin)
+                    {
+                        superAdmin = true;
+                    }
+                    else { isAdmin = true; }
+
+                }
+                else if (_user != null)
+                {
+                    isuser = true;
+                }
+
+
+
                 if (superAdmin && Roles.Contains("SuperAdmin"))
                 {
                     authorize = true;

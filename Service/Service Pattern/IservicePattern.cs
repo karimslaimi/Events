@@ -20,6 +20,7 @@ namespace Service
         void Delete(Expression<Func<T, bool>> where);
         T GetById(long id);
         T GetById(string id);
+       // IEnumerable<T> GetAll();
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where = null, Expression<Func<T, bool>> orderBy = null);
         T Get(Expression<Func<T, bool>> where);
 

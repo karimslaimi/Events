@@ -14,7 +14,7 @@ namespace Data.Infrastructure
         void Delete(Expression<Func<T, bool>> where);
         void Delete(T entity);
         T Get(Expression<Func<T, bool>> where);
-
+        //IEnumerable<T> FindAll();
         T GetById(long id);
         T GetById(string id);
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where = null, Expression<Func<T, bool>> orderBy = null);

@@ -55,9 +55,10 @@ namespace Data.Infrastructure
         {
             return dbset.Find(id);
         }
-        //public virtual IEnumerable<T> GetAll()
+        //public virtual IEnumerable<T> FindAll()
         //{
-        //    return dbset.ToList();
+        //    IQueryable<T> Query = dbset;
+        //    return Query;
         //}
 
         public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where = null, Expression<Func<T, bool>> orderBy = null)

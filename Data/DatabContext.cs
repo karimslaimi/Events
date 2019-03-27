@@ -21,7 +21,7 @@ namespace Data
         }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Event> Event { get; set; }
-        public DbSet<EventPicture> EventPictures { get; set; }
+        public DbSet<EventPicture> EventPicture { get; set; }
         public DbSet<organization> organization { get; set; }
         public DbSet<Subscribers> Subscribers { get; set; }
         public DbSet<Theme> Theme { get; set; }
