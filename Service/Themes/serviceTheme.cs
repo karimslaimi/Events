@@ -8,16 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service
+namespace Service.Themes
 {
-    public class serviceOrganization:servicePattern<organization>,IserviceOrganization
+    public class serviceTheme:servicePattern<Theme>,IserviceTheme
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
         static IUnitOfWork uow = new UnitOfWork(dbf);
-        public serviceOrganization() : base(uow)
+        public serviceTheme() : base(uow)
         {
 
         }
-
     }
 }

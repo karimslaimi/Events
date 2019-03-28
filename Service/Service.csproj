@@ -91,6 +91,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Admin\serviceAdmin.cs" />
     <Compile Include="Service Pattern\servicePattern.cs" />
+    <Compile Include="Themes\IserviceTheme.cs" />
+    <Compile Include="Themes\serviceTheme.cs" />
+    <Compile Include="Univ\IserviceUniv.cs" />
+    <Compile Include="Univ\serviceUniv.cs" />
     <Compile Include="User\IserviceUser.cs" />
     <Compile Include="User\serviceUser.cs" />
   </ItemGroup>

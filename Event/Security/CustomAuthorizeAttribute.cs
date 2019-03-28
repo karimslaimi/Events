@@ -75,11 +75,12 @@ namespace EventWeb.Security
                 {
                     authorize = true;
                 }
-            }
-
             return authorize;
-
         }
+
+           
+
+        
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             //if (filterContext.HttpContext.User.Identity.IsAuthenticated)

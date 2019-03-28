@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Univ
+namespace Service.Themes
 {
-    public interface IserviceUniversity:IservicePattern<University>
+    public interface IserviceTheme:IservicePattern<Theme>
     {
-        List<University> GetAll1();
     }
 }

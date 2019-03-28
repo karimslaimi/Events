@@ -94,6 +94,22 @@
     <Compile Include="Migrations\201903271515059_mj1.Designer.cs">
       <DependentUpon>201903271515059_mj1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903281358366_mg3.cs" />
+    <Compile Include="Migrations\201903281358366_mg3.Designer.cs">
+      <DependentUpon>201903281358366_mg3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281412583_mg4.cs" />
+    <Compile Include="Migrations\201903281412583_mg4.Designer.cs">
+      <DependentUpon>201903281412583_mg4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281421242_mg5.cs" />
+    <Compile Include="Migrations\201903281421242_mg5.Designer.cs">
+      <DependentUpon>201903281421242_mg5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281457013_mg6.cs" />
+    <Compile Include="Migrations\201903281457013_mg6.Designer.cs">
+      <DependentUpon>201903281457013_mg6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +129,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903271515059_mj1.resx">
       <DependentUpon>201903271515059_mj1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281358366_mg3.resx">
+      <DependentUpon>201903281358366_mg3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281412583_mg4.resx">
+      <DependentUpon>201903281412583_mg4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281421242_mg5.resx">
+      <DependentUpon>201903281421242_mg5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281457013_mg6.resx">
+      <DependentUpon>201903281457013_mg6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

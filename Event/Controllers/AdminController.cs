@@ -130,7 +130,7 @@ namespace EventWeb.Controllers
 
                 return RedirectToAction("login");
             }
-            catch(Exception r)
+            catch(Exception )
             {
                 return View();
                
@@ -242,7 +242,7 @@ namespace EventWeb.Controllers
                 client.Send(mailMessage);
 
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return RedirectToAction("index");
             }

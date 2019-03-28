@@ -83,11 +83,11 @@ namespace Service
         }
 
 
-        //public IEnumerable<TEntity> GetAll()
-        //{
-        //    //  return _repository.GetAll();
-        //    return utwk.getRepository<TEntity>().FindAll();
-        //}
+        public IEnumerable<TEntity> GetAll()
+        {
+            //  return _repository.GetAll();
+            return utwk.getRepository<TEntity>().GetAll();
+        }
 
 
 
@@ -98,7 +98,7 @@ namespace Service
             {
                 utwk.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

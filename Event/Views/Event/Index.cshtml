@@ -32,7 +32,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.theme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hostedby)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.creator)
+            </th>
         </tr>
     
     @foreach (var item in Model) {
@@ -52,10 +60,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
+            
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.idEvent }) |
-                @Html.ActionLink("Details", "Details", new { id=item.idEvent }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.idEvent })
+                @Html.DisplayFor(modelItem => item.theme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hostedby)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.creator)
+            </td>
+            <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.idEvent }) |
+            @Html.ActionLink("Details", "Details", new { id = item.idEvent }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.idEvent })
             </td>
         </tr>
     }

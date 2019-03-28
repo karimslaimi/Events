@@ -6,6 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
+using Service.Univ;
+using Service;
+using Service.Themes;
+using Microsoft.AspNet.Identity;
 
 namespace EventWeb.Controllers
 {
@@ -14,13 +18,20 @@ namespace EventWeb.Controllers
 
 
         IserviceEvent spe = new serviceEvent();
+        IserviceUniv spun = new serviceUniv();
+        IserviceOrganization spo = new serviceOrganization();
+        IserviceUser spu = new serviceUser();
+        IserviceTheme spt = new serviceTheme();
+
+
         // GET: Event
         public ActionResult Index()
         {
             //list of events
             List<Event> _event = new List<Event>();
 
-            _event = spe.GetMany(x=>x.approvedBy!=null).ToList();
+            //_event = spe.GetMany(x=>x.approvedBy!=null).ToList();
+            ViewBag.listevent = _event;
             return View();
         }
 
@@ -34,13 +45,19 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
+            List<University> listuniv = new List<University>();
+            listuniv = spun.GetAll().ToList();
+            ViewBag.listuniv = listuniv;
+            List<Theme> themelist = new List<Theme>();
+            themelist = spt.GetAll().ToList();
+            ViewBag.themelist = themelist;
             
             return View();
         }
 
         public ActionResult loadorg(int idUniv)
         {
-            return Json(ctx.organization.Where(x=>x.university.idUniv==idUniv).Select(s => new {
+            return Json(spo.GetMany(x=>x.university.idUniv==idUniv).Select(s => new {
                 Id = s.idorg,
                 Name = s.orgname }).ToList() ,JsonRequestBehavior.AllowGet);
         }
@@ -48,18 +65,24 @@ namespace EventWeb.Controllers
         // POST: Event/Create
         [CustomAuthorizeAttribute(Roles = "User")]
         [HttpPost]
-        public ActionResult Create(Event _event)
+        public ActionResult Create(Event _event,int theme,int hostedby)
         {
+            
             try
             {
-                if (ModelState.IsValid){
-                    _event.approvedBy = null;
-                    _event.CreationDate = new DateTime();
-                    _event.creator = spu.Get(x=>x.username==Session["Username"].ToString());
-                   // _event.hostedby
+                
 
-                }
-                //creation date
+                    _event.idEvent = 1;
+                    _event.theme = spt.GetById(theme);
+                    _event.hostedby = spo.GetById(hostedby);
+                   // _event.approvedBy = null;
+                    _event.CreationDate = DateTime.Now;
+                    _event.creator = spu.Get(x=>x.username==User.Identity.Name);
+                    
+                    spe.create_event(_event);
+
+                
+                
                 //
                 // TODO: Add insert logic here
 
