@@ -46,8 +46,8 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -90,25 +90,17 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201903271515059_mj1.cs" />
-    <Compile Include="Migrations\201903271515059_mj1.Designer.cs">
-      <DependentUpon>201903271515059_mj1.cs</DependentUpon>
+    <Compile Include="Migrations\201903291512059_m78.cs" />
+    <Compile Include="Migrations\201903291512059_m78.Designer.cs">
+      <DependentUpon>201903291512059_m78.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903281358366_mg3.cs" />
-    <Compile Include="Migrations\201903281358366_mg3.Designer.cs">
-      <DependentUpon>201903281358366_mg3.cs</DependentUpon>
+    <Compile Include="Migrations\201903291516197_m1.cs" />
+    <Compile Include="Migrations\201903291516197_m1.Designer.cs">
+      <DependentUpon>201903291516197_m1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903281412583_mg4.cs" />
-    <Compile Include="Migrations\201903281412583_mg4.Designer.cs">
-      <DependentUpon>201903281412583_mg4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903281421242_mg5.cs" />
-    <Compile Include="Migrations\201903281421242_mg5.Designer.cs">
-      <DependentUpon>201903281421242_mg5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903281457013_mg6.cs" />
-    <Compile Include="Migrations\201903281457013_mg6.Designer.cs">
-      <DependentUpon>201903281457013_mg6.cs</DependentUpon>
+    <Compile Include="Migrations\201903291521217_m66.cs" />
+    <Compile Include="Migrations\201903291521217_m66.Designer.cs">
+      <DependentUpon>201903291521217_m66.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,20 +119,14 @@
     <Folder Include="configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903271515059_mj1.resx">
-      <DependentUpon>201903271515059_mj1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903291512059_m78.resx">
+      <DependentUpon>201903291512059_m78.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903281358366_mg3.resx">
-      <DependentUpon>201903281358366_mg3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903291516197_m1.resx">
+      <DependentUpon>201903291516197_m1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903281412583_mg4.resx">
-      <DependentUpon>201903281412583_mg4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903281421242_mg5.resx">
-      <DependentUpon>201903281421242_mg5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903281457013_mg6.resx">
-      <DependentUpon>201903281457013_mg6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903291521217_m66.resx">
+      <DependentUpon>201903291521217_m66.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

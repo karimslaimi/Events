@@ -22,6 +22,7 @@ namespace EventWeb.Controllers
         IserviceOrganization spo = new serviceOrganization();
         IserviceUser spu = new serviceUser();
         IserviceTheme spt = new serviceTheme();
+        IserviceAdmin spa = new serviceAdmin();
 
 
         // GET: Event
@@ -30,9 +31,9 @@ namespace EventWeb.Controllers
             //list of events
             List<Event> _event = new List<Event>();
 
-            //_event = spe.GetMany(x=>x.approvedBy!=null).ToList();
+            _event = spe.GetMany(x=>x.approvedBy!=null).ToList();
             ViewBag.listevent = _event;
-            return View();
+            return View(_event);
         }
 
         // GET: Event/Details/5
@@ -75,9 +76,9 @@ namespace EventWeb.Controllers
                     _event.idEvent = 1;
                     _event.theme = spt.GetById(theme);
                     _event.hostedby = spo.GetById(hostedby);
-                   // _event.approvedBy = null;
+                    _event.approvedBy = null;
                     _event.CreationDate = DateTime.Now;
-                    _event.creator = spu.Get(x=>x.username==User.Identity.Name);
+                    _event.creatorid = spu.Get(x=>x.username==User.Identity.Name).id;
                     
                     spe.create_event(_event);
 

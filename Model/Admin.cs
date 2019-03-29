@@ -29,5 +29,10 @@ namespace Model
 
         public bool isSuperAdmin { get; set; }
 
+        public ICollection<Event> Event { get; set; }
+
+
+
+
     }
 }

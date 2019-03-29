@@ -39,7 +39,7 @@
                 @Html.DisplayNameFor(model => model.hostedby)
             </th>
             <th>
-                @Html.DisplayNameFor(model=>model.creator)
+                @Html.DisplayNameFor(model=>model.creatorid)
             </th>
         </tr>
     
@@ -68,7 +68,7 @@
                 @Html.DisplayFor(modelItem => item.hostedby)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.creator)
+                @Html.DisplayFor(modelItem => item.creatorid)
             </td>
             <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.idEvent }) |
