@@ -202,9 +202,15 @@ namespace EventWeb.Controllers
         public void List_annonce()
         {
 
+
         }
         public void Accept_annonce()
         {
+
+
+
+
+
 
         }
         public void Delete_annonce()

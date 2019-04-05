@@ -13,6 +13,8 @@ namespace Model
         public int idUniv { get; set; }
         public string UnivName { get; set; }
 
+        ICollection<organization> organizations { get; set; }
+
         public University(string univName)
         {
             UnivName = univName;

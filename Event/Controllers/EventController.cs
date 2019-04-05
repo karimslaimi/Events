@@ -32,7 +32,7 @@ namespace EventWeb.Controllers
             List<Event> _event = new List<Event>();
 
             _event = spe.GetMany(x=>x.approvedBy!=null).ToList();
-            ViewBag.listevent = _event;
+           
             return View(_event);
         }
 
@@ -73,10 +73,11 @@ namespace EventWeb.Controllers
             {
                 
 
-                    _event.idEvent = 1;
-                    _event.theme = spt.GetById(theme);
-                    _event.hostedby = spo.GetById(hostedby);
-                    _event.approvedBy = null;
+                    
+
+                    _event.themeid = theme;
+                    _event.hostedbyid = hostedby;
+                    _event.adminid = null;
                     _event.CreationDate = DateTime.Now;
                     _event.creatorid = spu.Get(x=>x.username==User.Identity.Name).id;
                     

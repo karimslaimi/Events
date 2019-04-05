@@ -10,6 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <p>
@@ -43,37 +44,39 @@
             </th>
         </tr>
     
-    @foreach (var item in Model) {
+    @foreach (var eve in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EventTitle)
+                @Html.DisplayFor(modelItem => eve.EventTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+              @{var cdate = eve.CreationDate.ToString("{MM/dd/yyyy}");}
+                  @Html.DisplayFor(modelItem => cdate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EventDate)
+                @{var edate = eve.EventDate.ToString("{MM/dd/yyyy}");}
+                @Html.DisplayFor(modelItem => edate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EventLocation)
+                @Html.DisplayFor(modelItem => eve.EventLocation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => eve.Description)
             </td>
             
             <td>
-                @Html.DisplayFor(modelItem => item.theme)
+                @Html.DisplayFor(modelItem => eve.theme.designation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.hostedby)
+                @Html.DisplayFor(modelItem => eve.hostedby.orgname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.creatorid)
+                @Html.DisplayFor(modelItem => eve.creator.username)
             </td>
             <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.idEvent }) |
-            @Html.ActionLink("Details", "Details", new { id = item.idEvent }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.idEvent })
+            @Html.ActionLink("Edit", "Edit", new { id = eve.idEvent }) |
+            @Html.ActionLink("Details", "Details", new { id = eve.idEvent }) |
+            @Html.ActionLink("Delete", "Delete", new { id = eve.idEvent })
             </td>
         </tr>
     }

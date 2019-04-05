@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,10 @@ namespace Model
         [Key]
         public int idorg { get; set; }//organization id
         public string orgname { get; set; }//organization name
-        public University university { get; set; }
+
+        [ForeignKey("university")]
+        public int idUniv { get; set; }
+        public virtual University university { get; set; }
 
         public organization(string orgname,University university)
         {
