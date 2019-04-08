@@ -11,12 +11,14 @@ namespace Service.EventFolder
     {
 
         void edit_event(Event _event);
-        void delete_event(Event _event);
+       // void delete_event(Event _event);
         void create_event(Event _event);
         List<Event> search_Event(string keyword);
         List<Event> search_event_date(DateTime date);
         List<Event> search_event_location(string location);
         List<Event> search_event_theme(string theme);
+        void acceptEvent(int eventid,int adminid);
+        void deleteEvent(Event _event);
 
 
     }

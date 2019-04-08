@@ -17,8 +17,7 @@ namespace Service
 
         void add_Admin(Admin _admin);
         bool authAdmin(string login, string password);
-        void accept_event(Event _event);
-        void delete_event(Event _event);
+        
         void delete_admin(Admin _admin);
         void edit_admin_profile(Admin _admin);
         List<Event> Event_log();

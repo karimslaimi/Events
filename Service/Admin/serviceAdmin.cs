@@ -28,10 +28,7 @@ namespace Service
 
         }
 
-        public void accept_event(Event annonce)
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
 
@@ -66,10 +63,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void delete_event(Event annonce)
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
 

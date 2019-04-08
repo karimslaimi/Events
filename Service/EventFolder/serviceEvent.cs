@@ -18,17 +18,35 @@ namespace Service.EventFolder
         {
 
         }
+
+
+
+
+        public void acceptEvent(int eventid,int adminid)
+        {
+
+            Event eve = this.GetById(eventid);
+            eve.adminid = adminid;
+            this.Update(eve);
+            this.Commit();
+            
+        }
+
         public void create_event(Event _event)
         {
             this.Add(_event);
             this.Commit();
         }
 
-        public void delete_event(Event _event)
+        public void deleteEvent(Event _event)
         {
             this.Delete(_event);
             this.Commit();
         }
+
+        
+
+       
 
         public void edit_event(Event _event)
         {

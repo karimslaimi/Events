@@ -14,13 +14,13 @@ using Service;
 namespace EventWeb.Controllers
 {
 
-    
+
 
     public class AdminController : Controller
     {
         IserviceAdmin spa = new serviceAdmin();
         //getting the instance of service that way i can use the service pattern and admin service
-        
+
 
 
         public ActionResult login()
@@ -31,10 +31,10 @@ namespace EventWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult login(Admin ad,string ReturnUrl)
+        public ActionResult login(Admin ad, string ReturnUrl)
         {
 
-            if(spa.authAdmin(ad.mailAdmin,ad.passwordAdmin))//check serviceAdmin
+            if (spa.authAdmin(ad.mailAdmin, ad.passwordAdmin))//check serviceAdmin
             {
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
                 Admin _admin = new Admin();
@@ -75,7 +75,7 @@ namespace EventWeb.Controllers
             return RedirectToAction("index");
         }
 
-        [CustomAuthorizeAttribute(Roles="SuperAdmin")]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult ListAdmin()
         {//only super admin can view list admins and manage admins(edit,delete)
 
@@ -89,7 +89,7 @@ namespace EventWeb.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-     
+
             return View();
         }
 
@@ -100,7 +100,7 @@ namespace EventWeb.Controllers
         }
 
         // GET: Admin/Create
-        [CustomAuthorizeAttribute(Roles= "SuperAdmin")]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult RegisterAdmin()
         {
             return View("RegisterAdmin");
@@ -112,11 +112,11 @@ namespace EventWeb.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
-        public ActionResult RegisterAdmin(Admin ad,string password)// string password is only for comfirmation of the typed password
+        public ActionResult RegisterAdmin(Admin ad, string password)// string password is only for comfirmation of the typed password
         {
             try
             {
-                if (spa.Get(x => x.mailAdmin == ad.mailAdmin)!=null)
+                if (spa.Get(x => x.mailAdmin == ad.mailAdmin) != null)
                 {//if admin already exists 
                     ViewBag.DuplicateMessage = "mail already exists";
                     return View("RegisterAdmin");
@@ -130,10 +130,10 @@ namespace EventWeb.Controllers
 
                 return RedirectToAction("login");
             }
-            catch(Exception )
+            catch (Exception)
             {
                 return View();
-               
+
             }
         }
 
@@ -180,10 +180,10 @@ namespace EventWeb.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View();
         }
-
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         // POST: Admin/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
@@ -199,27 +199,11 @@ namespace EventWeb.Controllers
                 return View();
             }
         }
-        public void List_annonce()
-        {
-
-
-        }
-        public void Accept_annonce()
-        {
-
-
-
-
-
-
-        }
-        public void Delete_annonce()
-        {
-
-        }
+        
 
         //GET:Admin/newsletter
-        [Authorize]
+
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult Newsletter()
         {
             MailMessage mailmessage=new MailMessage();
@@ -228,7 +212,7 @@ namespace EventWeb.Controllers
         }
 
         
-        [Authorize]
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         [HttpPost]
         public ActionResult Newsletter(string obj,string body)
         {

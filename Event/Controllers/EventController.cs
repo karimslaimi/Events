@@ -139,5 +139,26 @@ namespace EventWeb.Controllers
                 return View();
             }
         }
+        
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
+        public ActionResult EventNotApproved()
+        {
+            List<Event> _eventnotapproved = spe.GetMany(x => x.approvedBy==null).ToList();
+
+            return View(_eventnotapproved);
+        }
+
+        
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
+        public ActionResult AcceptAnnonce(int id)
+        {
+            
+            
+            spe.acceptEvent(id,spa.Get(x => x.mailAdmin == User.Identity.Name).idAdmin);
+            return RedirectToAction("EventNotApproved");
+        }
+
+
+
     }
 }
