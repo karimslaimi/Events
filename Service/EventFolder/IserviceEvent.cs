@@ -17,8 +17,8 @@ namespace Service.EventFolder
         List<Event> search_event_date(DateTime date);
         List<Event> search_event_location(string location);
         List<Event> search_event_theme(string theme);
-        void acceptEvent(int eventid,int adminid);
-        void deleteEvent(Event _event);
+        void acceptEvent(int eventid,int idadmin);
+        void refuseEvent(int eventid);
 
 
     }

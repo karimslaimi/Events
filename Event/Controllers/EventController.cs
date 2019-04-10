@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
 using Service.Univ;
 using Service;
 using Service.Themes;
-using Microsoft.AspNet.Identity;
+
 
 namespace EventWeb.Controllers
 {
@@ -71,10 +70,6 @@ namespace EventWeb.Controllers
             
             try
             {
-                
-
-                    
-
                     _event.themeid = theme;
                     _event.hostedbyid = hostedby;
                     _event.adminid = null;
@@ -99,16 +94,17 @@ namespace EventWeb.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            
+            return View(spe.GetById(id));
         }
 
         // POST: Event/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Event _event)
         {
             try
             {
-                // TODO: Add update logic here
+                spe.edit_event(_event);
 
                 return RedirectToAction("Index");
             }
@@ -117,28 +113,15 @@ namespace EventWeb.Controllers
                 return View();
             }
         }
-
+        [HttpGet]
         // GET: Event/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            spe.refuseEvent(id);
+            return RedirectToAction("index");
         }
 
-        // POST: Event/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
         
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult EventNotApproved()
@@ -152,11 +135,13 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult AcceptAnnonce(int id)
         {
-            
-            
+
             spe.acceptEvent(id,spa.Get(x => x.mailAdmin == User.Identity.Name).idAdmin);
             return RedirectToAction("EventNotApproved");
         }
+
+
+
 
 
 

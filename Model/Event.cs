@@ -35,8 +35,8 @@ namespace Model
         public int? themeid { get; set; }
         public virtual Theme theme { get; set; } //le theme de l'evenement
 
-        [ForeignKey("approvedby")]
-        public int? adminid; 
+        [ForeignKey("approvedBy")]
+        public int? adminid { get; set; }
         public virtual Admin approvedBy { get; set; } //l'admin qui a approuvé l'annonce de l'evenement tant que ce champ est null 
                                              //l'evenement n'apparaitra pas sur le site
     }

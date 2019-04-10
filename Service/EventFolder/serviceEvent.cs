@@ -5,8 +5,7 @@ using MyFinance.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Service.EventFolder
 {
@@ -22,11 +21,11 @@ namespace Service.EventFolder
 
 
 
-        public void acceptEvent(int eventid,int adminid)
+        public void acceptEvent(int eventid,int idadmin)
         {
-
+            
             Event eve = this.GetById(eventid);
-            eve.adminid = adminid;
+            eve.adminid = idadmin;
             this.Update(eve);
             this.Commit();
             
@@ -38,19 +37,21 @@ namespace Service.EventFolder
             this.Commit();
         }
 
-        public void deleteEvent(Event _event)
+        public void refuseEvent(int eventid)
         {
-            this.Delete(_event);
+            this.Delete(this.GetById(eventid));
             this.Commit();
         }
 
-        
-
-       
-
         public void edit_event(Event _event)
         {
-            throw new NotImplementedException();
+            Event eve = this.GetById(_event.idEvent);
+            eve.Description = _event.Description;
+            eve.EventDate = _event.EventDate;
+            eve.EventTitle = _event.EventTitle;
+            eve.adminid = null;
+            this.Update(eve);
+            this.Commit();
         }
 
         public List<Event> search_Event(string keyword)
