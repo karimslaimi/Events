@@ -27,7 +27,7 @@ namespace Model
 
         public ICollection<Event> Event { get; set; }
 
-
+        public ICollection<Logs> logs { get; set; }
 
 
     }

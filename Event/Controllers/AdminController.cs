@@ -19,7 +19,7 @@ namespace EventWeb.Controllers
     {
         IserviceAdmin spa = new serviceAdmin();
         //getting the instance of service that way i can use the service pattern and admin service
-
+        IserviceLogs spl = new serviceLogs();
 
 
         public ActionResult login()
@@ -141,7 +141,7 @@ namespace EventWeb.Controllers
         public ActionResult Edit(int id)
         {
             Admin ad = new Admin();//empty admin model
-            ad = spa.GetById(id);//get the admin by admin 
+            ad = spa.GetById(id);//get the admin by id 
             ViewData.Model = ad;
 
             return View();
@@ -150,6 +150,7 @@ namespace EventWeb.Controllers
         // POST: Admin/Edit/5
         [HttpPost]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Admin ad)
         {
             try
@@ -237,6 +238,15 @@ namespace EventWeb.Controllers
             }
 
             return RedirectToAction("");
+        }
+
+
+        public ActionResult logs()
+        {
+            List<Logs> log = new List<Logs>();
+                log=spl.GetAll().ToList();
+            ViewData.Model = log;
+            return View();
         }
 
 

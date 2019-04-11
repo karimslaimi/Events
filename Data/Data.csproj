@@ -90,6 +90,14 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\201904111444426_scar.cs" />
+    <Compile Include="Migrations\201904111444426_scar.Designer.cs">
+      <DependentUpon>201904111444426_scar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904111502121_scar1.cs" />
+    <Compile Include="Migrations\201904111502121_scar1.Designer.cs">
+      <DependentUpon>201904111502121_scar1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +113,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904111444426_scar.resx">
+      <DependentUpon>201904111444426_scar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111502121_scar1.resx">
+      <DependentUpon>201904111502121_scar1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

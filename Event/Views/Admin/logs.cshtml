@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Model.Logs>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>logs</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.admin.nameAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.events.EventTitle)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.admin.nameAdmin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.events.EventTitle)
+            </td>
+            
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

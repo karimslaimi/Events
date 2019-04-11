@@ -86,6 +86,8 @@
     <Compile Include="Admin\IserviceAdmin.cs" />
     <Compile Include="EventFolder\IserviceEvent.cs" />
     <Compile Include="EventFolder\serviceEvent.cs" />
+    <Compile Include="LogsFolder\IserviceLogs.cs" />
+    <Compile Include="LogsFolder\serviceLogs.cs" />
     <Compile Include="organization\IserviceOrganization.cs" />
     <Compile Include="organization\serviceOrganization.cs" />
     <Compile Include="Service Pattern\IservicePattern.cs" />

@@ -17,7 +17,10 @@ namespace Model
         public DateTime EventDate { get; set; } //date de l'evenement
         public string EventLocation { get; set; } //lieu de l'evenement
         public string Description { get; set; } //description de l'evenement
+
+        
         public ICollection<EventPicture> Pics { get; set; } //les photos de l'annonce
+        public ICollection<Logs> logs { get; set; }
 
         [ForeignKey("hostedby")]
         public int? hostedbyid { get; set; }

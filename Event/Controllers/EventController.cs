@@ -22,6 +22,7 @@ namespace EventWeb.Controllers
         IserviceUser spu = new serviceUser();
         IserviceTheme spt = new serviceTheme();
         IserviceAdmin spa = new serviceAdmin();
+        IserviceLogs spl = new serviceLogs();
 
 
         // GET: Event
@@ -38,6 +39,8 @@ namespace EventWeb.Controllers
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
+            Event _event = spe.GetById(id);
+            ViewData.Model = _event;
             return View();
         }
 
@@ -66,6 +69,7 @@ namespace EventWeb.Controllers
        
         [CustomAuthorizeAttribute(Roles = "User")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Event _event,int theme,int hostedby)
         {
             
@@ -76,7 +80,6 @@ namespace EventWeb.Controllers
                     _event.adminid = null;
                     _event.CreationDate = DateTime.Now;
                     _event.creatorid = spu.Get(x=>x.username==User.Identity.Name).id;
-                    
                     spe.create_event(_event);
 
                 
@@ -170,8 +173,15 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult AcceptAnnonce(int id)
         {
+            Admin _admin = spa.Get(x => x.mailAdmin == User.Identity.Name);
 
-            spe.acceptEvent(id,spa.Get(x => x.mailAdmin == User.Identity.Name).idAdmin);
+            spe.acceptEvent(id,_admin.idAdmin);
+            Logs log = new Logs();
+            log.adminid = _admin.idAdmin;
+            log.eventid = id;
+            log.date = DateTime.Now;
+            spl.Add(log);
+            spl.Commit();
             return RedirectToAction("EventNotApproved");
         }
 

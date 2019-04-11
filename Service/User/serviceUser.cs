@@ -29,14 +29,7 @@ namespace Service
         public void edit_user_profile(User _user)
         {
             User us = this.GetById(_user.id);
-            if (!string.IsNullOrEmpty(_user.lastname) && !string.IsNullOrWhiteSpace(_user.lastname) )
-            {
-                us.lastname = _user.lastname;
-            }
-            if (!string.IsNullOrEmpty(_user.firstname) && !string.IsNullOrWhiteSpace(_user.firstname))
-            {
-                us.firstname = _user.firstname;
-            }
+            
             if (!string.IsNullOrEmpty(_user.mail) && !string.IsNullOrWhiteSpace(_user.mail))
             {
                 us.mail = _user.mail;
