@@ -85,6 +85,7 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventPicture.cs" />
+    <Compile Include="Logs.cs" />
     <Compile Include="organization.cs" />
     <Compile Include="UserEvent.cs" />
     <Compile Include="Subscribers.cs" />

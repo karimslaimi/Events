@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Model;
 using Infrastructure;
 using Data.Infrastructure;
 using MyFinance.Data.Infrastructure;
-using System.Web.Security;
+
 
 namespace Service
 {
     public class serviceAdmin : servicePattern<Admin>, IserviceAdmin
 
-        //this implementation implements the interface IserviceAdmin and inherit from the servicePattern implementation with admin cast
-        //with the inheritance of the service Pattern i have already the implementation of the crud operations on the type Admin
-        //and i can now use the crud operations to implement the Admin services
-        //the same principle in the other services 
-        //convention over configuration
+        
         
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
@@ -28,17 +20,13 @@ namespace Service
 
         }
 
-       
-
-
-
+     
         public void add_Admin(Admin _admin)
         {
             _admin.isSuperAdmin = false;
             this.Add(_admin);
             this.Commit();
         }
-
 
 
         public bool authAdmin(string login, string password)
@@ -48,24 +36,12 @@ namespace Service
         }
 
 
-
-
-
-
         public void delete_admin(Admin _admin)
         {
             this.Delete(_admin);
             this.Commit();
         }
-
-        public void delete_comment(UserEvent _user_event)
-        {
-            throw new NotImplementedException();
-        }
-
-        
-
-
+  
 
         public void edit_admin_profile(Admin _admin)
         {
@@ -96,9 +72,6 @@ namespace Service
             throw new NotImplementedException();
         }
 
-     
-
-        
 
         
     }

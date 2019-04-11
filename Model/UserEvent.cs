@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Model
 {
@@ -15,6 +12,8 @@ namespace Model
         public Event Event { get;set; }
 
         public bool participation { get; set; }
-        public string comment { get; set; }
+
+        [Range(0, 5,ErrorMessage = "Value must be between 0 and 5.")]
+        public int star { get; set; }
     }
 }

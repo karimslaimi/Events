@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
+﻿using System.Data.Entity;
 using Model;
-using Microsoft.AspNet.Identity;
+
 
 namespace Data
 {
@@ -28,6 +21,7 @@ namespace Data
         public DbSet<University> University { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserEvent> UserEvent { get; set; }
+        public DbSet<Logs> Logs { get; set; }
 
 
     }

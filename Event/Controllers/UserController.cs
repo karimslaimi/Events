@@ -87,9 +87,14 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Edit(User _user)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && _user.password==spu.GetById(_user.id).password)
             {
                 spu.edit_user_profile(_user);//check serviceUser
+            }
+            else
+            {
+                
+                return View();
             }
             return RedirectToAction("index");
         }

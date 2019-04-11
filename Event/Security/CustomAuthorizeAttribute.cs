@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using Model;
+﻿using Model;
 using Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -32,34 +27,34 @@ namespace EventWeb.Security
             bool isuser = false;
 
             IserviceAdmin spa = new serviceAdmin();
-            IserviceUser spu = new serviceUser();
+            
             IPrincipal user = httpContext.User;
             bool authorize = false;
 
 
             string userid = user.Identity.Name;
             Admin _admin = spa.Get(x=>x.mailAdmin==userid);
-            User _user = new User();
+            
 
             if (_admin == null)
             {
-               _user = spu.Get(x => x.username == userid);
-            }
-
-
-                if (_admin != null)
-                {
-                    if (_admin.isSuperAdmin)
-                    {
-                        superAdmin = true;
-                    }
-                    else { isAdmin = true; }
-
-                }
-                else if (_user != null)
+                IserviceUser spu = new serviceUser();
+                User _user = new User();
+                _user = spu.Get(x => x.username == userid);
+                if (_user != null)
                 {
                     isuser = true;
                 }
+
+
+            }else if (_admin != null){
+
+                    if (_admin.isSuperAdmin)
+                         { superAdmin = true;}
+                    else { isAdmin = true; }
+
+            }
+                
 
 
 

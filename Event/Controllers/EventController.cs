@@ -41,7 +41,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
-        // GET: Event/Create
+        
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Create()
         {
@@ -55,6 +55,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
+        
         public ActionResult loadorg(int idUniv)
         {
             return Json(spo.GetMany(x=>x.university.idUniv==idUniv).Select(s => new {
@@ -62,7 +63,7 @@ namespace EventWeb.Controllers
                 Name = s.orgname }).ToList() ,JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Event/Create
+       
         [CustomAuthorizeAttribute(Roles = "User")]
         [HttpPost]
         public ActionResult Create(Event _event,int theme,int hostedby)
@@ -91,38 +92,72 @@ namespace EventWeb.Controllers
             }
         }
 
-        // GET: Event/Edit/5
+
+        [CustomAuthorize(Roles ="User")]
         public ActionResult Edit(int id)
         {
-            
-            return View(spe.GetById(id));
+            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(id).creatorid)
+            {
+                return View(spe.GetById(id));
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
-        // POST: Event/Edit/5
+
+        [CustomAuthorize(Roles = "User")]
         [HttpPost]
         public ActionResult Edit(Event _event)
         {
-            try
+            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(_event.idEvent).creatorid)
             {
-                spe.edit_event(_event);
+                try
+                {
+                    spe.edit_event(_event);
 
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            else
+            {
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
         }
+
+
+
+        [CustomAuthorize(Roles = "User")]
         [HttpGet]
-        // GET: Event/Delete/5
         public ActionResult Delete(int id)
         {
+            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(id).creatorid)
+            {
+
+                spe.Delete(spe.GetById(id));
+                return RedirectToAction("index");
+
+            }
+            else
+            {
+                return RedirectToAction("index");
+            }
+        }
+
+
+        [CustomAuthorize(Roles = "User")]
+        public ActionResult RefuseEvent(int id)
+        {
+
             spe.refuseEvent(id);
             return RedirectToAction("index");
         }
 
-     
-        
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult EventNotApproved()
         {
