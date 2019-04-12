@@ -1,21 +1,12 @@
 ﻿@model IEnumerable<Model.Logs>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/Adminator.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>logs</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-</head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+   
     <table class="table">
         <tr>
             <th>
@@ -41,4 +32,4 @@
     
     </table>
 </body>
-</html>
+

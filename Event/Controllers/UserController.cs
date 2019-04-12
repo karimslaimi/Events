@@ -3,6 +3,11 @@ using System.Web.Mvc;
 using EventWeb.Security;
 using Model;
 using System.Web.Security;
+using System.Linq;
+using System;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace EventWeb.Controllers
 {
@@ -30,7 +35,11 @@ namespace EventWeb.Controllers
 
             if (ModelState.IsValid)
             {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                Random rand = new Random();
+                _user.activated= new string(Enumerable.Repeat(chars, 36).Select(s => s[rand.Next(36)]).ToArray());
                 spu.register_user(_user);
+                SendVerificationMail(_user.id, _user.activated);
                 return RedirectToAction("index");
             }
             else
@@ -41,8 +50,47 @@ namespace EventWeb.Controllers
            
         }
 
+        public ActionResult verifymail(int id,string key)
+        {
+            User _user = new User();
+            _user = spu.GetById(id);
+            if (_user != null && key==_user.activated)
+            {
+                _user.activated = "active";
+                spu.Update(_user);
+                spu.Commit();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("index");
+            }
+            
+        }
 
+        public void SendVerificationMail(int id ,string key)
+        {
+            try
+            {
+                string sendermail = System.Configuration.ConfigurationManager.AppSettings["SenderMail"].ToString();
+                string senderpassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 1000000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                MailMessage mailMessage = new MailMessage(sendermail, spu.GetById(id).mail, "verify your mail", "http://localhost:8080/User/verifymail/?id="+id+"&key="+key);
+                client.Credentials = new NetworkCredential(sendermail, senderpassword);
+                mailMessage.IsBodyHtml = true;
+                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+                client.Send(mailMessage);
 
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
 
         // GET: User/Create
         public ActionResult login()
@@ -55,10 +103,18 @@ namespace EventWeb.Controllers
         public ActionResult login(User _user)
         {
             if (ModelState.IsValid && spu.AuthUser(_user.username,_user.password)) {//check if the user model is valid
-                FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
-                this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
-                this.Session["Username"] = _user.username.ToString();
-                return RedirectToAction("index");
+                if (spu.Get(x => x.username == _user.username).activated != "active")
+                {
+                    ViewBag.ErrorMessage = "verify your mail";
+                    return View();
+                }
+                else
+                {
+                    FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
+                    this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
+                    this.Session["Username"] = _user.username.ToString();
+                    return RedirectToAction("index");
+                }
             }
                 return View("Index");
             

@@ -25,6 +25,8 @@ namespace Model
         [Required]
         [MinLength(8,ErrorMessage ="password must be at least 8 characters"),MaxLength(20,ErrorMessage ="password must be less than 20 charaters")]
         public string password { get; set; }
+
+        public string activated { get; set; }
         
         public ICollection<Event> Event { get; set; }
 

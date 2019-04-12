@@ -98,6 +98,10 @@
     <Compile Include="Migrations\201904111502121_scar1.Designer.cs">
       <DependentUpon>201904111502121_scar1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904120014480_scar4.cs" />
+    <Compile Include="Migrations\201904120014480_scar4.Designer.cs">
+      <DependentUpon>201904120014480_scar4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904111502121_scar1.resx">
       <DependentUpon>201904111502121_scar1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904120014480_scar4.resx">
+      <DependentUpon>201904120014480_scar4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

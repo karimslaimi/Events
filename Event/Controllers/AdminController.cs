@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using EventWeb.Security;
@@ -35,11 +36,12 @@ namespace EventWeb.Controllers
 
             if (spa.authAdmin(ad.mailAdmin, ad.passwordAdmin))//check serviceAdmin
             {
-                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
                 Admin _admin = new Admin();
                 _admin = spa.Get(x => x.mailAdmin == ad.mailAdmin && x.passwordAdmin == ad.passwordAdmin);
-                Session["AdminID"] = _admin.idAdmin;
-                Session["mailAdmin"] = _admin.mailAdmin;
+                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
+                Response.Cookies["name"].Value = _admin.nameAdmin;
+
+
 
 
                 //Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
@@ -71,6 +73,7 @@ namespace EventWeb.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Abandon(); // it will clear the session at the end of request
+            Response.Cookies.Clear();
             return RedirectToAction("index");
         }
 
