@@ -14,7 +14,7 @@ namespace Model
         [Index(IsUnique =true)]
         public string username { get; set; }
         
-        [StringLength(20)]
+        [StringLength(254)]
         [Index(IsUnique = true)]
         public string mail { get; set; }
 

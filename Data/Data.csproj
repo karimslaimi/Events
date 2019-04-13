@@ -90,17 +90,13 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201904111444426_scar.cs" />
-    <Compile Include="Migrations\201904111444426_scar.Designer.cs">
-      <DependentUpon>201904111444426_scar.cs</DependentUpon>
+    <Compile Include="Migrations\201904130025546_scar.cs" />
+    <Compile Include="Migrations\201904130025546_scar.Designer.cs">
+      <DependentUpon>201904130025546_scar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904111502121_scar1.cs" />
-    <Compile Include="Migrations\201904111502121_scar1.Designer.cs">
-      <DependentUpon>201904111502121_scar1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904120014480_scar4.cs" />
-    <Compile Include="Migrations\201904120014480_scar4.Designer.cs">
-      <DependentUpon>201904120014480_scar4.cs</DependentUpon>
+    <Compile Include="Migrations\201904130037009_scar2.cs" />
+    <Compile Include="Migrations\201904130037009_scar2.Designer.cs">
+      <DependentUpon>201904130037009_scar2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,14 +115,11 @@
     <Folder Include="configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201904111444426_scar.resx">
-      <DependentUpon>201904111444426_scar.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904130025546_scar.resx">
+      <DependentUpon>201904130025546_scar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904111502121_scar1.resx">
-      <DependentUpon>201904111502121_scar1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904120014480_scar4.resx">
-      <DependentUpon>201904120014480_scar4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904130037009_scar2.resx">
+      <DependentUpon>201904130037009_scar2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

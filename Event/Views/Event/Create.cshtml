@@ -34,12 +34,36 @@
         });
 
     </script>
+
+
+
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTdPHr3hiUFuT5PYqPyD7ceBbvERs9I28&callback=initMap&libraries=places" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        function initMap() {
+            var location = document.getElementById('location');
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: { country: "tn" }
+            };
+            var autocomplete = new google.maps.places.Autocomplete(location, options);
+
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+                document.getElementById('location-snap').innerHTML = place.formatted_address;
+               
+            });
+        }
+    </script>
+
+
 </head>
-<body>
-    @using (Html.BeginForm()) 
+<body >
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
+
     <div class="form-horizontal">
         <h4>Event</h4>
         <hr />
@@ -65,10 +89,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EventLocation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EventLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.EventLocation, new { htmlAttributes = new { @class = "form-control",id="location" } })
                 @Html.ValidationMessageFor(model => model.EventLocation, "", new { @class = "text-danger" })
             </div>
         </div>
+
+       
+
         <div class="form-group">
             @Html.LabelFor(model => model.hostedby, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -90,7 +117,7 @@
         <div class="form-group">
             <div class="col-md-10">
 
-                <select  name="hostedby" id="organizations"></select>
+                <select name="hostedby" id="organizations"></select>
 
             </div>
         </div>
@@ -129,10 +156,10 @@
             </div>
         </div>
     </div>
+
     }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+
+
 </body>
+
 </html>
