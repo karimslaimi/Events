@@ -198,6 +198,7 @@
     <Content Include="Content\adminator\assets\static\images\datatables\sort_desc_disabled.png" />
     <Content Include="Content\adminator\assets\static\images\logo.png" />
     <Content Include="Content\adminator\assets\static\images\logo.svg" />
+    <Content Include="Content\adminator\assets\static\images\Sans-titre---1.png" />
     <Content Include="Content\adminator\assets\styles\vendor\font-awesome.css" />
     <Content Include="Content\adminator\assets\styles\vendor\themify-icons.css" />
     <Content Include="Content\adminator\basic-table.html" />

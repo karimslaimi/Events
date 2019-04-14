@@ -38,9 +38,11 @@ namespace EventWeb.Controllers
             {
                 Admin _admin = new Admin();
                 _admin = spa.Get(x => x.mailAdmin == ad.mailAdmin && x.passwordAdmin == ad.passwordAdmin);
-                FormsAuthentication.SetAuthCookie(ad.mailAdmin, false);//store user mail in cookies 
-                Response.Cookies["name"].Value = _admin.nameAdmin;
+                FormsAuthentication.SetAuthCookie(ad.mailAdmin, true);//store user mail in cookies 
 
+                var cookie = new HttpCookie("cookie");
+                cookie.Value = _admin.nameAdmin;
+                Response.Cookies.Add(cookie);
 
 
 
@@ -69,12 +71,12 @@ namespace EventWeb.Controllers
         }
 
         [Authorize]
-        public ActionResult LogOut()
+        public ActionResult logout()
         {
             FormsAuthentication.SignOut();
             Session.Abandon(); // it will clear the session at the end of request
             Response.Cookies.Clear();
-            return RedirectToAction("index");
+            return RedirectToAction("login");
         }
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
@@ -100,6 +102,19 @@ namespace EventWeb.Controllers
         {
             return View();
         }
+        
+        
+        
+        public ActionResult profile()
+        {
+
+            int ida = spa.Get(x => x.mailAdmin == User.Identity.Name).idAdmin;
+
+            return RedirectToAction("Edit",new { id=ida});
+        }
+        
+
+
 
         // GET: Admin/Create
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
@@ -189,7 +204,7 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         // POST: Admin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {

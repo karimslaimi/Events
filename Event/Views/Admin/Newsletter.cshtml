@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/Adminator.cshtml";
 }
 
+<title>Newsletter</title>
 
-<h2>Newsletter</h2>
-<div class="wrapper">
+<div class="container">
     @using (Html.BeginForm("Newsletter", "Admin", FormMethod.Post, new { @class = "form-signin" }))
     {
         @Html.AntiForgeryToken()

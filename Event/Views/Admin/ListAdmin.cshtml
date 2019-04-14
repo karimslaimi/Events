@@ -31,8 +31,8 @@
        
         
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idAdmin }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idAdmin })
+           @Html.ActionLink("Edit","Edit", new { id=item.idAdmin },new {@class="btn cur-p btn-outline-primary"}) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.idAdmin }, new { @class = "btn cur-p btn-outline-danger" })
         </td>
     </tr>
 }
