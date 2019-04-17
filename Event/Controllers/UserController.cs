@@ -8,16 +8,8 @@ using System;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Threading.Tasks;
-using System.Reflection;
-using Newtonsoft.Json;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 using System.Web;
+using MessageBird;
 
 namespace EventWeb.Controllers
 {
@@ -139,10 +131,11 @@ namespace EventWeb.Controllers
         }
 
         [CustomAuthorizeAttribute(Roles = "User")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
+
             User us = new User();
-            us = spu.GetById(id);
+            us = spu.Get(x=>x.username==User.Identity.Name);
             us.password = "";//make the passsword empty that way the user won't be able to see the password
             ViewData.Model = us;//put the mode in the view 
             //the user is able only to change his first and last name ,email,phone number and password he can't change his birth of date and username
@@ -172,41 +165,14 @@ namespace EventWeb.Controllers
 
 
 
-        public static async Task passwordsms(string phone,string key) {
+        private void passwordsms(string phone,string key) {
 
-            const string account = "ip1-16643";
-            const string apiKey = "EME8Zwc8DCygoUEyNvYp";
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://api.ip1sms.com");
+            const string YourAccessKey = "PlARM4zTsShj1IDg9q3Fwa3UM";
+            Client client = Client.CreateDefault(YourAccessKey);
+             long Msisdn = long.Parse("00216"+phone);
 
-                // Setting authentication
-                byte[] authBytes = Encoding.UTF8.GetBytes($"{account}:{apiKey}");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authBytes));
-
-                // Setting user agent
-                var version = typeof(UserController).Assembly
-                    .GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
-                client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("IP1.Example", version));
-
-
-
-
-                dynamic sms = new ExpandoObject();
-
-                sms.Numbers = new List<string>() { "+216" + phone };
-                sms.Message = "votre code est :" + key;
-                sms.From = "karim";
-
-
-                // Serialize the object into JSON
-                var json = JsonConvert.SerializeObject(sms);
-                StringContent requestContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync("/api/sms/send", requestContent);
-
-            }
-
+            MessageBird.Objects.Message message =
+            client.SendMessage("karim", key, new[] { Msisdn });
 
 
 
@@ -233,32 +199,38 @@ namespace EventWeb.Controllers
                 string key = new string(Enumerable.Repeat(chars, 6).Select(s => s[rand.Next(10)]).ToArray());
 
                 var cookie = new HttpCookie("cookie");
-                cookie.Value = key;
+                cookie["key"] = key;
                 Response.Cookies.Add(cookie);
                 
-                Session["User"]= _user.phone;
-               var  task=passwordsms(_user.phone, key);
-               // task.Wait();
-
+              
+               //passwordsms(_user.phone, key);
+                // task.Wait();
+                ViewBag.userid = _user.id;
                 return View();
             }
             else
             {
-                Session["resetkey"] = null;
+                
                 return View();
 
             }
         }
 
+        [HttpPost]
         //this will verify the code given in the view redirect to NewPassword if correct or return the same view with error
-        public ActionResult verifyCode(string code)
+        public ActionResult verifyCode(string code,int userid)
         {
-            if ()
+            HttpCookie myCookie = Request.Cookies["cookie"];
+            if (myCookie != null &&  myCookie["key"] == code)
             {
-                return RedirectToAction("NewPassword");
+                myCookie["valide"] = "true";
+                Response.Cookies.Add(myCookie);
+                return RedirectToAction("NewPassword", new { id = userid });
             }
             else
             {
+                myCookie["valide"] = "false";
+                Response.Cookies.Add(myCookie);
                 ViewBag.ErrorMessage = "code incorrect";
 
 
@@ -267,24 +239,37 @@ namespace EventWeb.Controllers
             
         }
 
+        [HttpGet]
         //it will return the view to put the new password
-        public ActionResult NewPassword()
+        public ActionResult NewPassword(int id)
         {
 
-            User _user = spu.Get(x=>x.phone==Session["User"].ToString());
-            ViewBag.mail = _user.mail;
-            return View(_user);
+            HttpCookie myCookie = Request.Cookies["cookie"];
+            if (myCookie!=null && myCookie["valide"] == "true")
+            {
+
+                ViewBag.userid = id;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
 
         }
 
         //this will update the database omg it took more than all the user methodes
-        public ActionResult ValidatePassword(User _user)
+        public ActionResult ValidatePassword(User _user,int userid)
         {
-
-            User us = spu.GetById(_user.id);
-            us.password = _user.password;
-            spu.Update(us);
-            spu.Commit();
+            HttpCookie myCookie = Request.Cookies["cookie"];
+            if (myCookie != null && myCookie["valide"] == "true")
+            {
+                User us = spu.GetById(userid);
+                us.password = _user.password;
+                spu.Update(us);
+                spu.Commit();
+            }
+            Response.Cookies["cookie"].Expires= DateTime.Now.AddDays(-1);
 
             return RedirectToAction("login");
         }
