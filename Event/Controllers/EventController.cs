@@ -161,7 +161,7 @@ namespace EventWeb.Controllers
         [CustomAuthorize(Roles ="User")]
         public ActionResult Edit(int id)
         {
-            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(id).creatorid)
+            if (spu.Get(x => x.username== User.Identity.Name).id == spe.GetById(id).creatorid)
             {
                 return View(spe.GetById(id));
             }
