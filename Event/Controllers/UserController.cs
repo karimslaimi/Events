@@ -113,7 +113,7 @@ namespace EventWeb.Controllers
                 }
                 else
                 {
-                    FormsAuthentication.SetAuthCookie(_user.username, false);//add username to cookies
+                    FormsAuthentication.SetAuthCookie(_user.username, true);//add username to cookies
                     this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
                     this.Session["Username"] = _user.username.ToString();
                     return RedirectToAction("index");
