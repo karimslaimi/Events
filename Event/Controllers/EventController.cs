@@ -42,7 +42,10 @@ namespace EventWeb.Controllers
         public ActionResult Details(int id)
         {
             Event _event = spe.GetById(id);
+            List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
+           // var img=pic.Where()
             ViewData.Model = _event;
+            ViewBag.pic = pic;
             return View();
         }
 
@@ -77,7 +80,7 @@ namespace EventWeb.Controllers
                 {
                     if (item != null)
                     {
-                        if (item.ContentLength > 0 && item.ContentLength< 500000)
+                        if (item.ContentLength > 0 && item.ContentLength< 5000000)
                         {
                             if(!(Path.GetExtension(item.FileName).ToLower()==".jpg"||
                                 Path.GetExtension(item.FileName).ToLower() == ".png" ||
@@ -111,15 +114,16 @@ namespace EventWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Event _event,int theme,int hostedby,List<HttpPostedFileBase> files)
         {
+            _event.themeid = theme;
+            _event.hostedbyid = hostedby;
+            _event.adminid = null;
+            _event.CreationDate = DateTime.Now;
             if (verifyFiles(files))
             {
                 try
                 {
 
-                    _event.themeid = theme;
-                    _event.hostedbyid = hostedby;
-                    _event.adminid = null;
-                    _event.CreationDate = DateTime.Now;
+                    
                     _event.creatorid = spu.Get(x => x.username == User.Identity.Name).id;
                     spe.create_event(_event);
                     var path = "";
@@ -147,13 +151,19 @@ namespace EventWeb.Controllers
                 catch
                 {
                     ViewBag.Error = "error occured try again later";
-                    return View();
+                    return RedirectToAction("Create");
                 }
             }
             else
             {
+                List<University> listuniv = new List<University>();
+                listuniv = spun.GetAll().ToList();
+                ViewBag.listuniv = listuniv;
+                List<Theme> themelist = new List<Theme>();
+                themelist = spt.GetAll().ToList();
+                ViewBag.themelist = themelist;
                 ViewBag.Error = "check file extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb";
-                return View();
+                return View(_event);
             }
         }
 
@@ -222,11 +232,11 @@ namespace EventWeb.Controllers
             List<EventPicture> pics = sep.GetMany(x=>x.eventid==id).ToList();
             foreach(var item in pics)
             {
-                if (System.IO.File.Exists("../Content/eventpics/" + item.picName))
-                {
-                    System.IO.File.Delete("../Content/eventpics/" + item.picName);
+               // if (System.IO.File.Exists(Request.MapPath(@"../Content/eventpics/" + item.picName)))
+               // {
+                    System.IO.File.Delete(Request.MapPath(@"/Content/eventpics/" + item.picName));
 
-                }
+                //}
                 sep.Delete(item);
                 sep.Commit();
 
