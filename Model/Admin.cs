@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -24,10 +25,10 @@ namespace Model
         public string passwordAdmin { get; set; }
 
         public bool isSuperAdmin { get; set; }
-
-        public ICollection<Event> Event { get; set; }
-
-        public ICollection<Logs> logs { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Event> Event { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Logs> logs { get; set; }
 
 
     }

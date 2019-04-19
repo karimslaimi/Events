@@ -1,9 +1,10 @@
 ﻿
 using System.Web.Mvc;
+using System.Web.Http;
 
 namespace EventWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController :Controller
     {
         public ActionResult Unauthorized()
         {

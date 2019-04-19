@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using System.Web.Http;
+using EventWeb.App_Start;
+using System.Net.Http.Formatting;
 
 namespace EventWeb
 {
@@ -16,10 +19,14 @@ namespace EventWeb
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+
+            GlobalConfiguration.Configuration.Formatters.Clear();
+            GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
+
         }
         protected void Application_EndRequest()
         {

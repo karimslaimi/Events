@@ -15,7 +15,7 @@ namespace Service.EventFolder
         static IUnitOfWork uow = new UnitOfWork(dbf);
         public serviceEvent() : base(uow)
         {
-
+           
         }
 
 
