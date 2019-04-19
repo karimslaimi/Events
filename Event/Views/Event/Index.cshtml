@@ -39,15 +39,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.hostedby)
             </th>
-            <th>
-                @Html.DisplayNameFor(model=>model.creatorid)
-            </th>
+           
         </tr>
     
     @foreach (var eve in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => eve.EventTitle)
+               <a href="@Url.Action("Details","Event",new { id = eve.idEvent })"> @Html.DisplayFor(modelItem => eve.EventTitle)</a>
             </td>
             <td>
               @{var cdate = eve.CreationDate.ToString("{MM/dd/yyyy}");}
@@ -70,13 +68,10 @@
             <td>
                 @Html.DisplayFor(modelItem => eve.hostedby.orgname)
             </td>
+          
             <td>
-                @Html.DisplayFor(modelItem => eve.creator.username)
-            </td>
-            <td>
-            @Html.ActionLink("Edit", "Edit", new { id = eve.idEvent }) |
-            @Html.ActionLink("Details", "Details", new { id = eve.idEvent }) |
-            @Html.ActionLink("Delete", "Delete", new { id = eve.idEvent })
+          
+           
             </td>
         </tr>
     }
