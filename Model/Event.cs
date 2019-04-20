@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,23 +21,30 @@ namespace Model
 
         
         public ICollection<EventPicture> Pics { get; set; } //les photos de l'annonce
+        [JsonIgnore]
         public ICollection<Logs> logs { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("hostedby")]
         public int? hostedbyid { get; set; }
         public virtual organization hostedby { get; set; } //l'organisateur de l'evenement
-
+        [JsonIgnore]
         [ForeignKey("creator")]
         public int? creatorid { get; set; }
-        public User creator { get; set; } //le createur de l'evenement 
+        public virtual User creator { get; set; } //le createur de l'evenement 
 
-
+        [JsonIgnore]
         [ForeignKey("theme")]
         public int? themeid { get; set; }
+
+        
         public virtual Theme theme { get; set; } //le theme de l'evenement
 
+        [JsonIgnore]
         [ForeignKey("approvedBy")]
         public int? adminid { get; set; }
+
+        [JsonIgnore]
         public virtual Admin approvedBy { get; set; } //l'admin qui a approuvé l'annonce de l'evenement tant que ce champ est null 
                                              //l'evenement n'apparaitra pas sur le site
     }

@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,6 +8,7 @@ namespace Model
 {
     public class organization
     {
+        [JsonIgnore]
         [Key]
         public int idorg { get; set; }//organization id
         public string orgname { get; set; }//organization name
