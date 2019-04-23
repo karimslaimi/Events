@@ -5,11 +5,9 @@ using Model;
 using System.Web.Security;
 using System.Linq;
 using System;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
 using System.Web;
-using MessageBird;
+using Service.EventFolder;
+using System.Collections.Generic;
 
 namespace EventWeb.Controllers
 {
@@ -20,7 +18,7 @@ namespace EventWeb.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","Event");
         }
 
 
@@ -34,6 +32,7 @@ namespace EventWeb.Controllers
         [HttpPost]
         public ActionResult Signup(User _user)
         {
+            IServiceMS sms = new ServiceMS();
 
             if (ModelState.IsValid)
             {
@@ -41,7 +40,7 @@ namespace EventWeb.Controllers
                 Random rand = new Random();
                 _user.activated = new string(Enumerable.Repeat(chars, 36).Select(s => s[rand.Next(36)]).ToArray());
                 spu.register_user(_user);
-                SendVerificationMail(_user.id, _user.activated);
+                sms.sendMail(_user.mail,"verify your mail", "http://localhost:8080/User/verifymail/?id=" + _user.id+ "&key=" + _user.activated);
                 return RedirectToAction("index");
             }
             else
@@ -70,29 +69,7 @@ namespace EventWeb.Controllers
 
         }
 
-        public void SendVerificationMail(int id, string key)
-        {
-            try
-            {
-                string sendermail = System.Configuration.ConfigurationManager.AppSettings["SenderMail"].ToString();
-                string senderpassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                client.EnableSsl = true;
-                client.Timeout = 1000000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                MailMessage mailMessage = new MailMessage(sendermail, spu.GetById(id).mail, "verify your mail", "http://localhost:8080/User/verifymail/?id=" + id + "&key=" + key);
-                client.Credentials = new NetworkCredential(sendermail, senderpassword);
-                mailMessage.IsBodyHtml = true;
-                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
-                client.Send(mailMessage);
-
-            }
-            catch (Exception)
-            {
-
-            }
-        }
+        
 
         // GET: User/Create
         public ActionResult login()
@@ -165,18 +142,7 @@ namespace EventWeb.Controllers
 
 
 
-        private void passwordsms(string phone,string key) {
-
-            const string YourAccessKey = "PlARM4zTsShj1IDg9q3Fwa3UM";
-            Client client = Client.CreateDefault(YourAccessKey);
-             long Msisdn = long.Parse("00216"+phone);
-
-            MessageBird.Objects.Message message =
-            client.SendMessage("karim", key, new[] { Msisdn });
-
-
-
-        }
+        
 
         
         //this methode will redirect the user where he can put his credentials mail or phone number
@@ -189,9 +155,9 @@ namespace EventWeb.Controllers
         public ActionResult recoverPassword(string credentials)
                         
         {
-           
+            IServiceMS sms = new ServiceMS();
 
-            User _user = spu.Get(x=>x.phone==credentials||x.phone==credentials);
+            User _user = spu.Get(x=>x.phone==credentials||x.mail==credentials);
             if (_user != null)
             {
                 const string chars = "0123456789";
@@ -203,7 +169,7 @@ namespace EventWeb.Controllers
                 Response.Cookies.Add(cookie);
                 
               
-               //passwordsms(_user.phone, key);
+               sms.sendSMS(key,_user.phone);
                 // task.Wait();
                 ViewBag.userid = _user.id;
                 return View();
@@ -274,6 +240,15 @@ namespace EventWeb.Controllers
             return RedirectToAction("login");
         }
 
+        [CustomAuthorizeAttribute(Roles = "User")]
+        public ActionResult MyEvents()
+        {
+            IserviceEvent spe = new serviceEvent();
+
+            List<Event> eve = spe.GetMany(x => x.creator.username == User.Identity.Name).ToList();
+
+            return View(eve);
+        }
 
 
     }

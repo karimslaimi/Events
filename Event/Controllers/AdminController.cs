@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
+
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+
 using EventWeb.Security;
 using Model;
 using Service;
@@ -97,13 +98,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-        
-        
+  
         
         public ActionResult profile()
         {
@@ -165,7 +160,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
-        // POST: Admin/Edit/5
+       
         [HttpPost]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         [ValidateAntiForgeryToken]
@@ -183,7 +178,7 @@ namespace EventWeb.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+       
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult Delete(int? id)
         {
@@ -201,8 +196,9 @@ namespace EventWeb.Controllers
 
             return View();
         }
+
+
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
-        // POST: Admin/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -219,7 +215,7 @@ namespace EventWeb.Controllers
         }
         
 
-        //GET:Admin/newsletter
+       
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult Newsletter()
@@ -234,21 +230,12 @@ namespace EventWeb.Controllers
         [HttpPost]
         public ActionResult Newsletter(string obj,string body)
         {
+            IServiceMS sms = new ServiceMS();
+            IserviceNL spnl = new serviceNL();
             try
             {
-                string sendermail = System.Configuration.ConfigurationManager.AppSettings["SenderMail"].ToString();
-                string senderpassword= System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                client.EnableSsl = true;
-                client.Timeout = 1000000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                MailMessage mailMessage = new MailMessage(sendermail, "karim-nar@live.fr", obj, body);
-                client.Credentials = new NetworkCredential(sendermail, senderpassword);
-                mailMessage.IsBodyHtml = true;
-                mailMessage.BodyEncoding = UTF8Encoding.UTF8;
-                client.Send(mailMessage);
-
+                string mails = spnl.GetAll().SelectMany(a => a.mailsubs.Split(',')).ToString();
+                sms.sendMail(mails, obj, body);
             }
             catch(Exception)
             {
@@ -267,6 +254,44 @@ namespace EventWeb.Controllers
             return View();
         }
 
+
+
+        public ActionResult loadorg(int idUniv)
+        {
+            IserviceOrganization spo = new serviceOrganization();
+            return Json(spo.GetMany(x => x.idUniv == idUniv).Select(s => new {
+                Id = s.idorg,
+                Name = s.orgname
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Organizations()
+        {
+            IserviceUniv spu = new serviceUniv();
+            List<University> listuniv = new List<University>();
+            listuniv = spu.GetAll().ToList();
+            ViewBag.listuniv = listuniv;
+            return View();
+        }
+
+        public ActionResult AddOrganization()
+        {
+            IserviceUniv spu = new serviceUniv();
+            List<University> listuniv = new List<University>();
+            listuniv = spu.GetAll().ToList();
+            ViewBag.listuniv = listuniv;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddOrganization(organization org,int univ)
+        {
+            org.idUniv = univ;
+            IserviceOrganization spo = new serviceOrganization();
+            spo.Add(org);
+            spo.Commit();
+
+            return RedirectToAction("Organizations");
+        }
 
     }
 }

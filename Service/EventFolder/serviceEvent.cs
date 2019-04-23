@@ -28,7 +28,9 @@ namespace Service.EventFolder
             eve.adminid = idadmin;
             this.Update(eve);
             this.Commit();
-            
+            IServiceMS sms = new ServiceMS();
+            sms.sendSMS("votre annonce :" + eve.EventTitle + " a été approuver", eve.creator.phone);
+            sms.sendMail(eve.creator.mail, "annonce accepté", "votre annonce :" + eve.EventTitle + "a été approuvé vous pouvez la consulter sur notre siteweb");
         }
 
         public void create_event(Event _event)
@@ -39,8 +41,12 @@ namespace Service.EventFolder
 
         public void refuseEvent(int eventid)
         {
-            this.Delete(this.GetById(eventid));
+            Event eve = this.GetById(eventid);
+            this.Delete(eve);
             this.Commit();
+            IServiceMS sms = new ServiceMS();
+            sms.sendSMS("votre annonce :" + eve.EventTitle + " n'a pas été approuvé", eve.creator.phone);
+            sms.sendMail(eve.creator.mail, "annonce réfusé", "votre annonce :" + eve.EventTitle + " n'a pas été approuvé");
         }
 
         public void edit_event(Event _event)

@@ -1,7 +1,7 @@
 ﻿using Model;
 
 
-namespace Service.Univ
+namespace Service
 {
     public interface IserviceUniv:IservicePattern<University>
     {

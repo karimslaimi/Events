@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Model.organization>
+
+@{
+    ViewBag.Title = "Organizations";
+    Layout = "~/Views/Shared/Adminator.cshtml";
+}
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#universities').on('change', function () {
+
+                var idUniv = $('#universities option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    data: { idUniv: idUniv },
+                    url: '@Url.Action("loadorg","Admin")',
+                    success: function (result) {
+                       //var organizations = JSON.parse(result);
+                        var output ="<table><thead><tr><th>OrgName</th></thead><tbody>";
+                        for (var i in result) {
+                            output +=
+                                "<tr><td>" +
+                                result[i].Name +
+                                "</td></tr>"
+                                
+                        }
+                        output += "</tbody></table>";
+                        $('#organizations').html(output);
+                        $("table").addClass("table");
+
+                    }
+                });
+            });
+        });
+
+</script>
+
+
+<div class="form-group">
+    <label class="control-label col-md-2">University</label>
+    <div class="col-md-10">
+
+        <select class="form-control"  id="universities">
+            <option value="-1">select university</option>
+            @foreach (var university in ViewBag.listuniv)
+            {
+                <option value="@university.idUniv">@university.UnivName</option>
+
+            }
+
+        </select>
+
+    </div>
+    </div>
+<div id="organizations">
+
+</div>
+<div style="margin-left:14px;">
+    @Html.ActionLink("add organization", "AddOrganization","Admin",new { @class= "btn cur-p btn-outline-primary btn-rounded waves-effect" })
+</div>

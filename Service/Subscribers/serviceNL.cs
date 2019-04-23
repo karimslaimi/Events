@@ -3,14 +3,13 @@ using Infrastructure;
 using Model;
 using MyFinance.Data.Infrastructure;
 
-
 namespace Service
-{ 
-   public class serviceUniv:servicePattern<University>,IserviceUniv
+{
+    public class serviceNL:servicePattern<Subscribers>, IserviceNL
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
         static IUnitOfWork uow = new UnitOfWork(dbf);
-        public serviceUniv() : base(uow)
+        public serviceNL() : base(uow)
         {
 
         }

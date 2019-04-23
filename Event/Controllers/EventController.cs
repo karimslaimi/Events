@@ -5,8 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using Model;
 using EventWeb.Security;
-using Service.Univ;
 using Service;
+
 using Service.Themes;
 using System.Web;
 using System.IO;
@@ -240,9 +240,13 @@ namespace EventWeb.Controllers
                 sep.Delete(item);
                 sep.Commit();
 
+
             }
            
             spe.refuseEvent(id);
+          
+         
+
             return RedirectToAction("EventNotApproved");
         }
 
@@ -267,6 +271,7 @@ namespace EventWeb.Controllers
             log.date = DateTime.Now;
             spl.Add(log);
             spl.Commit();
+          
             return RedirectToAction("EventNotApproved");
         }
 

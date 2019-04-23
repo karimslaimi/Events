@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Model.Event>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MyEvents</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+ 
+    <table class="table">
+        <tr>
+           
+           
+          
+           
+            <th>
+                @Html.DisplayNameFor(model => model.EventTitle)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+         
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.EventTitle)
+            </td>
+
+            <td>
+                @{var edate = item.EventDate.ToString("{MM/dd/yyyy}");}
+                @Html.DisplayFor(modelItem => edate)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Event", new { id = item.idEvent }, htmlAttributes: new { @class= "btn cur-p btn-outline-primary" }) |
+                @Html.ActionLink("Details", "Details", "Event", new { id = item.idEvent }, htmlAttributes: new { @class = "btn cur-p btn-outline-primary" }) |
+                @Html.ActionLink("Delete", "Delete", "Event", new { id = item.idEvent }, htmlAttributes: new { @class = "btn cur-p btn-outline-primary" })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>
