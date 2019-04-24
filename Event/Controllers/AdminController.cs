@@ -11,6 +11,7 @@ using System.Web.Security;
 using EventWeb.Security;
 using Model;
 using Service;
+using Service.EventFolder;
 
 namespace EventWeb.Controllers
 {
@@ -91,14 +92,31 @@ namespace EventWeb.Controllers
             return View();
         }
 
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         // GET: Admin
         public ActionResult Index()
         {
+            
 
             return View();
         }
 
-  
+            public JsonResult Univstats()
+        {
+            IserviceEvent spe = new serviceEvent();
+            IserviceUniv spun = new serviceUniv();
+            int total = spe.GetAll().Count();
+            List<Univstat> univstat = new List<Univstat>(spun.GetAll().Select(x => new Univstat { id = x.idUniv, name = x.UnivName }).ToList());
+
+            foreach (Univstat i in univstat)
+            {
+                i.count = spe.GetMany(x => x.hostedby.idUniv == i.id).Count();
+                i.ratio = (i.count * 100) / total;
+            }
+            ViewBag.univstat = univstat;
+
+            return Json(univstat.Select(x=>new { name=x.name,y=x.count} ),JsonRequestBehavior.AllowGet);
+        }
         
         public ActionResult profile()
         {
@@ -294,4 +312,14 @@ namespace EventWeb.Controllers
         }
 
     }
+     public class Univstat
+    {
+
+        public int id { get; set; }
+        public string name { get; set; }
+        public int count { get; set; }
+        public float ratio { get; set; }
+
+    }
 }
+

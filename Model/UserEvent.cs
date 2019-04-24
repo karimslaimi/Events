@@ -1,6 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model
 {
@@ -8,8 +8,14 @@ namespace Model
     {
         [Key]
         public int idUsev { get; set; }
-        public User User { get; set; }
-        public Event Event { get;set; }
+
+        [ForeignKey("User")]
+        public int userid { get; set; }
+        public virtual User User { get; set; }
+
+        [ForeignKey("Event")]
+        public int eventid { get; set; }
+        public virtual Event Event { get;set; }
 
         public bool participation { get; set; }
 
