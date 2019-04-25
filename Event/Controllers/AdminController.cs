@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -117,7 +118,18 @@ namespace EventWeb.Controllers
 
             return Json(univstat.Select(x=>new { name=x.name,y=x.count} ),JsonRequestBehavior.AllowGet);
         }
-        
+
+
+        public JsonResult Eventstat()
+        {
+            IserviceEvent spe = new serviceEvent();
+            DateTimeFormatInfo mn = new DateTimeFormatInfo();
+            var eve = spe.GetAll().GroupBy(s => s.EventDate.Month).Select(s=>new {month= mn.GetAbbreviatedMonthName(s.Key),count=s.Count()}).OrderBy(s=>s.month).ToList();
+            return Json(eve.Select(x => new { val= x.count, mon = (x.month) }), JsonRequestBehavior.AllowGet);
+        }
+
+
+
         public ActionResult profile()
         {
 
