@@ -1,7 +1,7 @@
 ﻿using Model;
 
 
-namespace Service.Themes
+namespace Service
 {
     public interface IserviceTheme:IservicePattern<Theme>
     {

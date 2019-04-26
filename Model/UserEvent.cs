@@ -20,6 +20,6 @@ namespace Model
         public bool participation { get; set; }
 
         [Range(0, 5,ErrorMessage = "Value must be between 0 and 5.")]
-        public int star { get; set; }
+        public int? star { get; set; }
     }
 }

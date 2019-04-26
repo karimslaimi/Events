@@ -8,6 +8,8 @@ using System;
 using System.Web;
 using Service.EventFolder;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EventWeb.Controllers
 {
@@ -33,12 +35,35 @@ namespace EventWeb.Controllers
         public ActionResult Signup(User _user)
         {
             IServiceMS sms = new ServiceMS();
+            if (spu.Get(x => x.username == _user.username) != null)
+            {
+                ViewBag.error = "username exists";
+                ModelState.AddModelError(string.Empty, "username exists");
+            }
+            if (spu.Get(x => x.mail == _user.mail) != null)
+            {
+                ViewBag.error = "mail exists";
+                ModelState.AddModelError(string.Empty, "mail exists");
+            }
+            if (spu.Get(x => x.phone == _user.phone) != null)
+            {
+                ViewBag.error = "phone number exists";
+                ModelState.AddModelError(string.Empty, "phone number exists");
+            }
+          
 
             if (ModelState.IsValid)
             {
+              
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 Random rand = new Random();
                 _user.activated = new string(Enumerable.Repeat(chars, 36).Select(s => s[rand.Next(36)]).ToArray());
+                //hash the password
+                SHA256 hash = new SHA256CryptoServiceProvider();
+                Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_user.password);
+                Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+                _user.password=BitConverter.ToString(encodedBytes);
+                /*******/
                 spu.register_user(_user);
                 sms.sendMail(_user.mail,"verify your mail", "http://localhost:8080/User/verifymail/?id=" + _user.id+ "&key=" + _user.activated);
                 return RedirectToAction("index");
@@ -71,7 +96,7 @@ namespace EventWeb.Controllers
 
         
 
-        // GET: User/Create
+        
         public ActionResult login()
         {
             return View();
@@ -81,17 +106,24 @@ namespace EventWeb.Controllers
         [HttpPost]
         public ActionResult login(User _user)
         {
-            if (ModelState.IsValid && spu.AuthUser(_user.username, _user.password))
-            {//check if the user model is valid
+
+            if (ModelState.IsValid)
+            {
+                SHA256 hash = new SHA256CryptoServiceProvider();
+                Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_user.password);
+                Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+                _user.password = BitConverter.ToString(encodedBytes);
+
+
                 if (spu.Get(x => x.username == _user.username).activated != "active")
                 {
                     ViewBag.ErrorMessage = "verify your mail";
                     return View();
                 }
-                else
+                else if ( spu.AuthUser(_user.username, _user.password))
                 {
-                    FormsAuthentication.SetAuthCookie(_user.username, true);//add username to cookies
-                    this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;//store the id of the user in the session
+                    FormsAuthentication.SetAuthCookie(_user.username, true);
+                    this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;
                     this.Session["Username"] = _user.username.ToString();
                     return RedirectToAction("index");
                 }

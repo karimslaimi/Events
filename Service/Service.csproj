@@ -108,6 +108,8 @@
     <Compile Include="Themes\serviceTheme.cs" />
     <Compile Include="Univ\IserviceUniv.cs" />
     <Compile Include="Univ\serviceUniv.cs" />
+    <Compile Include="UserEvent\IserviceUserEvent.cs" />
+    <Compile Include="UserEvent\serviceUserEvent.cs" />
     <Compile Include="User\IserviceUser.cs" />
     <Compile Include="User\serviceUser.cs" />
   </ItemGroup>

@@ -102,7 +102,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
-            public JsonResult Univstats()
+        public JsonResult Univstats()
         {
             IserviceEvent spe = new serviceEvent();
             IserviceUniv spun = new serviceUniv();
@@ -126,6 +126,18 @@ namespace EventWeb.Controllers
             DateTimeFormatInfo mn = new DateTimeFormatInfo();
             var eve = spe.GetAll().GroupBy(s => s.EventDate.Month).Select(s=>new {month= mn.GetAbbreviatedMonthName(s.Key),count=s.Count()}).OrderBy(s=>s.month).ToList();
             return Json(eve.Select(x => new { val= x.count, mon = (x.month) }), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult Themestats()
+        {
+            IserviceEvent spe = new serviceEvent();
+            var eve = spe.GetAll().GroupBy(s => s.theme).Select(s => new { theme = s.Key.designation, count = s.Count() });
+
+
+            return Json(eve.Select(x => new { theme = x.theme, val = x.count }), JsonRequestBehavior.AllowGet);
+
+
         }
 
 

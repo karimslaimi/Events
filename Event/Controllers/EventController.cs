@@ -7,7 +7,6 @@ using Model;
 using EventWeb.Security;
 using Service;
 
-using Service.Themes;
 using System.Web;
 using System.IO;
 
@@ -122,7 +121,7 @@ namespace EventWeb.Controllers
             {
                 try
                 {
-
+                    
                     
                     _event.creatorid = spu.Get(x => x.username == User.Identity.Name).id;
                     spe.create_event(_event);
@@ -165,6 +164,24 @@ namespace EventWeb.Controllers
                 ViewBag.Error = "check file extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb";
                 return View(_event);
             }
+        }
+        [CustomAuthorizeAttribute(Roles ="User")]                                               
+        [HttpPost]
+        public JsonResult Participate(int ide)
+        {
+            IServiceUserEvent spue = new serviceUserEvent();
+            int uid = spu.Get(x => x.username == User.Identity.Name).id;
+
+            if (spue.Get(x => x.userid == uid && x.eventid == ide) == null) { // if the user didn't participate before
+            spue.participate(uid, ide);
+                return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
+            }
+            else
+            {
+                spue.Delete(spue.Get(x => x.userid == uid && x.eventid == ide));
+                return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
+            }
+
         }
 
 

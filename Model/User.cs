@@ -25,7 +25,7 @@ namespace Model
         public string phone { get; set; }
         [JsonIgnore]
         [Required]
-        [MinLength(8,ErrorMessage ="password must be at least 8 characters"),MaxLength(20,ErrorMessage ="password must be less than 20 charaters")]
+        [MinLength(8,ErrorMessage ="password must be at least 8 characters")]
         public string password { get; set; }
         [JsonIgnore]
         public string activated { get; set; }

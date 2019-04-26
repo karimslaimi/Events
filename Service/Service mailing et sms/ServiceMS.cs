@@ -48,7 +48,7 @@ namespace Service
             long Msisdn = long.Parse("00216" + phone);
 
             MessageBird.Objects.Message message =
-            client.SendMessage("Annonce.RNU", body, new[] { Msisdn });
+            client.SendMessage("AnnonceRNU", body, new[] { Msisdn });
         }
     }
 }

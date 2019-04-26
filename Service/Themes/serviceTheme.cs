@@ -4,7 +4,7 @@ using Model;
 using MyFinance.Data.Infrastructure;
 
 
-namespace Service.Themes
+namespace Service
 {
     public class serviceTheme:servicePattern<Theme>,IserviceTheme
     {

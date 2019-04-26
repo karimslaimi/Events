@@ -11,14 +11,50 @@
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#participation').on("click", function () {
+            
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Participate","Event")',
+                data: { ide: $(this).val() },
+                success: function (result) {
+
+                    if (result.IsOk && result.Action == "participated") {
+                        $("#participation").removeClass();
+                        $("#participation").addClass("btn btn-success");
+                        console.log("success");
+                    } else if (result.IsOk && result.Action == "participate") {
+                        $("#participation").removeClass();
+                        $("#participation").addClass("btn btn-primary");
+                        console.log("primary");
+                    }
+
+
+
+                }
+            });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h4>Event</h4>
         <hr />
+        <div>Participate:
+        
+        <button id="participation" class="" value="@Model.idEvent" name="button">Participate</button>
+        </div>
+
+
+
         <dl class="dl-horizontal">
 
-
+            
 
 
             <dt>
