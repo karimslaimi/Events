@@ -13,8 +13,8 @@ namespace Service.EventFolder
         void create_event(Event _event);
         List<Event> search_Event(string keyword);
         List<Event> search_event_date(DateTime date);
-        List<Event> search_event_location(string location);
-        List<Event> search_event_theme(string theme);
+        List<Event> search_event_university(int univid);
+        List<Event> search_event_theme(int theme);
         void acceptEvent(int eventid,int idadmin);
         void refuseEvent(int eventid);
 

@@ -16,21 +16,61 @@
     <script>
         $(document).ready(function () {
         $('#participation').on("click", function () {
-            
+
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("Participate","Event")',
+                url: '@Url.Action("Participate", "Event")',
                 data: { ide: $(this).val() },
                 success: function (result) {
 
                     if (result.IsOk && result.Action == "participated") {
+                        $("#participation").text("don't participate");
                         $("#participation").removeClass();
                         $("#participation").addClass("btn btn-success");
+                        @ViewBag.participate=true;
+
                         console.log("success");
                     } else if (result.IsOk && result.Action == "participate") {
+                        $("#participation").text("participate");
                         $("#participation").removeClass();
                         $("#participation").addClass("btn btn-primary");
-                        console.log("primary");
+                        console.log("don't participate");
+                         @ViewBag.participate=false;
+
+                    }
+
+
+
+                }
+            });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+        $('#like').on("click", function () {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Like", "Event")',
+                data: { ide: $(this).val() },
+                success: function (result) {
+
+                    if (result.IsOk && result.Action == "liked") {
+                        $("#like").text("unlike");
+                        $("#like").removeClass();
+                        $("#like").addClass("btn btn-success");
+                        @ViewBag.participate=true;
+
+                        console.log("success");
+                    } else if (result.IsOk && result.Action == "unlike") {
+                        $("#like").text("like");
+                        $("#like").removeClass();
+                        $("#like").addClass("btn btn-primary");
+                       
+                         @ViewBag.like=false;
+
                     }
 
 
@@ -45,16 +85,21 @@
     <div class="container">
         <h4>Event</h4>
         <hr />
-        <div>Participate:
-        
-        <button id="participation" class="" value="@Model.idEvent" name="button">Participate</button>
+        <div>
+            Participate:
+
+            <button id="participation" class=" @(@ViewBag.participate == true ? "btn btn-success" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "don't participate".ToString() : "participate".ToString())</button>
         </div>
 
+        <div>
+            like:
 
+            <button id="like" class=" @(@ViewBag.like == true ? "btn btn-success" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "unlike".ToString() : "like".ToString())</button>
+        </div>
 
         <dl class="dl-horizontal">
 
-            
+
 
 
             <dt>
@@ -130,7 +175,7 @@
             <dd>
                 @foreach (var item in ViewBag.pic)
                 {
-                   <img src="~/Content/eventpics/@item.picName" />
+                    <img src="~/Content/eventpics/@item.picName" />
                 }
 
             </dd>

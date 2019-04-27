@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -77,9 +78,20 @@ namespace EventWeb.Controllers
         public ActionResult logout()
         {
             FormsAuthentication.SignOut();
-            Session.Abandon(); // it will clear the session at the end of request
-            Response.Cookies.Clear();
-            return RedirectToAction("login");
+            Session.Abandon();
+
+            // clear authentication cookie
+            HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            cookie1.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie1);
+
+            // clear session cookie (not necessary for your current problem but i would recommend you do it anyway)
+            SessionStateSection sessionStateSection = (SessionStateSection)WebConfigurationManager.GetSection("system.web/sessionState");
+            HttpCookie cookie2 = new HttpCookie(sessionStateSection.CookieName, "");
+            cookie2.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie2);
+
+           return RedirectToAction("login");
         }
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]

@@ -40,11 +40,25 @@ namespace EventWeb.Controllers
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
+            IServiceUserEvent spue = new serviceUserEvent();
+
             Event _event = spe.GetById(id);
             List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
-           // var img=pic.Where()
+            // var img=pic.Where()
+            ViewBag.participate = false;
+            if (User.Identity.IsAuthenticated) {
+                int uid = spu.Get(x => x.username == User.Identity.Name).id;
+                ViewBag.participate = spue.Get(x => x.eventid == id && x.userid == uid) != null;
+            }
+            ViewBag.like = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                int uid = spu.Get(x => x.username == User.Identity.Name).id;
+                ViewBag.like = spue.Get(x => x.eventid == id && x.userid == uid) != null;
+            }
             ViewData.Model = _event;
             ViewBag.pic = pic;
+           
             return View();
         }
 
@@ -165,7 +179,9 @@ namespace EventWeb.Controllers
                 return View(_event);
             }
         }
-        [CustomAuthorizeAttribute(Roles ="User")]                                               
+
+
+        [CustomAuthorizeAttribute(Roles ="User")]
         [HttpPost]
         public JsonResult Participate(int ide)
         {
@@ -179,6 +195,7 @@ namespace EventWeb.Controllers
             else
             {
                 spue.Delete(spue.Get(x => x.userid == uid && x.eventid == ide));
+                spue.Commit();
                 return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
             }
 
@@ -198,7 +215,7 @@ namespace EventWeb.Controllers
             }
         }
 
-
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = "User")]
         [HttpPost]
         public ActionResult Edit(Event _event)
@@ -292,6 +309,29 @@ namespace EventWeb.Controllers
             return RedirectToAction("EventNotApproved");
         }
 
+
+
+        [CustomAuthorizeAttribute(Roles = "User")]
+        [HttpPost]
+        public JsonResult Like(int ide)
+        {
+            IServiceUserEvent spue = new serviceUserEvent();
+            int uid = spu.Get(x => x.username == User.Identity.Name).id;
+            UserEvent uev = spue.Get(x => x.userid == uid && x.eventid == ide);
+            if (uev== null || uev.like==false)
+            { // if the user didn't like the event before
+                spue.like(uid, ide);
+                return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
+            }
+            else
+            {
+                uev.like = false;
+                spue.Update(uev);
+                spue.Commit();
+                return Json(new { IsOk = true, Eventid = ide, Action = "unlike" });
+            }
+
+        }
 
 
 

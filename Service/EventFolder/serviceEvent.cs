@@ -80,17 +80,17 @@ namespace Service.EventFolder
             return eve;
         }
 
-        public List<Event> search_event_location(string location)
+        public List<Event> search_event_university(int univid)
         {
             List<Event> eve = new List<Event>();
-            eve = this.GetMany(x => x.EventLocation.Contains(location)).ToList();
+            eve = this.GetMany(x => x.hostedby.idUniv==univid).ToList();
             return eve;
         }
 
-        public List<Event> search_event_theme(string theme)
+        public List<Event> search_event_theme(int theme)
         {
             List<Event> eve = new List<Event>();
-            eve=this.GetMany(x=>x.theme.designation.Contains(theme)).ToList();
+            eve=this.GetMany(x=>x.themeid==theme).ToList();
             return eve;
         }
     }
