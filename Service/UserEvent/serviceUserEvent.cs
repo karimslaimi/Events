@@ -28,10 +28,11 @@ namespace Service
             }
             else
             {
-                uev.eventid = ide;
-                uev.userid = idu;
-                uev.participation = true;
-                this.Add(uev);
+                UserEvent uevi = new UserEvent();
+                uevi.eventid = ide;
+                uevi.userid = idu;
+                uevi.participation = true;
+                this.Add(uevi);
                 this.Commit();
             }
            
@@ -45,7 +46,10 @@ namespace Service
             uev = this.Get(x => x.eventid == ide && x.userid == idu);
             if (uev != null)
             {
-                uev.participation = true;
+                if (uev.like == false) { uev.like = true; }
+                
+                if (uev.like == true) { uev.like = false; }
+                   
                 this.Update(uev);
                 this.Commit();
             }

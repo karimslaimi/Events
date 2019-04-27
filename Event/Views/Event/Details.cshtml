@@ -26,7 +26,7 @@
                     if (result.IsOk && result.Action == "participated") {
                         $("#participation").text("don't participate");
                         $("#participation").removeClass();
-                        $("#participation").addClass("btn btn-success");
+                        $("#participation").addClass("btn btn-danger");
                         @ViewBag.participate=true;
 
                         console.log("success");
@@ -60,15 +60,16 @@
                     if (result.IsOk && result.Action == "liked") {
                         $("#like").text("unlike");
                         $("#like").removeClass();
-                        $("#like").addClass("btn btn-success");
+                        $("#like").addClass("btn btn-danger");
                         @ViewBag.participate=true;
 
                         console.log("success");
                     } else if (result.IsOk && result.Action == "unlike") {
                         $("#like").text("like");
                         $("#like").removeClass();
+                        console.log("remove class");
                         $("#like").addClass("btn btn-primary");
-                       
+                        console.log("unlike");
                          @ViewBag.like=false;
 
                     }
@@ -88,13 +89,13 @@
         <div>
             Participate:
 
-            <button id="participation" class=" @(@ViewBag.participate == true ? "btn btn-success" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "don't participate".ToString() : "participate".ToString())</button>
+            <button id="participation" class=" @(@ViewBag.participate == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "don't participate".ToString() : "participate".ToString())</button>
         </div>
 
         <div>
             like:
 
-            <button id="like" class=" @(@ViewBag.like == true ? "btn btn-success" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "unlike".ToString() : "like".ToString())</button>
+            <button id="like" class=" @(@ViewBag.like == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.like == true ? "unlike".ToString() : "like".ToString())</button>
         </div>
 
         <dl class="dl-horizontal">

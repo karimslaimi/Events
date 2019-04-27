@@ -29,8 +29,8 @@ namespace Service.EventFolder
             this.Update(eve);
             this.Commit();
             IServiceMS sms = new ServiceMS();
-            sms.sendSMS("votre annonce :" + eve.EventTitle + " a été approuver", eve.creator.phone);
-            sms.sendMail(eve.creator.mail, "annonce accepté", "votre annonce :" + eve.EventTitle + "a été approuvé vous pouvez la consulter sur notre siteweb");
+           // sms.sendSMS("votre annonce :" + eve.EventTitle + " a été approuver", eve.creator.phone);
+           // sms.sendMail(eve.creator.mail, "annonce accepté", "votre annonce :" + eve.EventTitle + "a été approuvé vous pouvez la consulter sur notre siteweb");
         }
 
         public void create_event(Event _event)

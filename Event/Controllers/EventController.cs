@@ -48,13 +48,15 @@ namespace EventWeb.Controllers
             ViewBag.participate = false;
             if (User.Identity.IsAuthenticated) {
                 int uid = spu.Get(x => x.username == User.Identity.Name).id;
-                ViewBag.participate = spue.Get(x => x.eventid == id && x.userid == uid) != null;
+                if(spue.Get(x => x.eventid == id && x.userid == uid)!=null)
+                ViewBag.participate = spue.Get(x => x.eventid == id && x.userid == uid).participation;
             }
             ViewBag.like = false;
             if (User.Identity.IsAuthenticated)
             {
                 int uid = spu.Get(x => x.username == User.Identity.Name).id;
-                ViewBag.like = spue.Get(x => x.eventid == id && x.userid == uid) != null;
+                if (spue.Get(x => x.eventid == id && x.userid == uid) != null)
+                    ViewBag.like = spue.Get(x => x.eventid == id && x.userid == uid).like;
             }
             ViewData.Model = _event;
             ViewBag.pic = pic;
@@ -187,16 +189,30 @@ namespace EventWeb.Controllers
         {
             IServiceUserEvent spue = new serviceUserEvent();
             int uid = spu.Get(x => x.username == User.Identity.Name).id;
-
-            if (spue.Get(x => x.userid == uid && x.eventid == ide) == null) { // if the user didn't participate before
+            UserEvent uev = new UserEvent();
+            uev = spue.Get(x => x.userid == uid && x.eventid == ide);
+            if (uev == null) { // if the user didn't participate or like before
             spue.participate(uid, ide);
                 return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
             }
             else
             {
-                spue.Delete(spue.Get(x => x.userid == uid && x.eventid == ide));
-                spue.Commit();
-                return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
+                if (uev.participation == false)
+                {
+                    uev.participation = true;
+                    spue.Update(uev);
+                    spue.Commit();
+                    return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
+
+                }
+                else
+                {
+                    uev.participation = false;
+                    spue.Update(uev);
+                    spue.Commit();
+                    return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
+                }
+               
             }
 
         }
@@ -317,24 +333,42 @@ namespace EventWeb.Controllers
         {
             IServiceUserEvent spue = new serviceUserEvent();
             int uid = spu.Get(x => x.username == User.Identity.Name).id;
-            UserEvent uev = spue.Get(x => x.userid == uid && x.eventid == ide);
-            if (uev== null || uev.like==false)
+            UserEvent uev = new UserEvent();
+                uev=spue.Get(x => x.userid == uid && x.eventid == ide);
+            if (uev== null )
             { // if the user didn't like the event before
                 spue.like(uid, ide);
                 return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
             }
-            else
+           else
             {
-                uev.like = false;
-                spue.Update(uev);
-                spue.Commit();
-                return Json(new { IsOk = true, Eventid = ide, Action = "unlike" });
+
+                if (uev.like == false)
+                {
+                    uev.like = true;
+                    spue.Update(uev);
+                    spue.Commit();
+                    return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
+                }
+                else
+                {
+                    uev.like = false;
+                    spue.Update(uev);
+                    spue.Commit();
+                    return Json(new { IsOk = true, Eventid = ide, Action = "unlike" });
+                }
+                
             }
 
         }
 
-
-
+        [CustomAuthorizeAttribute(Roles = "User")]
+        public ActionResult MyEvents()
+        {
+            int uid = spu.Get(x => x.username == User.Identity.Name).id;
+            List<Event> eve = spe.GetMany(x => x.creatorid == uid).ToList();
+            return View(eve);
+        }
 
 
 
