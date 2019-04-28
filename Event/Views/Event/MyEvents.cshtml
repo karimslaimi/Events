@@ -72,7 +72,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <span class="@(item.adminid == null ? "text-danger".ToString() : "text-success".ToString())"> @(item.adminid == null ? "not approuved".ToString() : "approuved".ToString())</span>
+                <span class="@(item.adminid == null ? "badge badge-danger".ToString() : "badge badge-success".ToString())"> @(item.adminid == null ? "not approuved".ToString() : "approuved".ToString())</span>
                 @Html.ActionLink("Edit", "Edit", new { id=item.idEvent }) |
                 @Html.ActionLink("Details", "Details", new { id=item.idEvent }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.idEvent })

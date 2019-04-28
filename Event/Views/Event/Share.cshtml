@@ -1,0 +1,115 @@
+﻿
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+
+<script>
+    function copyto() {
+        var temp = document.getElementById("link");
+        temp.select();
+        document.execCommand("copy");
+
+    }
+
+
+</script>
+
+
+<style>
+    #social {
+        margin: 20px 10px;
+        text-align: center;
+    }
+
+    .smGlobalBtn { /* global button class */
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #ddd; /* add border to the buttons */
+        box-shadow: 0 3px 3px #999;
+        padding: 0px;
+        text-decoration: none;
+        text-align: center;
+        color: #fff;
+        font-size: 25px;
+        font-weight: normal;
+        line-height: 2em;
+        border-radius: 27px;
+        -moz-border-radius: 27px;
+        -webkit-border-radius: 27px;
+    }
+
+    /* facebook button class*/
+    .facebookBtn {
+        background: #4060A5;
+    }
+
+        .facebookBtn:before { /* use :before to add the relevant icons */
+            font-family: "FontAwesome";
+            content: "\f09a"; /* add facebook icon */
+        }
+
+        .facebookBtn:hover {
+            color: #4060A5;
+            background: #fff;
+            border-color: #4060A5; /* change the border color on mouse hover */
+        }
+
+    /* twitter button class*/
+    .twitterBtn {
+        background: #00ABE3;
+    }
+
+        .twitterBtn:before {
+            font-family: "FontAwesome";
+            content: "\f099"; /* add twitter icon */
+        }
+
+        .twitterBtn:hover {
+            color: #00ABE3;
+            background: #fff;
+            border-color: #00ABE3;
+        }
+    .enveloppeBtn {
+        background: #1c2833;
+    }
+
+        .enveloppeBtn:before {
+            font-family: "FontAwesome";
+            content: "\f0e0"; /* add twitter icon */
+        }
+
+        .enveloppeBtn:hover {
+            color: #1c2833;
+            background: #fff;
+            border-color: #1c2833;
+        }
+
+
+
+    input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+        input[type=text]:hover {
+        }
+</style>
+
+
+
+<div id="social">
+    <a class="facebookBtn smGlobalBtn" href="#"></a>
+    <a class="twitterBtn smGlobalBtn" href="#"></a>
+    <a class="enveloppeBtn smGlobalBtn" href="#"></a>
+</div>
+
+<br />
+<input type="text" id="link" class="form-control" readonly="readonly" value="localhost:8080/Event/Details/@ViewBag.id" />
+<a onclick="copyto()"><i class="fa fa-clipboard"></i></a>

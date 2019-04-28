@@ -373,6 +373,13 @@ namespace EventWeb.Controllers
 
 
 
+        public PartialViewResult Share(int id)
+        {
+            ViewBag.id = id;
+
+            return PartialView();
+        }
+
 
 
     }

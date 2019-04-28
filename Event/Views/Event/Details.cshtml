@@ -98,6 +98,53 @@
             <button id="like" class=" @(@ViewBag.like == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.like == true ? "unlike".ToString() : "like".ToString())</button>
         </div>
 
+        <div>
+            Share:<button class="btn btn-primary" id="sharebtn">share</button>
+
+        </div>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" style="margin:auto">Share with friends</h3>
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+
+                    </div>
+                    <div class="modal-body" id="myModalBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div >
+            </div>
+        </div>
+        
+            
+        <script>
+
+            $(document).ready(function () {
+                $('#sharebtn').click(function () {
+                    var url =' @Url.Action("Share","Event",new { id=Model.idEvent})';
+                    console.log("sharebtn");
+                    $.get(url, function (data) {
+                        console.log(url);
+                        $('#myModalBody').html(data);
+                        
+                        $('#myModal').modal('show');
+
+
+
+                    });
+
+                });
+
+
+            });
+
+        </script>
+
         <dl class="dl-horizontal">
 
 
