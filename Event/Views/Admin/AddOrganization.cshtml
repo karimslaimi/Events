@@ -1,16 +1,18 @@
 ﻿@model Model.organization
 
 @{
-    ViewBag.Title = "AddOrganization";
-    Layout = "~/Views/Shared/Adminator.cshtml";
+                /**/
+
+                ViewBag.Title = "AddOrganization";
+                Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
 <h2>AddOrganization</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-md-2">University</label>

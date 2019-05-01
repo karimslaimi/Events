@@ -11,71 +11,45 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EventTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.theme)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.hostedby)
-            </th>
-           
-        </tr>
+
+
+    @foreach (var eve in Model){
+
+
     
-    @foreach (var eve in Model) {
-        <tr>
-            <td>
-               <a href="@Url.Action("Details","Event",new { id = eve.idEvent })"> @Html.DisplayFor(modelItem => eve.EventTitle)</a>
-            </td>
-            <td>
-              @{var cdate = eve.CreationDate.ToString("{MM/dd/yyyy}");}
-                  @Html.DisplayFor(modelItem => cdate)
-            </td>
-            <td>
-                @{var edate = eve.EventDate.ToString("{MM/dd/yyyy}");}
-                @Html.DisplayFor(modelItem => edate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => eve.EventLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => eve.Description)
-            </td>
+
+        <div class="box">
             
-            <td>
-                @Html.DisplayFor(modelItem => eve.theme.designation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => eve.hostedby.orgname)
-            </td>
-          
-            <td>
-          
-           
-            </td>
-        </tr>
-    }
-    
-    </table>
+                
+               <a href="@Url.Action("Details","Event",new { id=eve.idEvent})"><img src="@Url.Content("~/Content/eventpics/id"+@eve.idEvent+"im1.jpg")" /></a>
+                
+                    
+                <div class="desc col">
+                    <a href="@Url.Action("Details","Event",new { id=eve.idEvent})"><span>@eve.EventTitle</span></a><br/>
+                    @eve.EventDate.ToString("ddd"), @eve.EventDate.ToString("MMM") @eve.EventDate.Day<br/>
+                    @eve.EventLocation<br/>
+
+                </div>
+                <div class="date col">
+                    <p class="juin">@eve.EventDate.ToString("MMMM")</p>
+                    <p class="num">@eve.EventDate.Day</p>
+                </div>
+                <ul>
+                    <li><a href="#"><i class="fa fa-share" ></i></a></li>
+                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                </ul>
+                
+                     </div>
+
+}       
+
+
 </body>
 </html>
