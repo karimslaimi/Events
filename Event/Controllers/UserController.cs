@@ -32,7 +32,7 @@ namespace EventWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Signup(User _user)
+        public ActionResult Signup(User _user ,string pw)
         {
             IServiceMS sms = new ServiceMS();
             if (spu.Get(x => x.username == _user.username) != null)
@@ -49,6 +49,10 @@ namespace EventWeb.Controllers
             {
                 ViewBag.error = "phone number exists";
                 ModelState.AddModelError(string.Empty, "phone number exists");
+            }
+            if (pw != _user.password)
+            {
+                ModelState.AddModelError(string.Empty, "passwords doesn't match");
             }
           
 
@@ -70,7 +74,7 @@ namespace EventWeb.Controllers
             }
             else
             {
-                return View(_user);
+                return View("login");
             }
 
 
@@ -99,6 +103,10 @@ namespace EventWeb.Controllers
         
         public ActionResult login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Event");
+            }
             return View();
         }
 
@@ -115,9 +123,10 @@ namespace EventWeb.Controllers
                 _user.password = BitConverter.ToString(encodedBytes);
 
 
-                if (spu.Get(x => x.username == _user.username).activated != "active")
+                if (spu.AuthUser(_user.username, _user.password) && spu.Get(x => x.username == _user.username).activated != "active")
                 {
-                    ViewBag.ErrorMessage = "verify your mail";
+                    ModelState.AddModelError(string.Empty,"activer votre compte");
+                    _user = null;
                     return View();
                 }
                 else if ( spu.AuthUser(_user.username, _user.password))
@@ -127,8 +136,15 @@ namespace EventWeb.Controllers
                     this.Session["Username"] = _user.username.ToString();
                     return RedirectToAction("index");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "nom d'utilisateur et mot de passe sont ivalide");
+                    _user = null;
+                    return View();
+                }
             }
-            return View("Index");
+            _user = null;
+            return View();
 
         }
         [Authorize]

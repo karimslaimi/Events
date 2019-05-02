@@ -90,29 +90,9 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201904171637228_ak47.cs" />
-    <Compile Include="Migrations\201904171637228_ak47.Designer.cs">
-      <DependentUpon>201904171637228_ak47.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904240200130_mp40.cs" />
-    <Compile Include="Migrations\201904240200130_mp40.Designer.cs">
-      <DependentUpon>201904240200130_mp40.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904260224298_hash.cs" />
-    <Compile Include="Migrations\201904260224298_hash.Designer.cs">
-      <DependentUpon>201904260224298_hash.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904260314548_uen.cs" />
-    <Compile Include="Migrations\201904260314548_uen.Designer.cs">
-      <DependentUpon>201904260314548_uen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904270159141_like.cs" />
-    <Compile Include="Migrations\201904270159141_like.Designer.cs">
-      <DependentUpon>201904270159141_like.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904270227418_like1.cs" />
-    <Compile Include="Migrations\201904270227418_like1.Designer.cs">
-      <DependentUpon>201904270227418_like1.cs</DependentUpon>
+    <Compile Include="Migrations\201904290000136_scar.cs" />
+    <Compile Include="Migrations\201904290000136_scar.Designer.cs">
+      <DependentUpon>201904290000136_scar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,23 +111,8 @@
     <Folder Include="configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201904171637228_ak47.resx">
-      <DependentUpon>201904171637228_ak47.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904240200130_mp40.resx">
-      <DependentUpon>201904240200130_mp40.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904260224298_hash.resx">
-      <DependentUpon>201904260224298_hash.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904260314548_uen.resx">
-      <DependentUpon>201904260314548_uen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904270159141_like.resx">
-      <DependentUpon>201904270159141_like.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904270227418_like1.resx">
-      <DependentUpon>201904270227418_like1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904290000136_scar.resx">
+      <DependentUpon>201904290000136_scar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

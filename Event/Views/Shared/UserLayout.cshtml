@@ -1,0 +1,43 @@
+﻿
+<html>
+<head>
+    <link />
+
+
+
+</head>
+
+<body>
+
+
+    <header class="header">
+        <div class="">
+            @Html.Partial("Header")
+
+        </div>
+    </header>
+
+
+
+    <div id="body">
+        <section class=" main-content clearfix">
+            @RenderBody()
+
+        </section>
+    </div>
+
+
+
+    <footer class="footer black-bgcolor">
+        <div class="">
+            @Html.Partial("Footer")
+
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

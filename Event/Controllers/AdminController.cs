@@ -136,7 +136,8 @@ namespace EventWeb.Controllers
         {
             IserviceEvent spe = new serviceEvent();
             DateTimeFormatInfo mn = new DateTimeFormatInfo();
-            var eve = spe.GetAll().GroupBy(s => s.EventDate.Month).Select(s=>new {month= mn.GetAbbreviatedMonthName(s.Key),count=s.Count()}).OrderBy(s=>s.month).ToList();
+            var eve = 
+                spe.GetAll().GroupBy(s => s.EventDate.Month).Select(s=>new {month= mn.GetAbbreviatedMonthName(s.Key),count=s.Count()}).OrderBy(s=>s.month).ToList();
             return Json(eve.Select(x => new { val= x.count, mon = (x.month) }), JsonRequestBehavior.AllowGet);
         }
 
