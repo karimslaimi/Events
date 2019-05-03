@@ -1,8 +1,4 @@
-﻿  <!-- Footer -->
-
-
-
-
+﻿<footer class=" black-bgcolor">
     <div class="container">
 
         <div class="row ">
@@ -12,22 +8,20 @@
                     <div class="card-body">
                         <h4 class="card-title">Catégories</h4>
                         <hr class="bgcouleur-rouge">
-                        <div class="card-text">
-                            <ul class="list-unstyled">
-                                <li class=""><a class="text-white" href="#">Informatique / TIC</a></li>
-                                <li class=""><a class="text-white" href="#">Sciences humaines</a></li>
-                                <li class=""><a class="text-white" href="#">Recherche scientifique</a></li>
-                                <li class=""><a class="text-white" href="#">Economique / Gestion / Droit</a></li>
-                                <li class=""><a class="text-white" href="#">Formation / Education</a></li>
-                                <li class=""><a class="text-white" href="#">Science de la médecine</a></li>
-                                <li class=""><a class="text-white" href="#">université de Monastir</a></li>
-                                <li class=""><a class="text-white" href="#">université de Sfax</a></li>
-                                <li class=""><a class="text-white" href="#">Technique / Industrie / Mécanique</a></li>
-                                <li class=""><a class="text-white" href="#">Coopération Internationale</a></li>
-                                <li class=""><a class="text-white" href="#">Physique / Chimie / Mathématique</a></li>
+                        <p class="card-text">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"><a class="text-white" href="#">Informatique / TIC</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Sciences humaines</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Recherche scientifique</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Economique / Gestion / Droit</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Formation / Education</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Science de la médecine</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Technique / Industrie / Mécanique</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Coopération Internationale</a></li>
+                                <li class="nav-item"><a class="text-white" href="#">Physique / Chimie / Mathématique</a></li>
                             </ul>
 
-                        </div>
+                        </p>
                     </div>
 
                 </div>
@@ -42,9 +36,9 @@
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item"><a class="text-white" href="#">Recherche avancée</a></li>
                                 <li class="nav-item"><a class="text-white" href="#">A propos</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Événements</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Se connecter</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Créer un événement</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("Index","Event")">Événements</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("login","User")">Se connecter</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("Create","Event")">Créer un événement</a></li>
 
                             </ul>
 
@@ -100,11 +94,11 @@
 
 
                                     <!--Twitter-->
-                                    <a class="tw-ic mr-3" role="button" href="#"><i class="fa fa-lg fa-twitter"></i></a>
+                                    <a class="tw-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-twitter"></i></a>
                                     <!--Google +-->
-                                    <a class="gplus-ic mr-3" role="button" href="#"><i class="fa fa-lg fa-google-plus-g"></i></a>
+                                    <a class="gplus-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-google-plus-g"></i></a>
                                     <!--Facebook-->
-                                    <a class="fb-ic mr-3" role="button" href="#"><i class="fa fa-lg fa-facebook-f"></i></a>
+                                    <a class="fb-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-facebook-f"></i></a>
 
                                 </div>
                             </div>
@@ -119,4 +113,3 @@
 
         <p class="m-0 text-left text-white">Copyright &copy; 2019 Portail Annonces</p>
     </div>
-    <!-- /.container -->
