@@ -1,21 +1,11 @@
-body{
-	margin:0;
-	padding:0;
-	font-family:sans-serif;
-}
 
-.container{
-	
-	margin:auto;
-	background:#f2f2f2;
-	
-}
+
 .box{
 	position:relative;
 	width:360px;
 	height:360px;
 	background:white;
-	float:left;
+	
 	margin:50px;
 	box-sizing:border-box;
 	border-radius:10px;   
@@ -59,7 +49,7 @@ body{
 .date {
     padding: 8px;
     text-align: left center;
-    margin-top: -100px;
+    margin-top: -50px;
 }
 .juin{
 	color:red;
@@ -68,56 +58,50 @@ body{
     margin-top:-5%;
 	 margin-left:8px;
 }
-ul{
-	display:flex;
-	position:absolute;
-	top:69%;
-	left:70%;
-	transform: translate(-50%,-50%);
+.box ul {
+    display: flex;
+    position: absolute;
+    top: 69%;
+    left: 70%;
+    transform: translate(-50%,-50%);
 }
 
-ul li {
-	list-style:none;
-	
+ ul.some li {
+    list-style: none;
 }
 
-ul li a{
-	width:50px;
-	height:50px;
-	background:#fff;
-	text-align:center;
-	line-height:80px;
-	font-size:30px;
-	margin:0 20px;
-	border-radius:50px;
-	position:relative;
-	overflow:hidden;
-	border:3px solid white;
-	
+ul.some li a {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    text-align: center;
+    line-height: 80px;
+    font-size: 30px;
+    margin: 0 20px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid white;
 }
 
-    ul li a .fa {
-        position: relative;
-        color: #262626;
-        transition: .5s;
-        width: 30px;
-        height: 30px;
-        backface-visibility:hidden;
+ul.some li a .fa {
+    position: relative;
+    color: #262626;
+    transition: .5s;
+    width: 30px;
+    height: 30px;
+    backface-visibility: hidden;
+}
 
+
+
+
+
+ul.some li a:hover {
+        background: #FAFAFA;
+        box-shadow: 2px 2px 2px 0px;
     }
 
-
-
-
-
-ul li a:hover{
-
-	background:#FAFAFA;
-	box-shadow:2px 2px 2px 0px;
-}
-ul li a:hover .fa {
-	
-}
 
 
 

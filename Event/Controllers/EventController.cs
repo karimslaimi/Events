@@ -46,13 +46,13 @@ namespace EventWeb.Controllers
             List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
             // var img=pic.Where()
             ViewBag.participate = false;
-            if (User.Identity.IsAuthenticated) {
+            if (User.Identity.IsAuthenticated && spa.Get(x=>x.mailAdmin==User.Identity.Name)==null) {
                 int uid = spu.Get(x => x.username == User.Identity.Name).id;
                 if(spue.Get(x => x.eventid == id && x.userid == uid)!=null)
                 ViewBag.participate = spue.Get(x => x.eventid == id && x.userid == uid).participation;
             }
             ViewBag.like = false;
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && spa.Get(x => x.mailAdmin == User.Identity.Name) == null)
             {
                 int uid = spu.Get(x => x.username == User.Identity.Name).id;
                 if (spue.Get(x => x.eventid == id && x.userid == uid) != null)
@@ -133,7 +133,7 @@ namespace EventWeb.Controllers
             _event.hostedbyid = hostedby;
             _event.adminid = null;
             _event.CreationDate = DateTime.Now;
-            if (verifyFiles(files))
+            if (files.First()==null ||  verifyFiles(files))
             {
                 try
                 {
@@ -141,21 +141,24 @@ namespace EventWeb.Controllers
                     
                     _event.creatorid = spu.Get(x => x.username == User.Identity.Name).id;
                     spe.create_event(_event);
-                    var path = "";
-                    int i = 1;
-                    foreach(var item in files)
+                    if (files.First() != null)
                     {
-                        string name = "id" + _event.idEvent + "im" + i + Path.GetExtension(item.FileName);
-                        EventPicture image = new EventPicture();
-                        
-                        path = Path.Combine(Server.MapPath("../Content/eventpics/"),name );
-                        item.SaveAs(path);
-                        image.eventid = _event.idEvent;
-                        image.picName = name;
-                        sep.Add(image);
-                        sep.Commit();
-                        i++;
+                        var path = "";
+                        int i = 1;
+                        foreach (var item in files)
+                        {
+                            string name = "id" + _event.idEvent + "im" + i + Path.GetExtension(item.FileName);
+                            EventPicture image = new EventPicture();
 
+                            path = Path.Combine(Server.MapPath("../Content/eventpics/"), name);
+                            item.SaveAs(path);
+                            image.eventid = _event.idEvent;
+                            image.picName = name;
+                            sep.Add(image);
+                            sep.Commit();
+                            i++;
+
+                        }
                     }
 
                     //
@@ -177,7 +180,7 @@ namespace EventWeb.Controllers
                 List<Theme> themelist = new List<Theme>();
                 themelist = spt.GetAll().ToList();
                 ViewBag.themelist = themelist;
-                ViewBag.Error = "check file extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb";
+                ModelState.AddModelError(string.Empty,"check file extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb");
                 return View(_event);
             }
         }
@@ -187,34 +190,40 @@ namespace EventWeb.Controllers
         [HttpPost]
         public JsonResult Participate(int ide)
         {
-            IServiceUserEvent spue = new serviceUserEvent();
-            int uid = spu.Get(x => x.username == User.Identity.Name).id;
-            UserEvent uev = new UserEvent();
-            uev = spue.Get(x => x.userid == uid && x.eventid == ide);
-            if (uev == null) { // if the user didn't participate or like before
-            spue.participate(uid, ide);
-                return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
-            }
-            else
+           
+            int? uid1 = spu.Get(x => x.username == User.Identity.Name).id;
+            if (uid1 != null)
             {
-                if (uev.participation == false)
-                {
-                    uev.participation = true;
-                    spue.Update(uev);
-                    spue.Commit();
+                int uid = uid1.GetValueOrDefault();
+                IServiceUserEvent spue = new serviceUserEvent();
+                UserEvent uev = new UserEvent();
+                uev = spue.Get(x => x.userid == uid && x.eventid == ide);
+                if (uev == null)
+                { // if the user didn't participate or like before
+                    spue.participate(uid, ide);
                     return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
-
                 }
                 else
                 {
-                    uev.participation = false;
-                    spue.Update(uev);
-                    spue.Commit();
-                    return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
-                }
-               
-            }
+                    if (uev.participation == false)
+                    {
+                        uev.participation = true;
+                        spue.Update(uev);
+                        spue.Commit();
+                        return Json(new { IsOk = true, Eventid = ide, Action = "participated" });
 
+                    }
+                    else
+                    {
+                        uev.participation = false;
+                        spue.Update(uev);
+                        spue.Commit();
+                        return Json(new { IsOk = true, Eventid = ide, Action = "participate" });
+                    }
+
+                }
+
+            }else return Json(new { IsOk = true, Eventid = ide, Action = "false" });
         }
 
 
@@ -332,33 +341,38 @@ namespace EventWeb.Controllers
         public JsonResult Like(int ide)
         {
             IServiceUserEvent spue = new serviceUserEvent();
-            int uid = spu.Get(x => x.username == User.Identity.Name).id;
+            int? uid1 = spu.Get(x => x.username == User.Identity.Name).id;
             UserEvent uev = new UserEvent();
-                uev=spue.Get(x => x.userid == uid && x.eventid == ide);
-            if (uev== null )
-            { // if the user didn't like the event before
-                spue.like(uid, ide);
-                return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
-            }
-           else
+            if (uid1 != null)
             {
-
-                if (uev.like == false)
-                {
-                    uev.like = true;
-                    spue.Update(uev);
-                    spue.Commit();
+                int uid = uid1.GetValueOrDefault();
+                uev = spue.Get(x => x.userid == uid && x.eventid == ide);
+                if (uev == null)
+                { // if the user didn't like the event before
+                    spue.like(uid, ide);
                     return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
                 }
                 else
                 {
-                    uev.like = false;
-                    spue.Update(uev);
-                    spue.Commit();
-                    return Json(new { IsOk = true, Eventid = ide, Action = "unlike" });
+
+                    if (uev.like == false)
+                    {
+                        uev.like = true;
+                        spue.Update(uev);
+                        spue.Commit();
+                        return Json(new { IsOk = true, Eventid = ide, Action = "liked" });
+                    }
+                    else
+                    {
+                        uev.like = false;
+                        spue.Update(uev);
+                        spue.Commit();
+                        return Json(new { IsOk = true, Eventid = ide, Action = "unlike" });
+                    }
+
                 }
-                
             }
+            else return Json(new { IsOk = true, Eventid = ide, Action = "false" });
 
         }
 

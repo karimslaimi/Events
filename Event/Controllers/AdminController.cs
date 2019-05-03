@@ -43,10 +43,8 @@ namespace EventWeb.Controllers
                 Admin _admin = new Admin();
                 _admin = spa.Get(x => x.mailAdmin == ad.mailAdmin && x.passwordAdmin == ad.passwordAdmin);
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, true);//store user mail in cookies 
+                
 
-                var cookie = new HttpCookie("cookie");
-                cookie.Value = _admin.nameAdmin;
-                Response.Cookies.Add(cookie);
 
 
 

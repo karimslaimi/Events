@@ -45,8 +45,8 @@ namespace Service.EventFolder
             this.Delete(eve);
             this.Commit();
             IServiceMS sms = new ServiceMS();
-            sms.sendSMS("votre annonce :" + eve.EventTitle + " n'a pas été approuvé", eve.creator.phone);
-            sms.sendMail(eve.creator.mail, "annonce réfusé", "votre annonce :" + eve.EventTitle + " n'a pas été approuvé");
+            //sms.sendSMS("votre annonce :" + eve.EventTitle + " n'a pas été approuvé", eve.creator.phone);
+            //sms.sendMail(eve.creator.mail, "annonce réfusé", "votre annonce :" + eve.EventTitle + " n'a pas été approuvé");
         }
 
         public void edit_event(Event _event)

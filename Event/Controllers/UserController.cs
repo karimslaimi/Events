@@ -134,6 +134,7 @@ namespace EventWeb.Controllers
                     FormsAuthentication.SetAuthCookie(_user.username, true);
                     this.Session["UserId"] = spu.Get(x => x.username == _user.username).id;
                     this.Session["Username"] = _user.username.ToString();
+                   
                     return RedirectToAction("index");
                 }
                 else

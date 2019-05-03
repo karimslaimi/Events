@@ -1,7 +1,7 @@
 ﻿@model Model.Event
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
                     url: '@Url.Action("loadorg","Event")',
                     success: function (result) {
                       //  var organizations = JSON.parse(result);
-                        var s = '<option value="-1">select organization</option>';
+                        var s = '<option value="-1">selectionner une institut</option>';
                         for (var i = 0; i < result.length; i++) {
                             s += '<option value="' + result[i].Id + '">' + result[i].Name + '</option>'
                         } $('#organizations').html(s);
@@ -108,8 +108,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="file">Importer l'image de l'annonce <span class="couleur-rouge">*</span></label>
-                    <input multiple type="file" name="files" value="Browse" class="file" id="file">
+                    <label for="file">Importer l'image de l'annonce<span class="couleur-rouge">*</span></label>
+                    <input multiple type="file" accept=".jpg,.jpeg,.bmp,.png" name="files" value="Browse" class="file-upload" id="file" placeholder="importer jusqu'à 4 image">
                 </div>
 
             </div>
@@ -122,8 +122,8 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Séléctionnez une université <span class="couleur-rouge">*</span></label>
 
-                    <select id="universities">
-                        <option value="-1">select university</option>
+                    <select id="universities" class="form-control">
+                        <option value="-1">selectionner une université</option>
                         @foreach (var university in ViewBag.listuniv)
                         {
                             <option value="@university.idUniv">@university.UnivName</option>
@@ -140,7 +140,7 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Sélectionnez une institut <span class="couleur-rouge">*</span></label>
 
-                        <select name="hostedby" id="organizations"></select>  
+                        <select name="hostedby" id="organizations" class="form-control"></select>  
                 </div>
 
 
