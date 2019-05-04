@@ -222,7 +222,7 @@ namespace EventWeb.Controllers
                 Response.Cookies.Add(cookie);
                 
               
-               sms.sendSMS(key,_user.phone);
+               //sms.sendSMS(key,_user.phone);
                 // task.Wait();
                 ViewBag.userid = _user.id;
                 return View();
@@ -284,7 +284,11 @@ namespace EventWeb.Controllers
             if (myCookie != null && myCookie["valide"] == "true")
             {
                 User us = spu.GetById(userid);
-                us.password = _user.password;
+                SHA256 hash = new SHA256CryptoServiceProvider();
+                Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_user.password);
+                Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+                us.password = BitConverter.ToString(encodedBytes);
+               
                 spu.Update(us);
                 spu.Commit();
             }
