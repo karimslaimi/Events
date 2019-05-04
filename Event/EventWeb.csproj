@@ -422,7 +422,6 @@
     <Content Include="Views\User\login.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Admin\Newsletter.cshtml" />
-    <Content Include="Views\User\Signup.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />

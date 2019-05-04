@@ -13,7 +13,7 @@ body {
 
 input,button,textarea { border-radius: 3px }
 
-.logo_principale {width: 100px;}
+.logo_principale {width: 150px;}
 .nav-link {color: #040404 ;}
 .current_link {color: #0091d0 !important;font-weight: bold !important;}
 .black-bgcolor {background-color: #040404 !important;}

@@ -38,21 +38,21 @@ namespace EventWeb.Controllers
             if (spu.Get(x => x.username == _user.username) != null)
             {
                 ViewBag.error = "username exists";
-                ModelState.AddModelError(string.Empty, "username exists");
+                ModelState.AddModelError("register", "username exists");
             }
             if (spu.Get(x => x.mail == _user.mail) != null)
             {
                 ViewBag.error = "mail exists";
-                ModelState.AddModelError(string.Empty, "mail exists");
+                ModelState.AddModelError("register", "mail exists");
             }
             if (spu.Get(x => x.phone == _user.phone) != null)
             {
                 ViewBag.error = "phone number exists";
-                ModelState.AddModelError(string.Empty, "phone number exists");
+                ModelState.AddModelError("register", "phone number exists");
             }
             if (pw != _user.password)
             {
-                ModelState.AddModelError(string.Empty, "passwords doesn't match");
+                ModelState.AddModelError("register", "passwords doesn't match");
             }
           
 
@@ -74,6 +74,8 @@ namespace EventWeb.Controllers
             }
             else
             {
+                ModelState.Remove("password");
+             
                 return View("login");
             }
 
@@ -125,8 +127,8 @@ namespace EventWeb.Controllers
 
                 if (spu.AuthUser(_user.username, _user.password) && spu.Get(x => x.username == _user.username).activated != "active")
                 {
-                    ModelState.AddModelError(string.Empty,"activer votre compte");
-                    _user = null;
+                    ModelState.AddModelError("login","activer votre compte");
+                    ViewData.Model = null;
                     return View();
                 }
                 else if ( spu.AuthUser(_user.username, _user.password))
@@ -139,13 +141,15 @@ namespace EventWeb.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "nom d'utilisateur et mot de passe sont ivalide");
-                    _user = null;
+                    ModelState.AddModelError("login", "nom d'utilisateur et mot de passe sont ivalide");
+                    ModelState.Remove("password");
+                    ModelState.Remove("username");
+                    
                     return View();
                 }
             }
             _user = null;
-            return View();
+            return View(_user);
 
         }
         [Authorize]

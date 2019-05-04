@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Http;
 using Service.EventFolder;
+using System.Linq;
 
 namespace EventWeb.Controllers
 {
@@ -15,8 +16,8 @@ namespace EventWeb.Controllers
         public ActionResult Index()
         {
             IserviceEvent spe = new serviceEvent();
-            var eve = spe.GetAll();
-            return View("~/Views/Event/Index.cshtml",eve);
+            var eve = spe.GetAll().Take(5);
+            return View(eve);
         }
 
         public ActionResult About()
