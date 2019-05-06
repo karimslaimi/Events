@@ -16,7 +16,7 @@ namespace EventWeb.Controllers
         public ActionResult Index()
         {
             IserviceEvent spe = new serviceEvent();
-            var eve = spe.GetAll().Take(5);
+            var eve = spe.GetMany(x=>x.adminid!=null).Take(4);
             return View(eve);
         }
 

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Model.Event>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>MyEvents</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style1.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <p>
@@ -18,8 +20,8 @@
     </p>
     <table class="table">
         <tr>
-          
-        
+
+
             <th>
                 @Html.DisplayNameFor(model => model.hostedby.orgname)
             </th>
@@ -38,48 +40,45 @@
             <th>
                 @Html.DisplayNameFor(model => model.EventLocation)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+          
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.hostedby.orgname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.theme.designation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventTitle)
-            </td>
-            <td>
-                @{var cdate = item.CreationDate.ToString("{MM/dd/yyyy}");}
-                @Html.DisplayFor(model => cdate)
-            </td>
-            <td>
-                @{var edate = item.CreationDate.ToString("{MM/dd/yyyy}");}
-                @Html.DisplayFor(model => edate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <span class="@(item.adminid == null ? "badge badge-danger".ToString() : "badge badge-success".ToString())"> @(item.adminid == null ? "not approuved".ToString() : "approuved".ToString())</span>
-                @Html.ActionLink("Edit", "Edit", new { id=item.idEvent }) |
-                @Html.ActionLink("Details", "Details", new { id=item.idEvent }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.idEvent })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.hostedby.orgname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.theme.designation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventTitle)
+                </td>
+                <td>
+                    @{var cdate = item.CreationDate.ToString("{MM/dd/yyyy}");}
+                    @Html.DisplayFor(model => cdate)
+                </td>
+                <td>
+                    @{var edate = item.CreationDate.ToString("{MM/dd/yyyy}");}
+                    @Html.DisplayFor(model => edate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventLocation)
+                </td>
+             
+                <td>
+                    <span class="@(item.adminid == null ? "badge badge-danger".ToString() : "badge badge-success".ToString())"> @(item.adminid == null ? "not approuved".ToString() : "approuved".ToString())</span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.idEvent }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.idEvent }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.idEvent })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

@@ -1,6 +1,5 @@
-﻿
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 <nav class=" pl-0 navbar navbar-expand-lg navbar-light bg-light fixed-top mt-5">
     <div class="container-fluid top-add mb-4">
         <div class="row">
@@ -12,7 +11,7 @@
         </div>
     </div>
     <div class="container">
-        <a class="navbar-brand" href="./">  <img src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
+        <a class="navbar-brand"  href="./">  <img  src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,13 +26,45 @@
                 <li class="nav-item">
                     <a class="nav-link " href="@Url.Action("Create","Event")" style="color: #0090d0;">Créer un événement</a>
                 </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("login","User")">Se connecter</a>
-                </li>
-               
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("login", "User")">Se connecter</a>
+                    </li>
+                }
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-link dropdown">
+                       
+
+
+                            <a class="dropdown-toggle mr-3"  data-toggle="dropdown"aria-haspopup="true" aria-expanded="false"> @User.Identity.Name.ToString()</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="@Url.Action("Edit","User")">Profile</a>
+                                <a class="dropdown-item" href="@Url.Action("MyEvents","Event")">Mes Annonces</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("LogOut","User")">Se déconnecter</a>
+                            </div>
+                        
+                    </li>                  
+                }
+
+
+
             </ul>
 
         </div>
     </div>
 </nav>
+<script>$("#dropdown").on("click", function (e) {
+        e.preventDefault();
+
+        if ($(this).hasClass("open")) {
+            $(this).removeClass("open");
+            $(this).children("ul").slideUp("fast");
+        } else {
+            $(this).addClass("open");
+            $(this).children("ul").slideDown("fast");
+        }
+    });</script>
