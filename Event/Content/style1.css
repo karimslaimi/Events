@@ -39,3 +39,139 @@ input,button,textarea { border-radius: 3px }
   color: #fff;
   cursor: pointer;
 }
+.full_window {
+    height: calc(100vh - 105px);
+    padding-top: 20px;
+}
+
+.one {
+    
+    background-image: url('pics/about.jpg');
+    background-size: cover;
+}
+
+.two {
+
+    background-image: url('pics/bg.jpg');
+    background-size: cover;
+}
+
+h5 {
+    font-size: 17px;
+}
+
+h6 {
+    font-size: 14px;
+}
+
+.desciption p {
+    font-size: 14px;
+}
+
+.annonce-date {
+    border-right: 2px solid #000;
+    height: 55px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+    .annonce-date > span:first-child {
+        font-size: 17px;
+        color: #a80101;
+    }
+
+    .annonce-date > span:last-child {
+        font-size: 19px;
+        color: #2d2d2d;
+    }
+
+.annonce-title > h4 {
+    font-size: 17px;
+    color: #000;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+.annonce-title > p {
+    font-size: 13px;
+    color: #2d2d2d;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    
+    -webkit-box-orient: vertical;
+}
+
+.search {
+    color: #fff;
+    background-color: #000;
+    border: none;
+    padding: 5px;
+    width: 220px;
+}
+
+.choice-bar {
+    color: #fff;
+    background-color: #000;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    width: 220px;
+}
+
+
+.fa-search {
+    color: #fff;
+    font-size: 20px;
+    padding-left: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.last-drop {
+    display: inline-flex;
+}
+
+.Ministere {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+
+
+@media (max-width: 576px) {
+
+
+    .full_window {
+        height: auto;
+        padding-top: 20px;
+    }
+
+    .search {
+        margin: 5px 0 5px 0;
+    }
+
+    .choice-bar {
+        margin: 5px 0 5px 0;
+    }
+
+    .last-drop {
+        display: block;
+    }
+
+    .Ministere {
+        font-size: 10px;
+    }
+}
+
+
+@media (min-width: 768px) {
+}
+
+
+@media (min-width: 992px) {
+}
+
