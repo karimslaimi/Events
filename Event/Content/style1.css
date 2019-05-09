@@ -121,15 +121,23 @@ h6 {
     cursor: pointer;
     width: 220px;
 }
-
-
-.fa-search {
-    color: #fff;
-    font-size: 20px;
-    padding-left: 5px;
-    padding-top: 5px;
-    cursor: pointer;
+    .choice-bar::-webkit-input-placeholder {
+        color: white;
+    }
+.fabutton {
+    background: none;
+    padding: 0px;
+    border: none;
 }
+
+
+    .fa-search {
+        color: #fff;
+        font-size: 20px;
+        padding-left: 5px;
+        padding-top: 5px;
+        cursor: pointer;
+    }
 
 .last-drop {
     display: inline-flex;

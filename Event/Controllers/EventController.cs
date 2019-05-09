@@ -30,11 +30,32 @@ namespace EventWeb.Controllers
         public ActionResult Index()
         {
             //list of events
-            List<Event> _event = new List<Event>();
 
-            _event = spe.GetMany(x=>x.approvedBy!=null).ToList();
-           
+            List<Event> _event = new List<Event>();
+            _event = spe.GetMany(x => x.adminid != null && x.EventDate >= DateTime.Today).ToList();
+
             return View(_event);
+        }
+        public ActionResult search(int? Univ, int? them, string keyword, DateTime? date)
+        {
+            List<Event> _event = new List<Event>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                _event.AddRange(spe.search_Event(keyword).ToList());
+            }
+            if (Univ != null)
+            {
+                _event.AddRange(spe.search_event_university(Univ.GetValueOrDefault()));
+            }
+            if (them != null)
+            {
+                _event.AddRange(spe.search_event_university(them.GetValueOrDefault()));
+            }
+            if (date != null)
+            {
+                _event.AddRange(spe.search_event_date(date.GetValueOrDefault()));
+            }
+            return View("Index", _event);
         }
 
         // GET: Event/Details/5

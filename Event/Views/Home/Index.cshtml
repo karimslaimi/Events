@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Model.Event>
+@{
     Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 
@@ -7,22 +8,34 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link href="~/Content/style1.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <link href="~/Content/style.css" rel="stylesheet" />
+    <script src="~/Scripts/popper.js"></script>
+    <a href="~/Scripts/jquery-3.3.1.min.map">~/Scripts/jquery-3.3.1.min.map</a>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker(
 
 
 
+            );
+        });
+    </script>
+
+  
 </head>
 
 
 <body>
 
-   
 
 
 
+    @Html.BeginForm("search", "Event", FormMethod.Post){
     <div class="container-fluid">
 
         <div class=" row full_window two">
@@ -35,49 +48,38 @@
                     </div>
                 </div>
                 <div class="col-12 text-center " style="height: 20%">
+
                     <div class="row align-items-center h-100" style=" background-color: rgb(0, 145, 208, 0.5);">
+
                         <div class="col-lg-3 ">
-                            <input class="search my-sm-3" type="text" placeholder="Mot clé">
+                            <input class="search my-sm-3" type="text" placeholder="Mot clé" name="keyword" autocomplete="off" />
                         </div>
                         <div class="col-lg-3">
                             <div class="dropdown">
-                                <button class=" dropdown-toggle choice-bar" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Sélectionnez une université
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
+
+                                @Html.DropDownList("Univ", new SelectList(ViewBag.listuniv, "idUniv", "UnivName"), "Sélectionnez une université", new { @class = "dropdown choice-bar" })
+
+
                             </div>
+
+
                         </div>
                         <div class="col-lg-3">
                             <div class="dropdown">
-                                <button class="dropdown-toggle choice-bar" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Choisissez un théme
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
+
+                                @Html.DropDownList("them", new SelectList(ViewBag.themelist, "idTheme", "designation"), "Choisissez un théme", new { @class = "dropdown choice-bar" })
+
+
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="last-drop">
-                                <div class="dropdown ">
-                                    <button class="dropdown-toggle choice-bar" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Choisissez une date
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
-                                <span>
-                                    <i class="fas fa-search"></i>
-                                </span>
+
+
+                                <input type="text" class="choice-bar datepicker" id="datepicker" name="date" placeholder="Choisissez une date" autocomplete="off"/>
+
+                                <button type="submit" class="fabutton"><i class="fa fa-search"></i></button>
+                               
                             </div>
                         </div>
                     </div>
@@ -85,7 +87,7 @@
             </div>
         </div>
 
-    </div>
+    </div>}
 
     <div class="container">
         <div class=" row ">
@@ -93,8 +95,8 @@
                 <h4 class="rubrique-title">Les événements à la une</h4>
             </div>
         </div>
-      
-        
+
+
         <div class="row">
             @foreach (var eve in Model)
             {
@@ -116,7 +118,7 @@
                     </a>
                 </div>
             }
-            </div>
+        </div>
         <div class=" row ">
             <div class="col ">
                 <h4 class="rubrique-title">Parcourir par université</h4>
