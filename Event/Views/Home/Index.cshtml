@@ -27,6 +27,12 @@
     </script>
 
   
+
+    <style>
+        li a{
+            color:black;
+        }
+    </style>
 </head>
 
 
@@ -133,27 +139,29 @@
         </div>
         <div class=" row ">
             <div class="col-lg-4 ">
-                <ul>
-                    <li>Université de Tunis</li>
-                    <li>Université de Gabed</li>
-                    <li>Université de Carthage</li>
-                    <li>Université de Manouba</li>
+                <ul style="list-style:none;">
+                    <li><a href="@Url.Action("search","Event",new {Univ=1 })">Université de Tunis</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=2 })">Université de Tunis El-Manar </a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=3 })">Université de Carthage</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=10 })">Université de la Manouba</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=13})">Direction des ISET</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 offset-1 ">
-                <ul>
-                    <li>Université de Tunis</li>
-                    <li>Université de Gabed</li>
-                    <li>Université de Carthage</li>
-                    <li>Université de Manouba</li>
+                <ul style="list-style:none;">
+                    <li><a href="@Url.Action("search","Event",new {Univ=4 })">Université de Jendouba</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=5 })">Université de Gabès</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=6 })">Université de Sousse</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=7 })">Université de Monastir</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 offset-1 ">
-                <ul>
-                    <li>Université de Tunis</li>
-                    <li>Université de Gabed</li>
-                    <li>Université de Carthage</li>
-                    <li>Université de Manouba</li>
+                <ul style="list-style:none; ">
+                    <li><a href="@Url.Action("search","Event",new {Univ=8 })">Université de Sfax</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=9 })">Université Zitouna</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=11 })">Université de Kairouan</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=12 })">Université de Gafsa</a></li>
+                    <li><a href="@Url.Action("search","Event",new {Univ=14 })">Université Virtuelle de Tunis</a></li>
                 </ul>
             </div>
         </div>

@@ -10,15 +10,18 @@
                         <hr class="bgcouleur-rouge">
                         <p class="card-text">
                             <ul class="navbar-nav ml-auto">
-                                <li class="nav-item"><a class="text-white" href="#">Informatique / TIC</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Sciences humaines</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Recherche scientifique</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Economique / Gestion / Droit</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Formation / Education</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Science de la médecine</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Technique / Industrie / Mécanique</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Coopération Internationale</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">Physique / Chimie / Mathématique</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=1 })">Informatique / TIC</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=3 })">Sciences humaines</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=6 })">Recherche scientifique</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=8 })">Economique / Gestion / Droit</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=11 })">Formation / Education</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=9 })">Science de la médecine</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=10 })">Technique / Industrie / Mécanique</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=5 })">Coopération Internationale</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=7 })">Physique / Chimie / Mathématique</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=4 })">Arts et Métiers</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("search","Event",new {them=2 })">SVT / biologie / Géologie</a></li>
+
                             </ul>
 
                         </p>
@@ -34,11 +37,19 @@
                         <hr class="bgcouleur-rouge">
                         <p class="card-text">
                             <ul class="navbar-nav ml-auto">
-                                <li class="nav-item"><a class="text-white" href="#">Recherche avancée</a></li>
-                                <li class="nav-item"><a class="text-white" href="#">A propos</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("Index","Home")">Recherche avancée</a></li>
+                                <li class="nav-item"><a class="text-white" href="@Url.Action("About","Home")">A propos</a></li>
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("Index","Event")">Événements</a></li>
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("login","User")">Se connecter</a></li>
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("Create","Event")">Créer un événement</a></li>
+                                <li class="nav-item"><span class="text-white" >Abonnez vous à nos lettres d'information:</span></li>
+                                <li class="nav-item">
+                                    @using (@Html.BeginForm("subscrice", "Home"))
+                                    {
+                                        <input type="email" name="mail" placeholder="votre email"/>
+                                        <input type="submit" value="go" />
+                                    }
+                            </li>
 
                             </ul>
 
@@ -94,11 +105,11 @@
 
 
                                     <!--Twitter-->
-                                    <a class="tw-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-twitter"></i></a>
+                                    <a class="tw-ic mr-3" role="button" href="#" target="_blank"><i class="fab fa-lg fa-twitter"></i></a>
                                     <!--Google +-->
-                                    <a class="gplus-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-google-plus-g"></i></a>
+                                    <a class="gplus-ic mr-3" role="button" href="#" target="_blank"><i class="fab fa-lg fa-google-plus-g"></i></a>
                                     <!--Facebook-->
-                                    <a class="fb-ic mr-3" role="button" href="#"><i class="fab fa-lg fa-facebook-f"></i></a>
+                                    <a class="fb-ic mr-3" role="button" href="https://www.facebook.com/CCK.MESRS/" target="_blank"><i class="fab fa-lg fa-facebook-f"></i></a>
 
                                 </div>
                             </div>

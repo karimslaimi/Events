@@ -4,6 +4,7 @@ using System.Web.Http;
 using Service.EventFolder;
 using System.Linq;
 using Service;
+using Model;
 
 namespace EventWeb.Controllers
 {
@@ -31,16 +32,24 @@ namespace EventWeb.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+          
 
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult subscribe(string email)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            IserviceNL spnl = new serviceNL();
+            if (spnl.Get(x => x.mailsubs == email) == null)
+            {
+                Subscribers mnl = new Subscribers();
+                mnl.mailsubs = email;
+                spnl.Add(mnl);
+                spnl.Commit();
+            }
+            return RedirectToAction("index");
         }
+
+        
+
     }
 }

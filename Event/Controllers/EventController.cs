@@ -49,7 +49,7 @@ namespace EventWeb.Controllers
             }
             if (them != null)
             {
-                _event.AddRange(spe.search_event_university(them.GetValueOrDefault()));
+                _event.AddRange(spe.search_event_theme(them.GetValueOrDefault()));
             }
             if (date != null)
             {
