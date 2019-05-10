@@ -11,14 +11,14 @@
         </div>
     </div>
     <div class="container">
-        <a class="navbar-brand"  href="./">  <img  src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
+        <a class="navbar-brand"  href="@Url.Action("Index","Home")"> <img  src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse"  id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">A propos</a>
+                    <a class="nav-link" href="@Url.Action("About","Home")">A propos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index","Event")">Événements</a>

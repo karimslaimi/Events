@@ -22,44 +22,42 @@
 
 
 <body>
- 
-    <div class="row">
-
-    @foreach (var eve in Model){
+    @using System.Globalization;
+    @{
 
 
-    
+        CultureInfo french = new CultureInfo("fr-FR"); }
 
-         <div class="box">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var eve in Model)
+            {
 
 
-               <a href="@Url.Action("Details","Event",new { id=eve.idEvent})"><img src="@Url.Content("~/Content/eventpics/id"+@eve.idEvent+"im1.jpg")" /></a>
 
-
-                <div class="desc" >
-                    <a href="@Url.Action("Details","Event",new { id=eve.idEvent})"><span>@eve.EventTitle</span></a><br/>
-                    @eve.EventDate.ToString("ddd"), @eve.EventDate.ToString("MMM") @eve.EventDate.Day<br/>
-                    @eve.EventLocation<br/>
-
+                <div class="col-lg-4 ">
+                    <a href="@Url.Action("Details", "Event", new { id = eve.idEvent })">
+                        <div class="bloc-post my-3">
+                            <img class="img-fluid" src="@Url.Content("~/Content/eventpics/id" + @eve.idEvent + "im1.jpg")" style="width: 100%; height:170px">
+                            <div class="d-flex pt-3 pb-3">
+                                <div class="annonce-date text-center">
+                                    <span>@eve.EventDate.ToString("MMM",french)</span><br><span>@eve.EventDate.Day</span>
+                                </div>
+                                <div class="annonce-title">
+                                    <h4>@eve.EventTitle</h4>
+                                    <p style="-webkit-line-clamp:1;">@eve.Description</p>
+                                    <p> @eve.EventLocation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="date">
-                    <p class="juin">@eve.EventDate.ToString("MMM")</p>
-                    <p class="num">@eve.EventDate.Day</p>
-                </div>
 
-                <div>
-                    <ul class="some">
-                        <li><a href="#"><i class="fa fa-share"></i></a></li>
-                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                    </ul>
-
-                </div>
-
-         </div>
-
-}       
+            }
         </div>
-    
+    </div>
+
 </body>
 
 

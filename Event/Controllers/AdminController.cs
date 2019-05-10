@@ -29,7 +29,7 @@ namespace EventWeb.Controllers
 
         public ActionResult login()
         {
-            Session["AdminID"] = null;//setting the session to be null
+           
             return View();
         }
 
@@ -41,28 +41,8 @@ namespace EventWeb.Controllers
             if (spa.authAdmin(ad.mailAdmin, ad.passwordAdmin))//check serviceAdmin
             {
                 Admin _admin = new Admin();
-                _admin = spa.Get(x => x.mailAdmin == ad.mailAdmin && x.passwordAdmin == ad.passwordAdmin);
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, true);//store user mail in cookies 
-                
-
-
-
-
-                //Admin _admin = (spa.Get(x => x.mailAdmin == ad.mailAdmin));
-                //HttpCookie mycookie = new HttpCookie("Role");
-                //
-                //if (_admin.isSuperAdmin)
-                //{
-                //    Session["Role"] = "SuperAdmin";
-                //    HttpContext.Session["Role"] = Session["Role"];
-                //    mycookie.Values["Role"] = Session["Role"].ToString();
-                //}
-                //else
-                //{
-                //    Session["Role"] = "Admin";
-                //    HttpContext.Session["Role"] = Session["Role"];
-                //    mycookie.Values["Role"] = Session["Role"].ToString();
-                //}
+             
 
                 return RedirectToAction("index");
             }
@@ -77,17 +57,8 @@ namespace EventWeb.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
-
-            // clear authentication cookie
-            HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            cookie1.Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies.Add(cookie1);
-
-            // clear session cookie (not necessary for your current problem but i would recommend you do it anyway)
-            SessionStateSection sessionStateSection = (SessionStateSection)WebConfigurationManager.GetSection("system.web/sessionState");
-            HttpCookie cookie2 = new HttpCookie(sessionStateSection.CookieName, "");
-            cookie2.Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies.Add(cookie2);
+            
+       
 
            return RedirectToAction("login");
         }
@@ -103,8 +74,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
-        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
-        // GET: Admin
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Index()
         {
             
@@ -112,6 +82,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public JsonResult Univstats()
         {
             IserviceEvent spe = new serviceEvent();
@@ -129,7 +100,7 @@ namespace EventWeb.Controllers
             return Json(univstat.Select(x=>new { name=x.name,y=x.count} ),JsonRequestBehavior.AllowGet);
         }
 
-
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public JsonResult Eventstat()
         {
             IserviceEvent spe = new serviceEvent();
@@ -139,7 +110,7 @@ namespace EventWeb.Controllers
             return Json(eve.Select(x => new { val= x.count, mon = (x.month) }), JsonRequestBehavior.AllowGet);
         }
 
-
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public JsonResult Themestats()
         {
             IserviceEvent spe = new serviceEvent();
@@ -152,7 +123,7 @@ namespace EventWeb.Controllers
         }
 
 
-
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult profile()
         {
 
@@ -164,7 +135,7 @@ namespace EventWeb.Controllers
 
 
 
-        // GET: Admin/Create
+       
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult RegisterAdmin()
         {
@@ -173,7 +144,6 @@ namespace EventWeb.Controllers
 
 
 
-        // POST: Admin/Create
         [ValidateAntiForgeryToken]
         [HttpPost]
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
@@ -193,7 +163,7 @@ namespace EventWeb.Controllers
                 }
                 spa.add_Admin(ad);
 
-                return RedirectToAction("login");
+                return RedirectToAction("index");
             }
             catch (Exception)
             {
@@ -298,7 +268,7 @@ namespace EventWeb.Controllers
             return RedirectToAction("");
         }
 
-
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult logs()
         {
             List<Logs> log = new List<Logs>();
@@ -306,8 +276,6 @@ namespace EventWeb.Controllers
             ViewData.Model = log;
             return View();
         }
-
-
 
         public ActionResult loadorg(int idUniv)
         {
@@ -318,6 +286,7 @@ namespace EventWeb.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult Organizations()
         {
             IserviceUniv spu = new serviceUniv();
@@ -327,6 +296,7 @@ namespace EventWeb.Controllers
             return View();
         }
 
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         public ActionResult AddOrganization()
         {
             IserviceUniv spu = new serviceUniv();
@@ -335,6 +305,8 @@ namespace EventWeb.Controllers
             ViewBag.listuniv = listuniv;
             return View();
         }
+
+        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
         [HttpPost]
         public ActionResult AddOrganization(organization org,int univ)
         {

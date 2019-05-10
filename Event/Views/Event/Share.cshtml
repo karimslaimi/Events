@@ -105,11 +105,13 @@
 
 
 <div id="social">
-    <a class="facebookBtn smGlobalBtn" href="#"></a>
-    <a class="twitterBtn smGlobalBtn" href="#"></a>
+    <a class="facebookBtn smGlobalBtn" href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=localhost:8080/Event/Details/@ViewData["id"]#Register&p[images]=&p[title]=&p[summary]="></a>
+    <a class="twitterBtn smGlobalBtn" href="http://twitter.com/share?text=AnnonceRNU&url=localhost:8080/Event/Details/@ViewData["id"]"></a>
     <a class="enveloppeBtn smGlobalBtn" href="#"></a>
 </div>
 
 <br />
-<input type="text" id="link" class="form-control" readonly="readonly" value="localhost:8080/Event/Details/@ViewBag.id" />
+<div class="px-5">
+<input type="text" id="link" class="form-control" readonly="readonly" value="localhost:8080/Event/Details/@ViewData["id"]" />
 <a onclick="copyto()"><i class="fa fa-clipboard"></i></a>
+</div>

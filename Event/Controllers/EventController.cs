@@ -55,6 +55,10 @@ namespace EventWeb.Controllers
             {
                 _event.AddRange(spe.search_event_date(date.GetValueOrDefault()));
             }
+            if (_event.Count()==0)
+            {
+                _event = spe.GetMany(x => x.adminid != null && x.EventDate >= DateTime.Today).OrderBy(x=>x.EventDate).ToList();
+            }
             return View("Index", _event);
         }
 
@@ -412,7 +416,7 @@ namespace EventWeb.Controllers
         {
             ViewBag.id = id;
 
-            return PartialView();
+            return PartialView(id);
         }
 
 

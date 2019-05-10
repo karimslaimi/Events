@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <link href="~/Content/style.css" rel="stylesheet" />
     <script src="~/Scripts/popper.js"></script>
-    <a href="~/Scripts/jquery-3.3.1.min.map">~/Scripts/jquery-3.3.1.min.map</a>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -35,7 +35,7 @@
 
 
 
-    @Html.BeginForm("search", "Event", FormMethod.Post){
+   
     <div class="container-fluid">
 
         <div class=" row full_window two">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-12 text-center " style="height: 20%">
-
+                    @using (Html.BeginForm("search", "Event", FormMethod.Post)){
                     <div class="row align-items-center h-100" style=" background-color: rgb(0, 145, 208, 0.5);">
 
                         <div class="col-lg-3 ">
@@ -76,18 +76,21 @@
                             <div class="last-drop">
 
 
-                                <input type="text" class="choice-bar datepicker" id="datepicker" name="date" placeholder="Choisissez une date" autocomplete="off"/>
-
+                                <input type="text" class="choice-bar datepicker" id="datepicker" name="date" placeholder="Choisissez une date" autocomplete="off" />
                                 <button type="submit" class="fabutton"><i class="fa fa-search"></i></button>
-                               
+
+
                             </div>
+
                         </div>
+                      
                     </div>
+                    }
                 </div>
             </div>
         </div>
 
-    </div>}
+    </div>
 
     <div class="container">
         <div class=" row ">
@@ -95,18 +98,22 @@
                 <h4 class="rubrique-title">Les événements à la une</h4>
             </div>
         </div>
+        @using System.Globalization;
+        @{
 
+
+            CultureInfo french = new CultureInfo("fr-FR"); }
 
         <div class="row">
             @foreach (var eve in Model)
             {
                 <div class="col-lg-4 ">
-                    <a href="@Url.Action("Details","Event",new { id=eve.idEvent})">
+                    <a href="@Url.Action("Details", "Event", new { id = eve.idEvent })">
                         <div class="bloc-post my-3">
-                            <img class="img-fluid" src="@Url.Content("~/Content/eventpics/id"+@eve.idEvent+"im1.jpg")" style="width: 100%; height:170px">
+                            <img class="img-fluid" src="@Url.Content("~/Content/eventpics/id" + @eve.idEvent + "im1.jpg")" style="width: 100%; height:170px">
                             <div class="d-flex pt-3 pb-3">
                                 <div class="annonce-date text-center">
-                                    <span>@eve.EventDate.ToString("MMM")</span><br><span>@eve.EventDate.Day</span>
+                                    <span>@eve.EventDate.ToString("MMM",french)</span><br><span>@eve.EventDate.Day</span>
                                 </div>
                                 <div class="annonce-title">
                                     <h4>@eve.EventTitle</h4>

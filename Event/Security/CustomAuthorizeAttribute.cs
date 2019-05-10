@@ -62,7 +62,7 @@ namespace EventWeb.Security
                 {
                     authorize = true;
                 }
-                if (isAdmin && Roles.Contains("Admin"))
+                if (isAdmin && Roles.Contains("SuperAdmin,Admin"))
                 {
                     authorize = true;
                 }

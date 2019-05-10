@@ -1,7 +1,7 @@
 ﻿@model Model.Event
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -13,6 +13,9 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/style1.css" rel="stylesheet" />
+
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
         $('#participation').on("click", function () {
@@ -24,14 +27,14 @@
                 success: function (result) {
 
                     if (result.IsOk && result.Action == "participated") {
-                        $("#participation").text("don't participate");
+                        $("#participation").text("annuler participation");
                         $("#participation").removeClass();
                         $("#participation").addClass("btn btn-danger");
                         @ViewBag.participate=true;
 
                         console.log("success");
                     } else if (result.IsOk && result.Action == "participate") {
-                        $("#participation").text("participate");
+                        $("#participation").text("participer");
                         $("#participation").removeClass();
                         $("#participation").addClass("btn btn-primary");
                         console.log("don't participate");
@@ -59,17 +62,18 @@
                 success: function (result) {
 
                     if (result.IsOk && result.Action == "liked") {
-                        $("#like").text("unlike");
-                        $("#like").removeClass();
-                        $("#like").addClass("btn btn-danger");
+                      
+                        $("#likefa").removeClass();
+                        $("#likefa").addClass("fa fa-heart red");
                         @ViewBag.participate=true;
 
                         console.log("success");
+
                     } else if (result.IsOk && result.Action == "unlike") {
-                        $("#like").text("like");
-                        $("#like").removeClass();
+                     
+                        $("#likefa").removeClass();
                         console.log("remove class");
-                        $("#like").addClass("btn btn-primary");
+                        $("#likefa").addClass("fa fa-heart blue");
                         console.log("unlike");
                          @ViewBag.like=false;
 
@@ -82,159 +86,92 @@
             });
         });
     </script>
+
+    <style>
+        .btnfa {
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+        }
+        .blue{
+
+            color:blue;
+        }
+        .blue {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h4>Event</h4>
-        <hr />
-       
-        <div>
-            Participate:
+    @using System.Globalization;
+    @{
 
-            <button id="participation" class=" @(@ViewBag.participate == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "don't participate".ToString() : "participate".ToString())</button>
-        </div>
 
-        <div>
-            like:
+        CultureInfo french = new CultureInfo("fr-FR"); }
 
-            <button id="like" class=" @(@ViewBag.like == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.like == true ? "unlike".ToString() : "like".ToString())</button>
-        </div>
 
-        <div>
-            Share:<button class="btn btn-primary" id="sharebtn">share</button>
 
-        </div>
-            
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" style="margin:auto">Share with friends</h3>
-                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+    <div class="container-fluid desciption">
+        <div class=" row full_window ">
+            <div class="col-lg-5 offset-2">
+                <img class="img-fluid" src="@Url.Content("~/Content/eventpics/id" + Model.idEvent + "im1.jpg")" style="height: 300px; width: 600px;">
+                <div>
+                    like:
 
-                    </div>
-                    <div class="modal-body" id="myModalBody">
+                    <button id="like" class="btnfa" value="@Model.idEvent" name="button" text=""> <i id="likefa"  class="fa fa-heart  @(@ViewBag.like == true ? "red" : "blue")"></i></button>
+                    
 
-                    </div>
-                    <div class="modal-footer">
-                        
-                    </div>
-                </div >
+                </div>
+                <h5 class="my-5">Description</h5>
+                <p style="width: 400px ;">
+                    @Html.DisplayFor(model => model.Description)
+                </p>
             </div>
-        </div>
-        
-            
-        <script>
+            <div class="col-lg-4 offset-1">
+                <div class="mt-5">
 
-            $(document).ready(function () {
-                $('#sharebtn').click(function () {
-                    var url =' @Url.Action("Share","Event",new { id=Model.idEvent})';
-                    console.log("sharebtn");
-                    $.get(url, function (data) {
-                        console.log(url);
-                        $('#myModalBody').html(data);
-                        
-                        $('#myModal').modal('show');
+                    <h4 style="font-weight:bold;">@Model.EventTitle</h4>
+                    <br />
+                    <h5>organisé par: @Model.hostedby.orgname</h5>
+                    <br />
+                    <h6>Date:</h6>
 
-
-
-                    });
-
-                });
+                    <p>@Model.EventDate.ToString("dddd", french) @Model.EventDate.Day @Model.EventDate.ToString("MMMM", french) @Model.EventDate.Year</p>
+                    <p>Lieu:</p>
+                    <p>@Model.EventLocation</p>
+                </div>
+                <div style="margin-top: 150px;">
+                    <button id="participation" class="px-5 @(@ViewBag.participate == true ? "btn btn-danger" : "btn btn-primary")" value="@Model.idEvent" name="button" text="">  @(@ViewBag.participate == true ? "annuler participation".ToString() : "participer".ToString())</button>
+                </div>
 
 
-            });
+            </div>
 
-        </script>
-
-        <dl class="dl-horizontal">
-
-
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.creator.username)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.creator.username)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.hostedby.orgname)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.hostedby.orgname)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.theme.designation)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.theme.designation)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EventTitle)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EventTitle)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </dt>
-
-            <dd>
-                @{var cdate = Model.CreationDate.ToString("{MM/dd/yyyy}");}
-                @Html.DisplayFor(model => cdate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EventDate)
-            </dt>
-
-            <dd>
-                @{var edate = Model.CreationDate.ToString("{MM/dd/yyyy}");}
-                @Html.DisplayFor(model => edate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EventLocation)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EventLocation)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-
-            <dt>
-                <psan>pictures</psan>
-            </dt>
-
-            <dd>
+            <div class="row offset-1 col-lg-4">
                 @foreach (var item in ViewBag.pic)
                 {
-                    <img src="~/Content/eventpics/@item.picName" />
+                    <img class="img-fluid" style="height: 200px; width: auto;" src="~/Content/eventpics/@item.picName" />
                 }
+            </div>
 
-            </dd>
+        </div>
+        <br />
+        <br />
+        <div>
+            @{Html.RenderPartial("share", new ViewDataDictionary { { "id", Model.idEvent } }); }
 
-        </dl>
+
+
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.idEvent }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+
+
+
+
+
+   
 </body>
 </html>
