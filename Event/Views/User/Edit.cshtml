@@ -14,16 +14,15 @@
 
     <h4 class="rubrique-title">Modifier Votre Profile</h4>
 
-    @using (Html.BeginForm("Signup", "User", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
-        if (ViewData.ModelState.ContainsKey("register"))
-        {
+       
 
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-        }
+        
         <div class="form-group">
             <label for="exampleInputEmail1">Nom d'utilisateur <span class="couleur-rouge">*</span></label>
             @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })

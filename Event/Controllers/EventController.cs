@@ -295,16 +295,16 @@ namespace EventWeb.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(id).creatorid)
+            if (spu.Get(x => x.username == User.Identity.Name).id == spe.GetById(id).creatorid)
             {
 
                 spe.Delete(spe.GetById(id));
-                return RedirectToAction("index");
+                return RedirectToAction("index","Home");
 
             }
             else
             {
-                return RedirectToAction("index");
+                return RedirectToAction("index","Home");
             }
         }
 
