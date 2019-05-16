@@ -16,7 +16,7 @@ namespace EventWeb.Controllers
     {
 
 
-        IserviceEvent spe = new serviceEvent();
+        IserviceEvent spe = new ServiceEvent();
         IserviceUniv spun = new serviceUniv();
         IserviceOrganization spo = new serviceOrganization();
         IserviceUser spu = new serviceUser();
@@ -65,7 +65,7 @@ namespace EventWeb.Controllers
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
-            IServiceUserEvent spue = new serviceUserEvent();
+            IServiceEvent spue = new serviceUserEvent();
 
             Event _event = spe.GetById(id);
             List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
@@ -220,7 +220,7 @@ namespace EventWeb.Controllers
             if (uid1 != null)
             {
                 int uid = uid1.GetValueOrDefault();
-                IServiceUserEvent spue = new serviceUserEvent();
+                IServiceEvent spue = new serviceUserEvent();
                 UserEvent uev = new UserEvent();
                 uev = spue.Get(x => x.userid == uid && x.eventid == ide);
                 if (uev == null)
@@ -365,7 +365,7 @@ namespace EventWeb.Controllers
         [HttpPost]
         public JsonResult Like(int ide)
         {
-            IServiceUserEvent spue = new serviceUserEvent();
+            IServiceEvent spue = new serviceUserEvent();
             int? uid1 = spu.Get(x => x.username == User.Identity.Name).id;
             UserEvent uev = new UserEvent();
             if (uid1 != null)

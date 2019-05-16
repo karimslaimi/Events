@@ -1,199 +1,181 @@
 ﻿
 @{
     Layout = "~/Views/Shared/Admin_Layout.cshtml";}
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <script>
-
     $(document).ready(function () {
+       
+            $.ajax({
+                    type: 'GET',
+                   
+                    url: '@Url.Action("stats", "Admin")',
+                success: function (result) {
 
-        $.getJSON("/Admin/Univstats", function (result) {
 
-            Highcharts.chart('container', {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'University'
-                }, credits: {
-                    enabled: false
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
+                    var univ = result[1];
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'University'
+                        }, credits: {
                             enabled: false
                         },
-                        showInLegend: true
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true
+                            }
+                        },
+                        series: [{
+                            name: 'Brands',
+                            colorByPoint: true,
+                            data: univ
+                        }]
+                    });
+
+                    var theme = result[2];
+                    var thcat = [];
+                    var thvalues = [];
+                    for (var i = 0; i < theme.length; i++) {
+                        if (theme[i].thname) {
+                            thcat[i] = theme[i].thname;
+                        }
+                        if (theme[i].thval) {
+                            thvalues[i] = theme[i].thval;
+                        }
                     }
-                },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: result
-                }]
-            });
+                    Highcharts.chart('container2', {
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: 'Theme Average Event'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: thcat,
+                            crosshair: true,
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Number of Events'
+                            }
+                        }, credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        },
+                        series: [{
+                            name: 'Events',
+                            data: thvalues
+                        }]
+                    });
 
+
+                    var event = result[0]
+                    var mncat = [];
+                    var mnvalues = [];
+                    for (var i = 0; i < event.length; i++) {
+                        if (event[i].mon) {
+                            mncat[i] = event[i].mon;
+
+                        }
+                        if (event[i].monval) {
+                            mnvalues[i] = event[i].monval;
+
+                        }
+                    }
+                    Highcharts.chart('container1', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Monthly Average Event'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: mncat,
+                            crosshair: true,
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Number of Events'
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        },
+                        series: [{
+                            name: 'Events',
+                            data: mnvalues
+                        }]
+                    });
+                }
         });
-
     })
 </script>
 
-<script>
-
-
-    $(document).ready(function () {
-
-        $.getJSON("/Admin/Eventstat", function (data) {
-            var cat = [];
-            var values = [];
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].mon) {
-                    cat[i] = data[i].mon;
-                   
-                }
-                if (data[i].val) {
-                    values[i] = data[i].val;
-                   
-                }
-            }
-
-
-
-            Highcharts.chart('container1', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Monthly Average Event'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-
-                    categories: cat,
-                    crosshair: true,
-
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Number of Events'
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: 'Events',
-                    data: values
-
-                }]
-            });
-        });
-    })
-
-</script>
 
 
 
 
-<script>
 
 
-    $(document).ready(function () {
-
-        $.getJSON("/Admin/Themestats", function (data) {
-            var cat = [];
-            var values = [];
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].theme) {
-                    cat[i] = data[i].theme;
-                }
-                if (data[i].val) {
-                    values[i] = data[i].val;
-                }
-            }
-
-
-
-            Highcharts.chart('container2', {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Theme Average Event'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-
-                    categories: cat,
-                    crosshair: true,
-
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Number of Events'
-                    }
-                }, credits: {
-                    enabled: false
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: 'Events',
-                    data: values
-
-                }]
-            });
-        });
-    })
-
-</script>
 <body>
     <div>
         <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
     </div>
 </body>
 

@@ -7,7 +7,7 @@ using MyFinance.Data.Infrastructure;
 
 namespace Service
 {
-  public  class serviceUserEvent:servicePattern<UserEvent>,IServiceUserEvent
+  public  class serviceUserEvent:servicePattern<UserEvent>,IServiceEvent
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
         static IUnitOfWork uow = new UnitOfWork(dbf);

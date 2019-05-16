@@ -1,21 +1,21 @@
 ﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
-<nav class=" pl-0 navbar navbar-expand-lg navbar-light bg-light fixed-top mt-5">
-    <div class="container-fluid top-add mb-4">
+<nav class=" pl-0 navbar navbar-expand-lg navbar-light bg-light fixed-top " style="margin-top:24px;">
+    <div class="container-fluid top-add mb-4 ">
         <div class="row">
-           
-            <img src="~/Content/pics/tn.png" style="height: 48px" />
+
+            <img src="~/Content/pics/tn.png" style="height: 24px" />
             <div class="col">
-                <span style="font-size: 15px;">Ministère de l'Enseignements Supérieur et de la Recherche Scientifique-</span><br><span style="font-size: 10px; color: #da2028">CENTRE DE CALCUL EL-KHAWARIZMI</span>
+                <span style="font-size: 10px;color: black;">Ministère de l'Enseignements Supérieur et de la Recherche Scientifique-</span><br><span style="font-size: 10px; color: black;">CENTRE DE CALCUL EL-KHAWARIZMI</span>
             </div>
         </div>
     </div>
     <div class="container">
-        <a class="navbar-brand"  href="@Url.Action("Index","Home")"> <img  src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
+        <a class="navbar-brand" href="@Url.Action("Index","Home")"> <img src="~/Content/pics/logo_portail_annonces.png" alt="Portail Annonces" class="logo_principale" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse"  id="navbarResponsive">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("About","Home")">A propos</a>
@@ -32,22 +32,22 @@
                         <a class="nav-link" href="@Url.Action("login", "User")">Se connecter</a>
                     </li>
                 }
-                @if(User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-link dropdown">
-                       
 
 
-                            <a class="dropdown-toggle mr-3"  data-toggle="dropdown"aria-haspopup="true" aria-expanded="false"> @User.Identity.Name.ToString()</a>
 
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@Url.Action("Edit","User")">Profile</a>
-                                <a class="dropdown-item" href="@Url.Action("MyEvents","Event")">Mes Annonces</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="@Url.Action("LogOut","User")">Se déconnecter</a>
-                            </div>
-                        
-                    </li>                  
+                        <a class="dropdown-toggle mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @User.Identity.Name.ToString()</a>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="@Url.Action("Edit","User")">Profile</a>
+                            <a class="dropdown-item" href="@Url.Action("MyEvents","Event")">Mes Annonces</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("LogOut","User")">Se déconnecter</a>
+                        </div>
+
+                    </li>
                 }
 
 
@@ -57,6 +57,11 @@
         </div>
     </div>
 </nav>
+
+
+
+
+
 <script>$("#dropdown").on("click", function (e) {
         e.preventDefault();
 

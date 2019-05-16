@@ -9,7 +9,7 @@ namespace Data
     {
         public DatabContext():base("Name=Event")
         {
-
+          
           
         }
         public DbSet<Admin> Admin { get; set; }

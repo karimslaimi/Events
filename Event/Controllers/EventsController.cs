@@ -12,7 +12,7 @@ namespace EventWeb.Controllers
 
     public class EventsController : ApiController
     {
-        IserviceEvent spe = new serviceEvent();
+        IserviceEvent spe = new ServiceEvent();
         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
         // GET: api/Events

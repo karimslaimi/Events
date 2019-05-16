@@ -453,6 +453,9 @@
     <Content Include="Views\Shared\UserLayout.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Admin\ThemeStats.cshtml" />
+    <Content Include="Views\Admin\EventStat.cshtml" />
+    <Content Include="Views\Admin\UnivStat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

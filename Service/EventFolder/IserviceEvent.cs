@@ -17,6 +17,7 @@ namespace Service.EventFolder
         List<Event> search_event_theme(int theme);
         void acceptEvent(int eventid,int idadmin);
         void refuseEvent(int eventid);
+        dynamic Eventstat();
 
 
     }

@@ -8,7 +8,8 @@ body {
 {
   position: fixed;
   top: 0px;
-  background-color: #000;
+  background-color: white;
+ 
 }
 
 input,button,textarea { border-radius: 3px }

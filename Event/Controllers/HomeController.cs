@@ -11,7 +11,7 @@ namespace EventWeb.Controllers
     public class HomeController :Controller
     {
         IserviceUniv spun = new serviceUniv();
-        IserviceEvent spe = new serviceEvent();
+        IserviceEvent spe = new ServiceEvent();
         IserviceTheme spt = new serviceTheme();
 
         public ActionResult Unauthorized()

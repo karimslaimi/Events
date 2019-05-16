@@ -4,22 +4,32 @@ using Model;
 using MyFinance.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 
 namespace Service.EventFolder
 {
-    public class serviceEvent : servicePattern<Event>, IserviceEvent
+    public class ServiceEvent : servicePattern<Event>, IserviceEvent
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
         static IUnitOfWork uow = new UnitOfWork(dbf);
-        public serviceEvent() : base(uow)
+        public ServiceEvent() : base(uow)
         {
            
         }
 
 
+        public dynamic Eventstat()
+        {
+            DateTimeFormatInfo mn = new DateTimeFormatInfo();
+            var eve = this.GetAll();
 
+
+            var _event = eve.GroupBy(s => s.EventDate.Month).Select(s => new { mon = mn.GetAbbreviatedMonthName(s.Key), monval = s.Count() }).OrderBy(s => s.mon).ToList();
+
+            return _event;
+        }
 
         public void acceptEvent(int eventid,int idadmin)
         {

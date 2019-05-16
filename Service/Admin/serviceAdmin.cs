@@ -4,7 +4,8 @@ using Model;
 using Infrastructure;
 using Data.Infrastructure;
 using MyFinance.Data.Infrastructure;
-
+using Service.EventFolder;
+using System.Linq;
 
 namespace Service
 {
@@ -38,6 +39,15 @@ namespace Service
 
         public void delete_admin(Admin _admin)
         {
+            IserviceEvent spe = new ServiceEvent();
+            int id = this.Get(x => x.isSuperAdmin==true).idAdmin;
+            List<Event> eve = spe.GetMany(x => x.adminid == _admin.idAdmin).ToList();
+            foreach(Event i in eve)
+            {
+                i.adminid = id;
+                spe.Update(i);
+                spe.Commit();
+            }
             this.Delete(_admin);
             this.Commit();
         }

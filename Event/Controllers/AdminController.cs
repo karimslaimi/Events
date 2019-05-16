@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Security;
-
+using Data;
 using EventWeb.Security;
 using Model;
 using Service;
@@ -83,44 +85,29 @@ namespace EventWeb.Controllers
         }
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
-        public JsonResult Univstats()
+        public JsonResult stats()
         {
-            IserviceEvent spe = new serviceEvent();
+            IserviceEvent spe =new ServiceEvent();
             IserviceUniv spun = new serviceUniv();
-            int total = spe.GetAll().Count();
-            List<Univstat> univstat = new List<Univstat>(spun.GetAll().Select(x => new Univstat { id = x.idUniv, name = x.UnivName }).ToList());
+            IserviceTheme spt = new serviceTheme();
 
-            foreach (Univstat i in univstat)
-            {
-                i.count = spe.GetMany(x => x.hostedby.idUniv == i.id).Count();
-                i.ratio = (i.count * 100) / total;
-            }
-            ViewBag.univstat = univstat;
+            List<dynamic> list = new List<dynamic>();
+            var eve = spe.Eventstat();
+            var univ = spun.Univstat();
+            var them = spt.Themestat();
+            list.Add(eve);
+            list.Add(univ);
+            list.Add(them);
+            
 
-            return Json(univstat.Select(x=>new { name=x.name,y=x.count} ),JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
+
+            
+
+    
         }
 
-        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
-        public JsonResult Eventstat()
-        {
-            IserviceEvent spe = new serviceEvent();
-            DateTimeFormatInfo mn = new DateTimeFormatInfo();
-            var eve = 
-                spe.GetAll().GroupBy(s => s.EventDate.Month).Select(s=>new {month= mn.GetAbbreviatedMonthName(s.Key),count=s.Count()}).OrderBy(s=>s.month).ToList();
-            return Json(eve.Select(x => new { val= x.count, mon = (x.month) }), JsonRequestBehavior.AllowGet);
-        }
-
-        [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
-        public JsonResult Themestats()
-        {
-            IserviceEvent spe = new serviceEvent();
-            var eve = spe.GetAll().GroupBy(s => s.theme).Select(s => new { theme = s.Key.designation, count = s.Count() });
-
-
-            return Json(eve.Select(x => new { theme = x.theme, val = x.count }), JsonRequestBehavior.AllowGet);
-
-
-        }
+       
 
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin,Admin")]
@@ -216,26 +203,18 @@ namespace EventWeb.Controllers
             {
                 return HttpNotFound();
             }
-
-            return View();
-        }
-
-
-        [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            try
+            else
             {
-                // TODO: Add delete logic here
-                spa.delete_admin(spa.GetById(id));//check serviceAdmin
+                spa.delete_admin(ad);//check serviceAdmin
                 return RedirectToAction("ListADMIN");
+
             }
-            catch
-            {
-                return View();
-            }
+
+            
         }
+
+
+     
         
 
        

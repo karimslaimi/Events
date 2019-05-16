@@ -300,7 +300,7 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult MyEvents()
         {
-            IserviceEvent spe = new serviceEvent();
+            IserviceEvent spe = new ServiceEvent();
 
             List<Event> eve = spe.GetMany(x => x.creator.username == User.Identity.Name).ToList();
 

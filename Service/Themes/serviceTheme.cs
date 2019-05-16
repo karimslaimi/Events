@@ -2,7 +2,8 @@
 using Infrastructure;
 using Model;
 using MyFinance.Data.Infrastructure;
-
+using Service.EventFolder;
+using System.Linq;
 
 namespace Service
 {
@@ -14,5 +15,16 @@ namespace Service
         {
 
         }
+
+        public dynamic Themestat()
+        {
+            IserviceEvent spe = new ServiceEvent();
+            var eve = spe.GetAll();
+
+            var _event = eve.GroupBy(s => s.theme).Select(s => new { thname = s.Key.designation, thval = s.Count() }).ToList();
+            return _event;
+        }
+
+
     }
 }
