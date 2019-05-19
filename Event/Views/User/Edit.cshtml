@@ -23,6 +23,7 @@
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
         
+        @Html.TextBoxFor(model => model.id, new { style = "display: none;" })
         <div class="form-group">
             <label for="exampleInputEmail1">Nom d'utilisateur <span class="couleur-rouge">*</span></label>
             @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })

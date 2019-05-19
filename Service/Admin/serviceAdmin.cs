@@ -6,6 +6,8 @@ using Data.Infrastructure;
 using MyFinance.Data.Infrastructure;
 using Service.EventFolder;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Service
 {
@@ -25,6 +27,10 @@ namespace Service
         public void add_Admin(Admin _admin)
         {
             _admin.isSuperAdmin = false;
+            SHA256 hash = new SHA256CryptoServiceProvider();
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_admin.passwordAdmin);
+            Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+            _admin.passwordAdmin= BitConverter.ToString(encodedBytes);
             this.Add(_admin);
             this.Commit();
         }
@@ -32,6 +38,11 @@ namespace Service
 
         public bool authAdmin(string login, string password)
         {
+
+            SHA256 hash = new SHA256CryptoServiceProvider();
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(password);
+            Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+            password = BitConverter.ToString(encodedBytes);
             return this.Get(x => x.mailAdmin == login && x.passwordAdmin == password) != null;
 
         }
@@ -69,6 +80,10 @@ namespace Service
             } 
             if (!string.IsNullOrEmpty(_admin.passwordAdmin)&&!string.IsNullOrWhiteSpace(_admin.passwordAdmin))
             {
+                SHA256 hash = new SHA256CryptoServiceProvider();
+                Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_admin.passwordAdmin);
+                Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+                _admin.passwordAdmin = BitConverter.ToString(encodedBytes);
                 ad.passwordAdmin = _admin.passwordAdmin;
             }
             this.Update(ad);

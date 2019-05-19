@@ -32,6 +32,7 @@ namespace Model
         [JsonIgnore]
         public virtual ICollection<Event> Event { get; set; }
 
+        public virtual ICollection<UserEvent> UserEvent { get; set; }
         public User()
         {
 

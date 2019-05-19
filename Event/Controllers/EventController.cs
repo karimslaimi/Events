@@ -69,13 +69,14 @@ namespace EventWeb.Controllers
 
             Event _event = spe.GetById(id);
             List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
-            // var img=pic.Where()
+           
             ViewBag.participate = false;
             if (User.Identity.IsAuthenticated && spa.Get(x=>x.mailAdmin==User.Identity.Name)==null) {
                 int uid = spu.Get(x => x.username == User.Identity.Name).id;
                 if(spue.Get(x => x.eventid == id && x.userid == uid)!=null)
                 ViewBag.participate = spue.Get(x => x.eventid == id && x.userid == uid).participation;
             }
+
             ViewBag.like = false;
             if (User.Identity.IsAuthenticated && spa.Get(x => x.mailAdmin == User.Identity.Name) == null)
             {
@@ -83,6 +84,7 @@ namespace EventWeb.Controllers
                 if (spue.Get(x => x.eventid == id && x.userid == uid) != null)
                     ViewBag.like = spue.Get(x => x.eventid == id && x.userid == uid).like;
             }
+
             ViewData.Model = _event;
             ViewBag.pic = pic;
            
@@ -186,8 +188,7 @@ namespace EventWeb.Controllers
                         }
                     }
 
-                    //
-                    // TODO: Add insert logic here
+                  
 
                     return RedirectToAction("Index");
                 }
@@ -205,7 +206,7 @@ namespace EventWeb.Controllers
                 List<Theme> themelist = new List<Theme>();
                 themelist = spt.GetAll().ToList();
                 ViewBag.themelist = themelist;
-                ModelState.AddModelError(string.Empty,"check file extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb");
+                ModelState.AddModelError(string.Empty,"check files extension or size or count only (png,jpg,jpeg,bmp) files and not mere than 4 pictures and the size of each one maximum of 4mb");
                 return View(_event);
             }
         }
@@ -270,7 +271,7 @@ namespace EventWeb.Controllers
         [HttpPost]
         public ActionResult Edit(Event _event)
         {
-            if (spu.Get(x => x.mail == User.Identity.Name).id == spe.GetById(_event.idEvent).creatorid)
+            if (spu.Get(x => x.username == User.Identity.Name).id == spe.GetById(_event.idEvent).creatorid)
             {
                 try
                 {

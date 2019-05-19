@@ -13,19 +13,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <link href="~/Content/style.css" rel="stylesheet" />
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(function () {
-            $("#datepicker").datepicker(
-
-
-
-            );
-        });
-    </script>
-
 
 
     <style>
@@ -41,7 +28,7 @@
 
 
 
-   
+
     <div class="container-fluid">
 
         <div class=" row full_window two">
@@ -54,43 +41,44 @@
                     </div>
                 </div>
                 <div class="col-12 text-center " style="height: 20%">
-                    @using (Html.BeginForm("search", "Event", FormMethod.Post)){
-                    <div class="row align-items-center h-100" style=" background-color: rgb(0, 145, 208, 0.5);">
+                    @using (Html.BeginForm("search", "Event", FormMethod.Post))
+                    {
+                        <div class="row align-items-center h-100" style=" background-color: rgb(0, 145, 208, 0.5);">
 
-                        <div class="col-lg-3 ">
-                            <input class="search my-sm-3" type="text" placeholder="Mot clé" name="keyword" autocomplete="off" />
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="dropdown">
+                            <div class="col-lg-3 ">
+                                <input class="search my-sm-3" type="text" placeholder="Mot clé" name="keyword" autocomplete="off" />
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="dropdown">
 
-                                @Html.DropDownList("Univ", new SelectList(ViewBag.listuniv, "idUniv", "UnivName"), "Sélectionnez une université", new { @class = "dropdown choice-bar" })
+                                    @Html.DropDownList("Univ", new SelectList(ViewBag.listuniv, "idUniv", "UnivName"), "Sélectionnez une université", new { @class = "dropdown choice-bar" })
+
+
+                                </div>
 
 
                             </div>
+                            <div class="col-lg-3">
+                                <div class="dropdown">
+
+                                    @Html.DropDownList("them", new SelectList(ViewBag.themelist, "idTheme", "designation"), "Choisissez un théme", new { @class = "dropdown choice-bar" })
 
 
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="dropdown">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="last-drop">
 
-                                @Html.DropDownList("them", new SelectList(ViewBag.themelist, "idTheme", "designation"), "Choisissez un théme", new { @class = "dropdown choice-bar" })
 
+                                    <input type="text" class="choice-bar datepicker" id="datepicker" name="date" placeholder="Choisissez une date" autocomplete="off" />
+                                    <button type="submit" class="fabutton"><i class="fa fa-search"></i></button>
+
+
+                                </div>
 
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="last-drop">
-
-
-                                <input type="text" class="choice-bar datepicker" id="datepicker" name="date" placeholder="Choisissez une date" autocomplete="off" />
-                                <button type="submit" class="fabutton"><i class="fa fa-search"></i></button>
-
-
-                            </div>
 
                         </div>
-                      
-                    </div>
                     }
                 </div>
             </div>
@@ -119,7 +107,7 @@
                             <img class="img-fluid" src="@Url.Content("~/Content/eventpics/id" + @eve.idEvent + "im1.jpg")" style="width: 100%; height:170px">
                             <div class="d-flex pt-3 pb-3">
                                 <div class="annonce-date text-center">
-                                    <span>@eve.EventDate.ToString("MMM",french)</span><br><span>@eve.EventDate.Day</span>
+                                    <span>@eve.EventDate.ToString("MMM", french)</span><br><span>@eve.EventDate.Day</span>
                                 </div>
                                 <div class="annonce-title">
                                     <h4>@eve.EventTitle</h4>
@@ -173,3 +161,15 @@
 
 
 </html>
+
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker(
+
+
+
+        );
+    });
+</script>
+

@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201904290000136_scar.Designer.cs">
       <DependentUpon>201904290000136_scar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905190432179_scrfc.cs" />
+    <Compile Include="Migrations\201905190432179_scrfc.Designer.cs">
+      <DependentUpon>201905190432179_scrfc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904290000136_scar.resx">
       <DependentUpon>201904290000136_scar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905190432179_scrfc.resx">
+      <DependentUpon>201905190432179_scrfc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

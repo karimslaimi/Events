@@ -3,6 +3,9 @@ using Data.Infrastructure;
 using Infrastructure;
 using Model;
 using MyFinance.Data.Infrastructure;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Service
 {
@@ -40,6 +43,10 @@ namespace Service
             }
             if(!string.IsNullOrEmpty(_user.password) && !string.IsNullOrWhiteSpace(_user.password))
             {
+                SHA256 hash = new SHA256CryptoServiceProvider();
+                Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_user.password);
+                Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+                _user.password = BitConverter.ToString(encodedBytes);
                 us.password = _user.password;
             }
             this.Update(us);

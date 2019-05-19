@@ -140,17 +140,28 @@ namespace EventWeb.Controllers
             {
                 if (spa.Get(x => x.mailAdmin == ad.mailAdmin) != null)
                 {//if admin already exists 
+                    ModelState.AddModelError(string.Empty,"email already taken");
                     ViewBag.DuplicateMessage = "mail already exists";
-                    return View("RegisterAdmin");
+                  
                 }
                 if (ad.passwordAdmin != password)
                 {// if passwords does not match
+                    ModelState.AddModelError(string.Empty, "password don't match");
                     ViewBag.ErrorMessage = "password don't match";
-                    return View("RegisterAdmin");
+                   
                 }
-                spa.add_Admin(ad);
+                if (ModelState.IsValid)
+                {
+                    spa.add_Admin(ad);
+                    return RedirectToAction("ListAdmin");
 
-                return RedirectToAction("index");
+                }
+                else
+                {
+                    return View();
+                }
+
+                
             }
             catch (Exception)
             {
@@ -178,9 +189,24 @@ namespace EventWeb.Controllers
         {
             try
             {
-                spa.edit_admin_profile(ad);
+                if (spa.Get(x => x.mailAdmin == ad.mailAdmin) != null)
+                {//if admin already exists 
+                    ModelState.AddModelError(string.Empty, "email already taken");
+                    ViewBag.DuplicateMessage = "mail already exists";
 
-                return RedirectToAction("ListAdmin");
+                }
+                
+                if (ModelState.IsValid)
+                {
+                    spa.edit_admin_profile(ad);
+
+                    return RedirectToAction("ListAdmin");
+                }
+                else
+                {
+                    return View();
+                }
+
             }
             catch
             {
@@ -222,12 +248,13 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         public ActionResult Newsletter()
         {
-            MailMessage mailmessage=new MailMessage();
+           
+
             return View();
 
         }
 
-        
+       
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
         [HttpPost]
         public ActionResult Newsletter(string obj,string body)
@@ -244,7 +271,7 @@ namespace EventWeb.Controllers
                 return RedirectToAction("index");
             }
 
-            return RedirectToAction("");
+            return RedirectToAction("Index");
         }
 
         [CustomAuthorizeAttribute(Roles = "SuperAdmin")]
@@ -256,7 +283,9 @@ namespace EventWeb.Controllers
             return View();
         }
 
-        public ActionResult loadorg(int idUniv)
+
+
+        public JsonResult loadorg(int idUniv)
         {
             IserviceOrganization spo = new serviceOrganization();
             return Json(spo.GetMany(x => x.idUniv == idUniv).Select(s => new {
@@ -298,14 +327,6 @@ namespace EventWeb.Controllers
         }
 
     }
-     public class Univstat
-    {
-
-        public int id { get; set; }
-        public string name { get; set; }
-        public int count { get; set; }
-        public float ratio { get; set; }
-
-    }
+   
 }
 

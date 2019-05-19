@@ -152,6 +152,7 @@ namespace EventWeb.Controllers
             return View(_user);
 
         }
+
         [Authorize]
         public ActionResult Logout()
         {
@@ -177,7 +178,7 @@ namespace EventWeb.Controllers
         [CustomAuthorizeAttribute(Roles = "User")]
         public ActionResult Edit(User _user)
         {
-            if (ModelState.IsValid && _user.password == spu.GetById(_user.id).password)
+            if (ModelState.IsValid)
             {
                 spu.edit_user_profile(_user);//check serviceUser
             }

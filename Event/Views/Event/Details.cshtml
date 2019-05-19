@@ -53,6 +53,7 @@
 
     <script>
         $(document).ready(function () {
+       
         $('#like').on("click", function () {
 
             $.ajax({
@@ -67,7 +68,7 @@
                         $("#likefa").addClass("fa fa-heart red");
                         @ViewBag.participate=true;
 
-                        console.log("success");
+                        console.log("like");
 
                     } else if (result.IsOk && result.Action == "unlike") {
                      
@@ -87,6 +88,8 @@
         });
     </script>
 
+ 
+
     <style>
         .btnfa {
             background-color: Transparent;
@@ -98,9 +101,9 @@
         }
         .blue{
 
-            color:blue;
+            color: black;
         }
-        .blue {
+        .red {
             color: red;
         }
     </style>
@@ -121,9 +124,9 @@
                 <div>
                     like:
 
-                    <button id="like" class="btnfa" value="@Model.idEvent" name="button" text=""> <i id="likefa" class="fa fa-heart  @(@ViewBag.like == true ? "red" : "blue")"></i></button>
+                    <button id="like" class="btnfa" value="@Model.idEvent" name="button" text=""> <i id="likefa" class="fa fa-heart @(@ViewBag.like == true ? "red" : "blue")"></i></button>
 
-
+                    
                 </div>
                 <h5 class="my-5">Description</h5>
                 <p style="width: 400px ;">

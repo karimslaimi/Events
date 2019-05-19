@@ -5,6 +5,7 @@ using Service.EventFolder;
 using System.Linq;
 using Service;
 using Model;
+using System;
 
 namespace EventWeb.Controllers
 {
@@ -22,7 +23,7 @@ namespace EventWeb.Controllers
         public ActionResult Index()
         {
          
-            var eve = spe.GetMany(x=>x.adminid!=null).Take(4);
+            var eve = spe.GetMany(x=>x.adminid!=null && x.EventDate >= DateTime.Today).OrderBy(x=>x.UserEvent.Count()).Take(4);
             ViewBag.listuniv = spun.GetAll().ToList();
 
             ViewBag.themelist = spt.GetAll().ToList();
