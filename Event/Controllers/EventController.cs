@@ -65,7 +65,7 @@ namespace EventWeb.Controllers
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
-            IServiceEvent spue = new serviceUserEvent();
+            IServiceUserEvent spue = new serviceUserEvent();
 
             Event _event = spe.GetById(id);
             List<EventPicture> pic = sep.GetMany(x => x.eventid == id).ToList();
@@ -221,7 +221,7 @@ namespace EventWeb.Controllers
             if (uid1 != null)
             {
                 int uid = uid1.GetValueOrDefault();
-                IServiceEvent spue = new serviceUserEvent();
+                IServiceUserEvent spue = new serviceUserEvent();
                 UserEvent uev = new UserEvent();
                 uev = spue.Get(x => x.userid == uid && x.eventid == ide);
                 if (uev == null)
@@ -324,13 +324,20 @@ namespace EventWeb.Controllers
                 //}
                 sep.Delete(item);
                 sep.Commit();
-
+                
 
             }
            
+            
+
+            IServiceMS spsms = new ServiceMS();
+            IServiceUserEvent spue = new serviceUserEvent();
+            string mails = spue.GetMany(x => x.participation == true).SelectMany(x => x.User.mail.Split(',')).ToString();
+            if (mails != null)
+            {
+                spsms.sendMail(mails, "l'évenement " + spe.GetById(id).EventTitle + "a été supprimer", "l'annonce de cet evenement a été suprrimer verifier avec les organizateurs de cet evenement");
+            }
             spe.refuseEvent(id);
-          
-         
 
             return RedirectToAction("EventNotApproved");
         }
@@ -356,7 +363,14 @@ namespace EventWeb.Controllers
             log.date = DateTime.Now;
             spl.Add(log);
             spl.Commit();
-          
+            IServiceMS spsms = new ServiceMS();
+            IServiceUserEvent spue = new serviceUserEvent();
+            string mails = spue.GetMany(x => x.participation == true).SelectMany(x => x.User.mail.Split(',')).ToString();
+            if (mails != null)
+            {
+                spsms.sendMail(mails,"l'évenement "+spe.GetById(id).EventTitle+"a été modifier consulter le lien ci dessous pour voir les changements","localhost:8080/Event/Details/"+id);
+            }
+            
             return RedirectToAction("EventNotApproved");
         }
 
@@ -366,7 +380,7 @@ namespace EventWeb.Controllers
         [HttpPost]
         public JsonResult Like(int ide)
         {
-            IServiceEvent spue = new serviceUserEvent();
+            IServiceUserEvent spue = new serviceUserEvent();
             int? uid1 = spu.Get(x => x.username == User.Identity.Name).id;
             UserEvent uev = new UserEvent();
             if (uid1 != null)
