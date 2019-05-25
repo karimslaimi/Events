@@ -1,8 +1,11 @@
 namespace Data.Migrations
 {
-
+    using Model;
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    
+    using System.Security.Cryptography;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Data.DatabContext>
     {
@@ -32,14 +35,22 @@ namespace Data.Migrations
             //};
             //University.ForEach(e => context.University.AddOrUpdate(p => p.UnivName, e));
             //context.SaveChanges();
+            string password = "admin";
 
-            //    var Admins = new List<Admin>
-            //    {
-            //        new Admin{nameAdmin="karim",mailAdmin="admin@admin.com",passwordAdmin="admin",isSuperAdmin=true},
+            SHA256 hash = new SHA256CryptoServiceProvider();
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(password);
+            Byte[] encodedBytes = hash.ComputeHash(originalBytes);
+            password = BitConverter.ToString(encodedBytes);
 
-            //    };
-            //    Admins.ForEach(e => context.Admin.AddOrUpdate(c => c.mailAdmin, e));
-            //    context.SaveChanges();
+            var Admins = new List<Admin>
+                {
+
+          
+            new Admin{nameAdmin="karim",mailAdmin="admin@admin.com",passwordAdmin=password,isSuperAdmin=true},
+
+                };
+            Admins.ForEach(e => context.Admin.AddOrUpdate(c => c.mailAdmin, e));
+            context.SaveChanges();
 
 
             //var Organization = new List<organization>

@@ -11,13 +11,21 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <link href="~/Content/style.css" rel="stylesheet" />
 
 
 
     <style>
         li a {
             color: black;
+        }
+        .desc {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            display: -webkit-flex;
+       
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
     </style>
 </head>
@@ -111,7 +119,8 @@
                                 </div>
                                 <div class="annonce-title">
                                     <h4>@eve.EventTitle</h4>
-                                    <p style="-webkit-line-clamp:1;">@eve.Description</p>
+
+                                    <p class="desc">@eve.Description</p>
                                     <p> @eve.EventLocation</p>
                                 </div>
                             </div>
