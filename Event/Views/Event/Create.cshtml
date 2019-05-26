@@ -168,7 +168,7 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Description <span class="couleur-rouge">*</span></label>
                    
-                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Description,  new { @cols = "100", @rows = "4", @style = "width:100%;",@class="form-control"  })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                   
                 </div>

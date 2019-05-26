@@ -85,6 +85,11 @@ namespace EventWeb.Controllers
                     ViewBag.like = spue.Get(x => x.eventid == id && x.userid == uid).like;
             }
 
+            if (_event.hostedby == null)
+            {
+                ViewBag.hostedby = spo.GetById((long)_event.hostedbyid).orgname;
+            }
+
             ViewData.Model = _event;
             ViewBag.pic = pic;
            
