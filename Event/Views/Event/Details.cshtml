@@ -126,7 +126,7 @@
 
                     <button id="like" class="btnfa" value="@Model.idEvent" name="button" text=""> <i id="likefa" class="fa fa-heart @(@ViewBag.like == true ? "red" : "blue")"></i></button>
 
-                    
+
                 </div>
                 <h5 class="my-5">Description</h5>
                 <p class="container">
@@ -138,7 +138,8 @@
 
                     <h4 style="font-weight:bold;">@Model.EventTitle</h4>
                     <br />
-                    <h5>organisé par:@(Model.hostedby == null ? @ViewBag.hostedby : Model.hostedby.orgname)
+                    <h5>
+                        organisé par:@(Model.hostedby == null ? @ViewBag.hostedby : Model.hostedby.orgname)
                     </h5>
                     <br />
                     <h6>Date:</h6>
@@ -154,20 +155,22 @@
 
             </div>
 
-            <div class="">
+
+        </div>
+        <div style="margin-top:3.5em;">
+            <div class="col-lg-5">
                 @foreach (var item in ViewBag.pic)
                 {
                     <img class="img-fluid" style="height: 200px; width: auto;" src="~/Content/eventpics/@item.picName" />
                 }
             </div>
 
-        </div>
-
-        <div style="margin-top:150px;right:0%;" class="flex-sm-row col-lg-3">
-            @{Html.RenderPartial("share", new ViewDataDictionary { { "id", Model.idEvent } }); }
+            <div style="" class="flex-sm-row col-lg-3">
+                @{Html.RenderPartial("share", new ViewDataDictionary { { "id", Model.idEvent } }); }
 
 
 
+            </div>
         </div>
     </div>
 

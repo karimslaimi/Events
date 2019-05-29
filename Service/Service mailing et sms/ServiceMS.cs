@@ -1,10 +1,10 @@
 ﻿using MessageBird;
 using System;
-
+using System.Collections.Specialized;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-
+using System.Web;
 
 namespace Service
 {
@@ -43,12 +43,25 @@ namespace Service
 
         public void sendSMS(string body,string phone)
         {
-            const string YourAccessKey = "PlARM4zTsShj1IDg9q3Fwa3UM";
-            Client client = Client.CreateDefault(YourAccessKey);
-            long Msisdn = long.Parse("00216" + phone);
+            //const string YourAccessKey = "k4lCCTW1NKDvQhWEszuWNeXjy";
+            //Client client = Client.CreateDefault(YourAccessKey);
+            //long Msisdn = long.Parse("00216" + phone);
 
-            MessageBird.Objects.Message message =
-            client.SendMessage("AnnonceRNU", body, new[] { Msisdn });
+            //MessageBird.Objects.Message message =
+            //client.SendMessage("AnnonceRNU", body, new[] { Msisdn });
+            String message = HttpUtility.UrlEncode("This is your message");
+            using (var wb = new WebClient())
+            {
+                byte[] response = wb.UploadValues("https://api.txtlocal.com/send/", new NameValueCollection()
+                {
+                {"apikey" , "XF2tuaNRaZ8-tuuzMiApYRolMvapWyUuxhRBx6c0xo"},
+                {"numbers" , "00216"+phone},
+                {"message" , body},
+                {"sender" , "AnnonceRnu"}
+                });
+                string result = System.Text.Encoding.UTF8.GetString(response);
+
+            }
         }
     }
 }
