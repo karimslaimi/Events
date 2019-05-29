@@ -33,14 +33,16 @@ namespace Service.EventFolder
 
         public void acceptEvent(int eventid,int idadmin)
         {
-            
+            IserviceUser spu = new serviceUser();
+          
             Event eve = this.GetById(eventid);
+            User creator = spu.GetById((long)eve.creatorid);
             eve.adminid = idadmin;
             this.Update(eve);
             this.Commit();
             IServiceMS sms = new ServiceMS();
-           // sms.sendSMS("votre annonce :" + eve.EventTitle + " a été approuver", eve.creator.phone);
-           // sms.sendMail(eve.creator.mail, "annonce accepté", "votre annonce :" + eve.EventTitle + "a été approuvé vous pouvez la consulter sur notre siteweb");
+            sms.sendSMS("votre annonce :" + eve.EventTitle + " a été approuver", spu.GetById((long)eve.creatorid).phone);
+            sms.sendMail(eve.creator.mail, "annonce accepté", "votre annonce :" + eve.EventTitle + "a été approuvé vous pouvez la consulter sur notre siteweb");
         }
 
         public void create_event(Event _event)
@@ -52,11 +54,14 @@ namespace Service.EventFolder
         public void refuseEvent(int eventid)
         {
             Event eve = this.GetById(eventid);
+            IserviceUser spu = new serviceUser();
+            User creator = spu.GetById((long)eve.creatorid);
+            IServiceMS sms = new ServiceMS();
+          
             this.Delete(eve);
             this.Commit();
-            IServiceMS sms = new ServiceMS();
-            //sms.sendSMS("votre annonce :" + eve.EventTitle + " n'a pas été approuvé", eve.creator.phone);
-            //sms.sendMail(eve.creator.mail, "annonce réfusé", "votre annonce :" + eve.EventTitle + " n'a pas été approuvé");
+            sms.sendSMS("votre annonce :" + eve.EventTitle + " n'a pas été approuvé", creator.phone);
+            sms.sendMail(creator.mail, "annonce réfusé", "votre annonce :" + eve.EventTitle + " n'a pas été approuvé");
         }
 
         public void edit_event(Event _event)

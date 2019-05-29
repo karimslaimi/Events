@@ -1,4 +1,6 @@
-﻿<footer class=" black-bgcolor" style="margin-top:300px;">
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+<footer class=" black-bgcolor" style="margin-top:200px;">
     <div class="container">
 
         <div class="row ">
@@ -42,14 +44,14 @@
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("Index","Event")">Événements</a></li>
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("login","User")">Se connecter</a></li>
                                 <li class="nav-item"><a class="text-white" href="@Url.Action("Create","Event")">Créer un événement</a></li>
-                                <li class="nav-item"><span class="text-white" >Abonnez vous à nos lettres d'information:</span></li>
+                                <li class="nav-item"><span class="text-white">Abonnez vous à nos lettres d'information:</span></li>
                                 <li class="nav-item">
                                     @using (@Html.BeginForm("subscrice", "Home"))
                                     {
-                                        <input type="email" name="mail" placeholder="votre email"/>
+                                        <input type="email" name="mail" placeholder="votre email" />
                                         <input type="submit" value="go" />
                                     }
-                            </li>
+                                </li>
 
                             </ul>
 
@@ -124,4 +126,4 @@
 
         <p class="m-0 text-left text-white">Copyright &copy; 2019 Portail Annonces</p>
     </div>
-    </footer>
+</footer>

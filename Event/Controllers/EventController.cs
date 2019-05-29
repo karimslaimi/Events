@@ -375,7 +375,7 @@ namespace EventWeb.Controllers
             {
                 spsms.sendMail(mails,"l'évenement "+spe.GetById(id).EventTitle+"a été modifier consulter le lien ci dessous pour voir les changements","localhost:8080/Event/Details/"+id);
             }
-            
+           
             return RedirectToAction("EventNotApproved");
         }
 

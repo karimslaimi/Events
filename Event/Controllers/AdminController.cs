@@ -189,7 +189,7 @@ namespace EventWeb.Controllers
         {
             try
             {
-                if (spa.Get(x => x.mailAdmin == ad.mailAdmin) != null)
+                if (spa.Get(x => x.mailAdmin == ad.mailAdmin) != null && spa.Get(x => x.mailAdmin == ad.mailAdmin).idAdmin!=ad.idAdmin)
                 {//if admin already exists 
                     ModelState.AddModelError(string.Empty, "email already taken");
                     ViewBag.DuplicateMessage = "mail already exists";
@@ -278,7 +278,7 @@ namespace EventWeb.Controllers
         public ActionResult logs()
         {
             List<Logs> log = new List<Logs>();
-                log=spl.GetAll().ToList();
+                log=spl.GetAll().OrderBy(x=>x.date).ToList();
             ViewData.Model = log;
             return View();
         }

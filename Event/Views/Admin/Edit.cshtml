@@ -9,7 +9,7 @@
         <div class="well">
             <h2 class="card-header info-color white-text text-center py-4">Edit Profile</h2>
 
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Edit","Admin",FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
 
@@ -49,9 +49,7 @@
                 </div>
 
             }
-            <div>
-                @Html.ActionLink("Back to List", "ListAdmin")
-            </div>
+           
         </div>
         </div>
     </div>
