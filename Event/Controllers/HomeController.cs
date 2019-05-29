@@ -23,7 +23,7 @@ namespace EventWeb.Controllers
         public ActionResult Index()
         {
          
-            var eve = spe.GetMany(x=>x.adminid!=null && x.EventDate >= DateTime.Today).OrderBy(x=> x.EventDate).ThenBy(a=>a.UserEvent!=null? a.UserEvent.Count():a.EventDate.Month).Take(4);
+            var eve = spe.GetMany(x=>x.adminid!=null && x.EventDate >= DateTime.Today).OrderBy(x=> x.EventDate).ThenBy(a=>a.UserEvent!=null? a.UserEvent.Count():a.EventDate.Month).Take(6);
             ViewBag.listuniv = spun.GetAll().ToList();
 
             ViewBag.themelist = spt.GetAll().ToList();

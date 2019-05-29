@@ -223,7 +223,7 @@ namespace EventWeb.Controllers
                 Response.Cookies.Add(cookie);
                 
               
-               sms.sendSMS(key,_user.phone);
+                sms.sendSMS(key,_user.phone);
                 // task.Wait();
                 ViewBag.userid = _user.id;
                 return View();
