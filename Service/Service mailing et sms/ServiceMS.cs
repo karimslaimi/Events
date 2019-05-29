@@ -25,12 +25,19 @@ namespace Service
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client.UseDefaultCredentials = false;
                     MailMessage mailMessage = new MailMessage();//sendermail, spu.GetById(id).mail, "verify your mail", "http://localhost:8080/User/verifymail/?id=" + id + "&key=" + key);
+
                     mailMessage.To.Add(mails);
+
                     mailMessage.From=new MailAddress("cck@rnu.com");
-                    mailMessage.Body = body;    
+
+                    mailMessage.Body = body;
+
                     client.Credentials = new NetworkCredential(sendermail, senderpassword);
+
                     mailMessage.IsBodyHtml = true;
+
                     mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+
                     client.Send(mailMessage);
 
                 }
@@ -39,9 +46,9 @@ namespace Service
 
                 }
             }
-        
 
-        public void sendSMS(string body,string phone)
+
+        public void sendSMS(string body, string phone)
         {
             //const string YourAccessKey = "k4lCCTW1NKDvQhWEszuWNeXjy";
             //Client client = Client.CreateDefault(YourAccessKey);
