@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Globalization;
+
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Configuration;
+
 using System.Web.Mvc;
 using System.Web.Security;
-using Data;
+
 using EventWeb.Security;
 using Model;
 using Service;
@@ -42,7 +37,7 @@ namespace EventWeb.Controllers
 
             if (spa.authAdmin(ad.mailAdmin, ad.passwordAdmin))//check serviceAdmin
             {
-                Admin _admin = new Admin();
+                
                 FormsAuthentication.SetAuthCookie(ad.mailAdmin, true);//store user mail in cookies 
              
 
