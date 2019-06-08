@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
+
 
 namespace EventWeb.App_Start
 {
     public class WebApiConfig
     {
 
-        public static void Register(HttpConfiguration configuration)
+        public static void Register(HttpConfiguration config)
         {
-            configuration.Routes.MapHttpRoute("API Default", "api/{controller}/{id}",
-                new { id = RouteParameter.Optional });
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
 
     }

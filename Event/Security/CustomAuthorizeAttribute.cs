@@ -30,6 +30,7 @@ namespace EventWeb.Security
             
             IPrincipal user = httpContext.User;
             bool authorize = false;
+           
 
 
             string userid = user.Identity.Name;
@@ -43,6 +44,7 @@ namespace EventWeb.Security
                 _user = spu.Get(x => x.username == userid);
                 if (_user != null)
                 {
+                    
                     isuser = true;
                 }
 
