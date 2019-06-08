@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Web.Http;
 using EventWeb.App_Start;
 using System.Net.Http.Formatting;
+using Newtonsoft.Json;
 
 namespace EventWeb
 {
@@ -18,15 +19,23 @@ namespace EventWeb
 
         protected void Application_Start()
         {
+            GlobalConfiguration.Configuration.MapHttpAttributeRoutes();
+
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalConfiguration.Configuration.EnsureInitialized();
 
+            GlobalConfiguration.Configuration.EnsureInitialized();
             GlobalConfiguration.Configuration.Formatters.Clear();
             GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
 
         }
         protected void Application_EndRequest()

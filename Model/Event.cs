@@ -47,7 +47,7 @@ namespace Model
         [JsonIgnore]
         public virtual Admin approvedBy { get; set; } //l'admin qui a approuvé l'annonce de l'evenement tant que ce champ est null 
                                                       //l'evenement n'apparaitra pas sur le site
-
+        [JsonIgnore]
         public virtual ICollection<UserEvent> UserEvent { get; set; }
 
     }

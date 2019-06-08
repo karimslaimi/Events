@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.PeerToPeer;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using Microsoft.Ajax.Utilities;
+using System.IdentityModel.Tokens.Jwt;
 using Model;
 using Service;
 using Service.EventFolder;
 using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 using RouteAttribute = System.Web.Http.RouteAttribute;
+using System.Web.Security;
+using AuthorizeAttribute = System.Web.Http.AuthorizeAttribute;
 
 namespace EventWeb.Controllers
 {
@@ -23,7 +26,9 @@ namespace EventWeb.Controllers
         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
         // GET: api/Events
-        [Route("api/Events/GetEvents")]
+        [HttpGet]
+      
+        [Route("api/Events")]
         public List<Event> GetEvents()
         {
 
@@ -69,6 +74,8 @@ namespace EventWeb.Controllers
 
             if (spu.AuthUser(_user.username.ToString(), _user.password.ToString()))
             {
+
+                FormsAuthentication.SetAuthCookie(_user.username.ToString(), false);
                 return true;
             }
             else
@@ -76,6 +83,23 @@ namespace EventWeb.Controllers
                 return false;
             }
         }
+
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
+
+        [Authorize]
+        [Route("api/Events/MyEvents")]
+        [HttpGet]
+        public List<Event> MyEvents()
+        {
+            List<Event> eve = spe.GetMany(x => x.creator.username == User.Identity.Name).ToList();
+            return eve;
+        }
+
+
+
 
 
 
